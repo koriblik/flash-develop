@@ -28,7 +28,7 @@ package {
 			__starling = new Starling(applicationClass, stage);
 			__starling.antiAliasing = 1;
 			__starling.showStats = true;
-			__starling.showStatsAt("left", "bottom", 2);
+			__starling.showStatsAt("left", "bottom", 1);
 			__starling.start();
 		}
 	}
