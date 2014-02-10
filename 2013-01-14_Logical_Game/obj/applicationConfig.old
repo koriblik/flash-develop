@@ -16,7 +16,11 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
+<<<<<<< .mine
+      <value>'2014-02-10'</value>
+=======
       <value>'2/7/2014'</value>
+>>>>>>> .r4
     </define>
     <define append="true">
       <name>CONFIG::air</name>

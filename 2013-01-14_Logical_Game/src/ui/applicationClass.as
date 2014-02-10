@@ -4,6 +4,7 @@ package ui {
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import ui.scenes.baseScene;
+	import ui.scenes.game.gameScene;
 	import ui.scenes.loader.loaderScene;
 	import ui.scenes.mainMenu.mainMenuScene;
 	
@@ -26,9 +27,10 @@ package ui {
 			//setup Scenes
 			config.__SCENES["loaderScene"] = loaderScene;
 			config.__SCENES["mainMenuScene"] = mainMenuScene;
+			config.__SCENES["gameScene"] = gameScene;
 			//... continue to add scenes here
 			//activate first scene
-			config.__ACTIVE_SCENE = "loaderScene";
+			config.__ACTIVE_SCENE = "gameScene";
 			showScene();
 		}
 		

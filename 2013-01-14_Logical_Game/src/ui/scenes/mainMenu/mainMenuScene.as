@@ -28,6 +28,9 @@ package ui.scenes.mainMenu {
 			removeEventListener("SCENE_INITIALIZED", onSceneInitialized);
 			//in this point scene is fully visible
 			//...
+			fadeOutAndClose({duration: config.__FADE_SCENE_DELAY, color: 0xff000000, width: config.__WINDOW_WIDTH, height: config.__WINDOW_HEIGHT});
+			config.__ACTIVE_SCENE = "gameScene";
+
 		}
 	}
 }
