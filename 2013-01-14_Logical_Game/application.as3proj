@@ -7,11 +7,11 @@
     <movie path="bin\application.swf" />
     <movie fps="60" />
     <movie width="640" />
-    <movie height="480" />
+    <movie height="314" />
     <movie version="11" />
     <movie minorVersion="9" />
     <movie platform="Flash Player" />
-    <movie background="#FFFFFF" />
+    <movie background="#000000" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -53,7 +53,6 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="lib\starling.swc" />
-    <element path="lib\feathers.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -86,7 +85,7 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="True" />
-    <option testMovie="Default" />
+    <option testMovie="ExternalPlayer" />
     <option testMovieCommand="" />
   </options>
   <!-- Plugin storage -->

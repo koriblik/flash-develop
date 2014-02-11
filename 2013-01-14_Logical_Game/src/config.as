@@ -8,7 +8,7 @@ package {
 	public class config {
 		static public const __SHARED_OBJECT_LOCAL_NAME:String = "koriblik/LogicalGame";
 		static public const __SHARED_OBJECT_LOCAL_PATH:String = "/";
-		static public const __FADE_SCENE_DELAY:Number = 0.4;
+		static public const __FADE_SCENE_DELAY:Number = 0.2;
 		static public var __ACTIVE_SCENE:String = "";
 		static public var __SCENES:Array;
 		static public var __WINDOW_WIDTH:uint;

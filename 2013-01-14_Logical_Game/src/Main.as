@@ -1,10 +1,10 @@
 package {
 	import config;
+	import assets;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import starling.core.Starling;
 	import ui.applicationClass;
-	
 	/**
 	 * 2014-01-14
 	 * @author Pavol Kusovsky
@@ -23,6 +23,7 @@ package {
 			// entry point
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			config.initialize(stage);
+			assets.initialize();
 			//Create a Starling instance that will run the "application" class
 			Starling.multitouchEnabled = false;
 			__starling = new Starling(applicationClass, stage);
