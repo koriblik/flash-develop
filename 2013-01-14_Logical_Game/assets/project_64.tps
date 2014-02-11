@@ -129,6 +129,11 @@
                 <key>name</key>
                 <filename>textures_64.xml</filename>
             </struct>
+            <key>java</key>
+            <struct type="DataFile">
+                <key>name</key>
+                <filename>textures_64.java</filename>
+            </struct>
         </map>
         <key>multiPack</key>
         <false/>
@@ -142,7 +147,7 @@
             <string></string>
         </struct>
         <key>autoAliasEnabled</key>
-        <true/>
+        <false/>
         <key>trimSpriteNames</key>
         <false/>
         <key>cleanTransparentPixels</key>
@@ -170,6 +175,8 @@
             <filename>textures_64/background_empty.png</filename>
             <filename>textures_64/background_layer01.png</filename>
             <filename>textures_64/background_layer02.png</filename>
+            <filename>textures_64/player_fly.png</filename>
+            <filename>textures_64/player_fly_shadow.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
