@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'2014-02-11'</value>
+      <value>'2014-02-12'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -32,17 +32,16 @@
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>E:\Working\github\flash-develop\trunk\2013-01-14_Logical_Game\src</path-element>
-      <path-element>E:\Working\flashdevelop\classes</path-element>
-      <path-element>E:\Working\github\flash-develop\trunk\classes</path-element>
+      <path-element>E:\Working\github\2013-01-14_Logical_Game\src</path-element>
+      <path-element>e:\Working\github\classes</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>E:\Working\github\flash-develop\trunk\2013-01-14_Logical_Game\lib\starling.swc</path-element>
+      <path-element>E:\Working\github\2013-01-14_Logical_Game\lib\starling.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>E:\Working\github\flash-develop\trunk\2013-01-14_Logical_Game\src\Main.as</path-element>
+    <path-element>E:\Working\github\2013-01-14_Logical_Game\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#000000</default-background-color>
   <default-frame-rate>60</default-frame-rate>
