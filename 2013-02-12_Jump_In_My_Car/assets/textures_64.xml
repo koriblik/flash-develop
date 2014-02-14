@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:1a8e75c2c883c8499e003fc16db0f604:5260b698940fadca13beacabc430f6fa:79b0df89fca4e6f763f07950667e1678$ -->
+<TextureAtlas imagePath="textures_64.png">
+    <SubTexture name="background_empty" x="0" y="0" width="1" height="1"/>
+    <SubTexture name="background_layer01" x="3" y="0" width="94" height="117"/>
+    <SubTexture name="background_layer02" x="99" y="0" width="94" height="67"/>
+    <SubTexture name="background_layer04" x="0" y="119" width="187" height="130"/>
+    <SubTexture name="player_fly" x="0" y="251" width="72" height="56"/>
+    <SubTexture name="player_fly_shadow" x="74" y="251" width="36" height="28"/>
+</TextureAtlas>
