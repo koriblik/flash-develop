@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<level>
+	<sections>
+   		<section template_id="0" repeat="7"/>
+   	</sections>
+   	<templates>
+   		<template id="0">
+   			<item texture_id="0" repeat="3"/>
+   		</template>
+   	</templates>
+   	<textures>
+   		<texture id="0" name="" height=""/>
+   	</textures>
+<level>

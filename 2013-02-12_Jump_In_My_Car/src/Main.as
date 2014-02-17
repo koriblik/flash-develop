@@ -5,6 +5,7 @@ package {
 	import flash.events.Event;
 	import starling.core.Starling;
 	import ui.applicationClass;
+	
 	/**
 	 * 2014-01-14
 	 * @author Pavol Kusovsky
