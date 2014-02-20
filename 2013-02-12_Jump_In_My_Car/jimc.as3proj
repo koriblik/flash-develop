@@ -4,10 +4,10 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\jinc.swf" />
-    <movie fps="30" />
+    <movie path="bin\jimc.swf" />
+    <movie fps="60" />
     <movie width="640" />
-    <movie height="341" />
+    <movie height="512" />
     <movie version="11" />
     <movie minorVersion="9" />
     <movie platform="Flash Player" />

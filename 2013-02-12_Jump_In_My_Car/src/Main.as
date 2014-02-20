@@ -23,8 +23,8 @@ package {
 		private function init(e:Event = null):void {
 			// entry point
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			config.initialize(stage);
 			assets.initialize();
+			config.initialize(stage);
 			//Create a Starling instance that will run the "application" class
 			Starling.multitouchEnabled = false;
 			__starling = new Starling(applicationClass, stage);

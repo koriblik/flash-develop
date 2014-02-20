@@ -40,7 +40,6 @@ package ui.scenes.game.objects {
 			__speed = nSpeed;
 			__oldOffsetX = -1;
 			__parallaxLayerWidth = __tileWidth * __tileDataLength - config.__WINDOW_WIDTH;
-			trace(__parallaxLayerWidth);
 			//throw error if paralax X size is less then stageWidth
 			if ((__tileDataLength * iTileWidth) < config.__WINDOW_WIDTH) {
 				throw new Error("[parallaxLayer \"" + __parallaxLayerID + "\"] Error: Layer width is less than stageWidth!");
@@ -75,7 +74,7 @@ package ui.scenes.game.objects {
 				trace("[parallaxLayer \"" + __parallaxLayerID + "\"] Warning: iPosition less then 0. Value changed to 0.");
 			}
 			//if loop is OFF and iPosition is less then layerWidth I can proceed
-			if ((iPosition >= __parallaxLayerWidth) && (!__parallaxLoop)) {
+			if ((iPosition > __parallaxLayerWidth) && (!__parallaxLoop)) {
 				//set iPosition to the latest value
 				iPosition = __parallaxLayerWidth;
 			}

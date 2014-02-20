@@ -13,20 +13,16 @@ package {
 		private static const __gameTexture64SpriteSheet:Class;
 		[Embed(source="../assets/textures_64.xml", mimeType = "application/octet-stream")]
 		public static const __gameTexture64SpriteSheetXML:Class;
-		//
+		//texture data
 		private static var gameTextures:Dictionary = new Dictionary();
 		private static var gameTextureAtlas:TextureAtlas;
 		private static var __selectedTextureSheet:String;
-		/*
 		//levels
-		[Embed(source="../lib/data/levels.xml",mimeType="application/octet-stream")]
-		private static const __levelsClass:Class;
-		public static var __levelsXML:XML;
-		*/
+		[Embed(source="../assets/game_level.xml",mimeType="application/octet-stream")]
+		private static const __levelClass:Class;
+		public static var __levelXML:XML;
 		static public function initialize():void {
-			/*
-			__levelsXML = XML(new __levelsClass());
-			*/
+			__levelXML = XML(new __levelClass());
 			//TODO tu pridat vyber texturoveho subory na zaklade rozlisenia
 			__selectedTextureSheet = "__gameTexture64SpriteSheet";
 		}

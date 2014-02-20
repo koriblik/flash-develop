@@ -171,11 +171,15 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>textures_64/background_layer04.png</filename>
             <filename>textures_64/background_empty.png</filename>
             <filename>textures_64/background_layer01.png</filename>
             <filename>textures_64/background_layer02.png</filename>
             <filename>textures_64/player_fly.png</filename>
+            <filename>textures_64/foreground_layer01.png</filename>
+            <filename>textures_64/foreground_layer02a.png</filename>
+            <filename>textures_64/foreground_layer02b.png</filename>
+            <filename>textures_64/foreground_layer03.png</filename>
+            <filename>textures_64/foreground_layer04.png</filename>
             <filename>textures_64/player_fly_shadow.png</filename>
         </array>
         <key>ignoreFileList</key>
