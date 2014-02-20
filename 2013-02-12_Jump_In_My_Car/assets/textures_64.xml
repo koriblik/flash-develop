@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:9917dab4f628e87a5a62e4b7e0641f8d:cf067e730fe5a31da54a19cc706d8f79:79b0df89fca4e6f763f07950667e1678$ -->
+<!-- $TexturePacker:SmartUpdate:16b8e1adf4909489e1f261c5c148b365:d0c1bcd430e3f56e1746f84a6a1d5046:79b0df89fca4e6f763f07950667e1678$ -->
 <TextureAtlas imagePath="textures_64.png">
     <SubTexture name="background_empty" x="0" y="0" width="1" height="1"/>
-    <SubTexture name="background_layer01" x="3" y="0" width="128" height="192"/>
-    <SubTexture name="background_layer02" x="133" y="0" width="128" height="128"/>
+    <SubTexture name="background_layer01" x="3" y="0" width="128" height="128"/>
+    <SubTexture name="background_layer02" x="133" y="0" width="128" height="192"/>
     <SubTexture name="foreground_layer01" x="263" y="0" width="128" height="192"/>
     <SubTexture name="foreground_layer02a" x="0" y="194" width="128" height="192"/>
     <SubTexture name="foreground_layer02b" x="130" y="194" width="128" height="192"/>

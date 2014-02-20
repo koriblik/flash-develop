@@ -65,7 +65,7 @@ package ui.scenes.game.objects {
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
-		public function setPosition(iPosition:int):void {
+		public function setPosition(iPosition:Number):void {
 			//set counter to 0
 			var __counter:uint = 0;
 			iPosition *= __speed;

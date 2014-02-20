@@ -10,6 +10,9 @@ package {
 		static public const __SHARED_OBJECT_LOCAL_PATH:String = "/";
 		static public const __FADE_SCENE_DELAY:Number = 0.2;
 		static public var __ACTIVE_SCENE:String = "";
+		static public var __STAGE:Stage;
+		static public var __FRAME_RATE:uint;
+		static public var __DELTA_TIME:Number;
 		static public var __SCENES:Array;
 		static public var __WINDOW_WIDTH:uint;
 		static public var __WINDOW_HEIGHT:uint;
@@ -19,6 +22,9 @@ package {
 		
 		static public function initialize(stage:Stage):void {
 			__SCENES = new Array();
+			__STAGE = stage;
+			__FRAME_RATE = __STAGE.frameRate;
+			__DELTA_TIME = 1 / __FRAME_RATE;
 			__WINDOW_WIDTH = stage.stageWidth;
 			__WINDOW_HEIGHT = stage.stageHeight;
 			__MENU_BG_COLOR = 0xffff00ff;

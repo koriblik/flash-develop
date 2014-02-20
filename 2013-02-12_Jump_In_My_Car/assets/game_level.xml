@@ -4,7 +4,7 @@
    		<section template_id="hole" sub_size="1" repeat="1" />
    		<section template_id="island" sub_size="1" repeat="1"/>
    		<section template_id="hole" sub_size="3" repeat="1"/>
-   		<section template_id="island" sub_size="3" repeat="1"/>
+   		<section template_id="island" sub_size="13" repeat="1"/>
    		<section template_id="hole" sub_size="3" repeat="1"/>
    		<section template_id="island" sub_size="0" repeat="1"/>
    		<section template_id="hole" sub_size="3" repeat="1"/>
