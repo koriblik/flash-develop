@@ -4,7 +4,7 @@
    		<section template_id="hole" sub_size="1" repeat="1" />
    		<section template_id="island" sub_size="1" repeat="1"/>
    		<section template_id="hole" sub_size="3" repeat="1"/>
-   		<section template_id="island" sub_size="13" repeat="1"/>
+   		<section template_id="island" sub_size="3" repeat="1"/>
    		<section template_id="hole" sub_size="3" repeat="1"/>
    		<section template_id="island" sub_size="0" repeat="1"/>
    		<section template_id="hole" sub_size="3" repeat="1"/>
@@ -28,7 +28,7 @@
    			<item texture_id="03"/>
    		</template>
    	</templates>
-   	<textures>
+   	<textures width="128">
    		<texture id="01" name="foreground_layer01"/>
 		<texture id="02a" name="foreground_layer02a"/>
 		<texture id="02b" name="foreground_layer02b"/>

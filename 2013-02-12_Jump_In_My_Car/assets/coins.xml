@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<coins>
+	<coin position="700" line="1" space="128" repeat="2"/>
+	<coin position="764" line="2" space="128" repeat="2"/>
+	<coin position="828" line="3" space="128" repeat="4"/>
+</coins>

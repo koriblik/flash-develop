@@ -17,8 +17,12 @@ package {
 		static public var __WINDOW_WIDTH:uint;
 		static public var __WINDOW_HEIGHT:uint;
 		static public var __MENU_BG_COLOR:uint;
-		
+		//textures in the level - ground
 		static public var __LEVEL_GRAPHIC_DATA:Array;
+		//length of the level in pixels
+		static public var __LEVEL_SIZE:uint;
+		//coins array
+		static public var __LEVEL_COINS_DATA:Array;
 		
 		static public function initialize(stage:Stage):void {
 			__SCENES = new Array();
@@ -29,7 +33,39 @@ package {
 			__WINDOW_HEIGHT = stage.stageHeight;
 			__MENU_BG_COLOR = 0xffff00ff;
 			__LEVEL_GRAPHIC_DATA = new Array();
+			__LEVEL_COINS_DATA = new Array();
 			loadLevelData();
+			loadCoinsData();
+		}
+		
+		static public function loadCoinsData():void {
+			var i:uint;
+			var j:uint;
+			var maxItems:uint;
+			var repeats:uint;
+			var space:uint;
+			var tempObject:Array;
+			maxItems = assets.__coinsXML.descendants("coin").length();
+			//load conis data
+			for (i = 0; i < maxItems; i++) {
+				repeats = uint(assets.__coinsXML.descendants("coin")[i].@repeat);
+				space = uint(assets.__coinsXML.descendants("coin")[i].@space);
+				for (j = 0; j < repeats; j++) {
+					__LEVEL_COINS_DATA.push({position: uint(assets.__coinsXML.descendants("coin")[i].@position) + j * space, line: uint(assets.__coinsXML.descendants("coin")[i].@line)});
+				}
+			}
+			//sort the data
+			for (i = 0; i < __LEVEL_COINS_DATA.length; i++) {
+				j = i;
+				if (j > 0) {
+					//if current position is less then previous - bubble down
+					while ((__LEVEL_COINS_DATA[j].position < __LEVEL_COINS_DATA[j - 1].position) && (j > 0)) {
+						//switch
+						__LEVEL_COINS_DATA.splice(j - 1, 0, __LEVEL_COINS_DATA.splice(j, 1)[0]);
+						j--;
+					}
+				}
+			}
 		}
 		
 		static public function loadLevelData():void {
@@ -82,6 +118,8 @@ package {
 					}
 				}
 			}
+			//calculate level size
+			__LEVEL_SIZE = __LEVEL_GRAPHIC_DATA.length * uint(assets.__levelXML.textures.@width) - __WINDOW_WIDTH;
 		}
 	}
 }

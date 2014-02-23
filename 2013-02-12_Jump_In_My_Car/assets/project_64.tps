@@ -181,6 +181,15 @@
             <filename>textures_64/foreground_layer03.png</filename>
             <filename>textures_64/foreground_layer04.png</filename>
             <filename>textures_64/player_fly_shadow.png</filename>
+            <filename>textures_64/coin00_empty.png</filename>
+            <filename>textures_64/coin01.png</filename>
+            <filename>textures_64/coin02.png</filename>
+            <filename>textures_64/coin03.png</filename>
+            <filename>textures_64/coin04.png</filename>
+            <filename>textures_64/coin05.png</filename>
+            <filename>textures_64/coin06.png</filename>
+            <filename>textures_64/coin07.png</filename>
+            <filename>textures_64/coin08.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

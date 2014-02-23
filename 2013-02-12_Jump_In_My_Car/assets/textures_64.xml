@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:16b8e1adf4909489e1f261c5c148b365:d0c1bcd430e3f56e1746f84a6a1d5046:79b0df89fca4e6f763f07950667e1678$ -->
+<!-- $TexturePacker:SmartUpdate:36d08123fbfa0dbf18935ad011c50a76:c1a5944c4716042d6ee1160f66e11c25:79b0df89fca4e6f763f07950667e1678$ -->
 <TextureAtlas imagePath="textures_64.png">
     <SubTexture name="background_empty" x="0" y="0" width="1" height="1"/>
-    <SubTexture name="background_layer01" x="3" y="0" width="128" height="128"/>
-    <SubTexture name="background_layer02" x="133" y="0" width="128" height="192"/>
-    <SubTexture name="foreground_layer01" x="263" y="0" width="128" height="192"/>
-    <SubTexture name="foreground_layer02a" x="0" y="194" width="128" height="192"/>
-    <SubTexture name="foreground_layer02b" x="130" y="194" width="128" height="192"/>
-    <SubTexture name="foreground_layer03" x="260" y="194" width="128" height="192"/>
-    <SubTexture name="foreground_layer04" x="0" y="388" width="128" height="192"/>
-    <SubTexture name="player_fly" x="130" y="388" width="72" height="56"/>
-    <SubTexture name="player_fly_shadow" x="204" y="388" width="36" height="28"/>
+    <SubTexture name="background_layer01" x="3" y="0" width="128" height="192"/>
+    <SubTexture name="background_layer02" x="133" y="0" width="128" height="128"/>
+    <SubTexture name="coin00_empty" x="263" y="0" width="32" height="32"/>
+    <SubTexture name="coin01" x="297" y="0" width="32" height="32"/>
+    <SubTexture name="coin02" x="331" y="0" width="32" height="32"/>
+    <SubTexture name="coin03" x="365" y="0" width="32" height="32"/>
+    <SubTexture name="coin04" x="399" y="0" width="32" height="32"/>
+    <SubTexture name="coin05" x="433" y="0" width="32" height="32"/>
+    <SubTexture name="coin06" x="467" y="0" width="32" height="32"/>
+    <SubTexture name="coin07" x="0" y="194" width="32" height="32"/>
+    <SubTexture name="coin08" x="34" y="194" width="32" height="32"/>
+    <SubTexture name="foreground_layer01" x="68" y="194" width="128" height="192"/>
+    <SubTexture name="foreground_layer02a" x="198" y="194" width="128" height="192"/>
+    <SubTexture name="foreground_layer02b" x="328" y="194" width="128" height="192"/>
+    <SubTexture name="foreground_layer03" x="0" y="388" width="128" height="192"/>
+    <SubTexture name="foreground_layer04" x="130" y="388" width="128" height="192"/>
+    <SubTexture name="player_fly" x="260" y="388" width="72" height="56"/>
+    <SubTexture name="player_fly_shadow" x="334" y="388" width="36" height="28"/>
 </TextureAtlas>

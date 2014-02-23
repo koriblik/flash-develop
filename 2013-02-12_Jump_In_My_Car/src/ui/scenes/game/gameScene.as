@@ -23,7 +23,7 @@ package ui.scenes.game {
 			super();
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			__position = 0;
-			__speed = new speedController(10, 6, .4);
+			__speed = new speedController(20, 8, 0.3);
 		}
 		
 		private function onAddedToStage(e:Event):void {
@@ -41,12 +41,12 @@ package ui.scenes.game {
 			//in this point scene is fully visible
 			//...
 			var tiles01:Array = new Array("background_layer01", "background_layer01", "background_layer01", "background_layer01", "background_layer01", "background_layer01", "background_layer01");
-			__layer01 = new parallaxLayer("bg_layer01", 128, 128, tiles01, 0.3, 0, 0);
+			__layer01 = new parallaxLayer("bg_layer01", 128, 192, tiles01, .3, 0, 128);
 			addChild(__layer01);
 			var tiles02:Array = new Array("background_layer02", "background_layer02", "background_layer02", "background_layer02", "background_layer02", "background_layer02", "background_layer02");
-			__layer02 = new parallaxLayer("bg_layer02", 128, 192, tiles02, .4, 0, 104);
+			__layer02 = new parallaxLayer("bg_layer02", 128, 128, tiles02, .4, 0, 0);
 			addChild(__layer02);
-			__levelLayer01 = new parallaxLayer("foreground_layer03", 128, 192, config.__LEVEL_GRAPHIC_DATA, 1, 0, 288, false);
+			__levelLayer01 = new parallaxLayer("foreground_layer03", 128, 192, config.__LEVEL_GRAPHIC_DATA, 1, 0, 320, false);
 			addChild(__levelLayer01);
 			__playerShadow = new Image(assets.getAtlas().getTexture("player_fly_shadow"));
 			addChild(__playerShadow);
@@ -63,17 +63,13 @@ package ui.scenes.game {
 		
 		private function onEnterFrame(event:Event):void {
 			__speed.updateFrame(config.__DELTA_TIME);
-			trace(__position);
-			if ((__position > 1000) && (__position < 1010)) {
-				__speed.startBreak();
-			}
 			__position += __speed.getSpeed();
 			__layer01.setPosition(__position);
 			__layer02.setPosition(__position);
 			__levelLayer01.setPosition(__position);
 			__player.y = 270 + 10 * Math.sin(Math.PI * __position / 180);
-			__playerShadow.scaleX = 0.86 + 0.06 * Math.sin(Math.PI * __position / 180);
-			__playerShadow.scaleY = 0.86 + 0.06 * Math.sin(Math.PI * __position / 180);
+			__playerShadow.scaleX = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
+			__playerShadow.scaleY = 0.84  + 0.08 * Math.sin(Math.PI * __position / 180);
 		}
 	}
 }

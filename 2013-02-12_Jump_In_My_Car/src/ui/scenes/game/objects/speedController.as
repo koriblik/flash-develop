@@ -29,7 +29,7 @@ package ui.scenes.game.objects {
 				case __ACCELERATE: 
 					__counter += nDelta;
 					__counter = Math.min(__speedMaxTime, __counter);
-					__speed = __speedMax * Math.sin((__counter*(Math.PI / 2))/__speedMaxTime);
+					__speed = __speedMax * Math.sin((__counter * (Math.PI / 2)) / __speedMaxTime);
 					break;
 				case __BREAK: 
 					__counter += nDelta;

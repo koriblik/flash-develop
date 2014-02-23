@@ -21,8 +21,13 @@ package {
 		[Embed(source="../assets/game_level.xml",mimeType="application/octet-stream")]
 		private static const __levelClass:Class;
 		public static var __levelXML:XML;
+		//coins
+		[Embed(source="../assets/coins.xml",mimeType="application/octet-stream")]
+		private static const __coinsClass:Class;
+		public static var __coinsXML:XML;
 		static public function initialize():void {
 			__levelXML = XML(new __levelClass());
+			__coinsXML = XML(new __coinsClass());
 			//TODO tu pridat vyber texturoveho subory na zaklade rozlisenia
 			__selectedTextureSheet = "__gameTexture64SpriteSheet";
 		}
