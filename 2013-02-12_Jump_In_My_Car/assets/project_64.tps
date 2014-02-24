@@ -190,6 +190,7 @@
             <filename>textures_64/coin06.png</filename>
             <filename>textures_64/coin07.png</filename>
             <filename>textures_64/coin08.png</filename>
+            <filename>textures_64/coin_shadow.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

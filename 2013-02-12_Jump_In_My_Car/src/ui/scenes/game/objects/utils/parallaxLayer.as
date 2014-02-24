@@ -1,4 +1,4 @@
-package ui.scenes.game.objects {
+package ui.scenes.game.objects.utils {
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;

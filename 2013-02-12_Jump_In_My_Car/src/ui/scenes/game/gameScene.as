@@ -1,9 +1,13 @@
 package ui.scenes.game {
 	import config;
+	import flash.net.SharedObjectFlushStatus;
 	import starling.display.Image;
 	import starling.events.Event;
 	import ui.scenes.baseScene;
-	import ui.scenes.game.objects.parallaxLayer;
+	import ui.scenes.game.objects.backgroundLayersObject;
+	import ui.scenes.game.objects.coinController;
+	import ui.scenes.game.objects.objectsLayer;
+	import ui.scenes.game.objects.utils.parallaxLayer;
 	import ui.scenes.game.objects.speedController;
 	
 	/**
@@ -11,19 +15,18 @@ package ui.scenes.game {
 	 * @author Pavol Kusovsky
 	 */
 	public class gameScene extends baseScene {
-		private var __layer01:parallaxLayer;
-		private var __layer02:parallaxLayer;
-		private var __levelLayer01:parallaxLayer;
+		private var __backgroundLayer:backgroundLayersObject;
+		private var __objectsLayer:objectsLayer;
+		private var __coinController:coinController;
 		private var __player:Image;
 		private var __playerShadow:Image;
+		private var __frame:uint;
 		private var __position:Number;
 		private var __speed:speedController;
 		
 		public function gameScene() {
 			super();
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			__position = 0;
-			__speed = new speedController(20, 8, 0.3);
 		}
 		
 		private function onAddedToStage(e:Event):void {
@@ -40,14 +43,17 @@ package ui.scenes.game {
 			removeEventListener("SCENE_INITIALIZED", onSceneInitialized);
 			//in this point scene is fully visible
 			//...
-			var tiles01:Array = new Array("background_layer01", "background_layer01", "background_layer01", "background_layer01", "background_layer01", "background_layer01", "background_layer01");
-			__layer01 = new parallaxLayer("bg_layer01", 128, 192, tiles01, .3, 0, 128);
-			addChild(__layer01);
-			var tiles02:Array = new Array("background_layer02", "background_layer02", "background_layer02", "background_layer02", "background_layer02", "background_layer02", "background_layer02");
-			__layer02 = new parallaxLayer("bg_layer02", 128, 128, tiles02, .4, 0, 0);
-			addChild(__layer02);
-			__levelLayer01 = new parallaxLayer("foreground_layer03", 128, 192, config.__LEVEL_GRAPHIC_DATA, 1, 0, 320, false);
-			addChild(__levelLayer01);
+			__position = 0;
+			__frame = 0;
+			__speed = new speedController(20, 8, 0.3);
+			//background layer
+			__backgroundLayer = new backgroundLayersObject();
+			addChild(__backgroundLayer);
+			//objects layer
+			__objectsLayer = new objectsLayer();
+			addChild(__objectsLayer);
+			//coin controller
+			__coinController = new coinController(__objectsLayer);
 			__playerShadow = new Image(assets.getAtlas().getTexture("player_fly_shadow"));
 			addChild(__playerShadow);
 			__playerShadow.x = 130;
@@ -62,14 +68,23 @@ package ui.scenes.game {
 		}
 		
 		private function onEnterFrame(event:Event):void {
+			//update frame counter
+			__frame++;
+			//calculate new speed
 			__speed.updateFrame(config.__DELTA_TIME);
+			//calculate position
 			__position += __speed.getSpeed();
-			__layer01.setPosition(__position);
-			__layer02.setPosition(__position);
-			__levelLayer01.setPosition(__position);
+			__position = Math.min(__position, config.__LEVEL_SIZE);
+			//update background layers
+			__backgroundLayer.updateFrame(__position);
+			//update coins controller
+			__coinController.updateFrame(__position);
+			//update object layers
+			__objectsLayer.updateFrame(__position);
+			//
 			__player.y = 270 + 10 * Math.sin(Math.PI * __position / 180);
 			__playerShadow.scaleX = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
-			__playerShadow.scaleY = 0.84  + 0.08 * Math.sin(Math.PI * __position / 180);
+			__playerShadow.scaleY = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
 		}
 	}
 }

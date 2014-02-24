@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <coins>
-	<coin position="700" line="1" space="128" repeat="2"/>
-	<coin position="764" line="2" space="128" repeat="2"/>
-	<coin position="828" line="3" space="128" repeat="4"/>
+	<coin position="180" line="0" space="128" repeat="3"/>
+	<coin position="700" line="0" space="128" repeat="2"/>
+	<coin position="764" line="1" space="128" repeat="2"/>
+	<coin position="828" line="2" space="128" repeat="4"/>
+	<coin position="2048" line="2" space="128" repeat="40"/>
 </coins>
