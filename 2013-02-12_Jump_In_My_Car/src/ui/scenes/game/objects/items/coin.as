@@ -37,6 +37,9 @@ package ui.scenes.game.objects.items {
 			__frame = 0;
 		}
 		
+		/**
+		 * Calculate frame to be displayed
+		 */
 		public function updateSprite():void {
 			//set frame based on current position
 			var frame:uint = ((__position + __frame) / 8) % 8;
