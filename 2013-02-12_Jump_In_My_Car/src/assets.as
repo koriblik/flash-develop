@@ -3,15 +3,16 @@ package {
 	import flash.utils.Dictionary;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
+	
 	/**
 	 * 2014-02-11
 	 * @author Pavol Kusovsky
 	 */
 	public class assets {
 		//texture atlas
-		[Embed(source = "../assets/textures_64.png")]
+		[Embed(source="../assets/textures_64.png")]
 		private static const __gameTexture64SpriteSheet:Class;
-		[Embed(source="../assets/textures_64.xml", mimeType = "application/octet-stream")]
+		[Embed(source="../assets/textures_64.xml",mimeType="application/octet-stream")]
 		public static const __gameTexture64SpriteSheetXML:Class;
 		//texture data
 		private static var gameTextures:Dictionary = new Dictionary();
@@ -25,9 +26,15 @@ package {
 		[Embed(source="../assets/coins.xml",mimeType="application/octet-stream")]
 		private static const __coinsClass:Class;
 		public static var __coinsXML:XML;
+		//obstacles
+		[Embed(source="../assets/obstacles.xml",mimeType="application/octet-stream")]
+		private static const __obstaclesClass:Class;
+		public static var __obstaclesXML:XML;
+		
 		static public function initialize():void {
 			__levelXML = XML(new __levelClass());
 			__coinsXML = XML(new __coinsClass());
+			__obstaclesXML = XML(new __obstaclesClass());
 			//TODO tu pridat vyber texturoveho subory na zaklade rozlisenia
 			__selectedTextureSheet = "__gameTexture64SpriteSheet";
 		}

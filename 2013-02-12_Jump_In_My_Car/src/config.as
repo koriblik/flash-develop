@@ -23,6 +23,8 @@ package {
 		static public var __LEVEL_SIZE:uint;
 		//coins array
 		static public var __LEVEL_COINS_DATA:Array;
+		//obstacles array
+		static public var __LEVEL_OBSTACLES_DATA:Array;
 		
 		static public function initialize(stage:Stage):void {
 			__SCENES = new Array();
@@ -36,6 +38,11 @@ package {
 			__LEVEL_COINS_DATA = new Array();
 			loadLevelData();
 			loadCoinsData();
+			loadObstaclesData();
+		}
+		
+		static private function loadObstaclesData():void {
+		
 		}
 		
 		static public function loadCoinsData():void {

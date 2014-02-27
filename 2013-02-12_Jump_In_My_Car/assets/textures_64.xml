@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:4a49b50a40fe16d8b0754054587d112d:c6f1fee2e2aa2299855b7798d2e738a2:79b0df89fca4e6f763f07950667e1678$ -->
+<!-- $TexturePacker:SmartUpdate:1cea1617ea35a6fb72139ed5c3032052:5d7ac5aefa177179c88c2b8dc5d796d8:79b0df89fca4e6f763f07950667e1678$ -->
 <TextureAtlas imagePath="textures_64.png">
     <SubTexture name="background_empty" x="0" y="0" width="1" height="1"/>
     <SubTexture name="background_layer01" x="3" y="0" width="128" height="192"/>
@@ -20,6 +20,9 @@
     <SubTexture name="foreground_layer02b" x="362" y="194" width="128" height="192"/>
     <SubTexture name="foreground_layer03" x="0" y="388" width="128" height="192"/>
     <SubTexture name="foreground_layer04" x="130" y="388" width="128" height="192"/>
-    <SubTexture name="player_fly" x="260" y="388" width="72" height="56"/>
-    <SubTexture name="player_fly_shadow" x="334" y="388" width="36" height="28"/>
+    <SubTexture name="pillar" x="260" y="388" width="32" height="68"/>
+    <SubTexture name="player_fly" x="294" y="388" width="72" height="56"/>
+    <SubTexture name="player_fly_shadow" x="368" y="388" width="36" height="28"/>
+    <SubTexture name="ramp" x="406" y="388" width="32" height="50"/>
+    <SubTexture name="wall_high" x="440" y="388" width="48" height="138"/>
 </TextureAtlas>

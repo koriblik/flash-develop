@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<obstacles>
+	<obstacle type="wall_high" position="180" line="0"/>
+	<obstacle type="wall_high" position="360" line="2"/>
+	<obstacle type="wall_low" position="540" line="0"/>
+	<obstacle type="wall_low" position="720" line="2"/>
+	<obstacle type="wall_jump" position="900" line="0"/>
+	<obstacle type="wall_jump" position="1080" line="1"/>
+	<obstacle type="wall_jump" position="1260" line="2"/>
+	
+	<obstacle type="wall_fly_low" position="1420" line="0"/>
+	<obstacle type="wall_fly_low" position="1420" line="2"/>
+	<obstacle type="wall_fly_jump" position="900" line="0"/>
+	<obstacle type="wall_fly_jump" position="1080" line="1"/>
+	<obstacle type="wall_fly_jump" position="1260" line="2"/>
+	
+</obstacles>

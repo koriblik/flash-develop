@@ -27,7 +27,7 @@ package ui.scenes.game.objects {
 			var tiles02:Array = new Array("background_layer02", "background_layer02", "background_layer02", "background_layer02", "background_layer02", "background_layer02", "background_layer02");
 			__layer02 = new parallaxLayer("bg_layer02", 128, 128, tiles02, .4, 0, 0);
 			addChild(__layer02);
-			__levelLayer01 = new parallaxLayer("foreground_layer03", 128, 192, config.__LEVEL_GRAPHIC_DATA, 1, 0, 320, false);
+			__levelLayer01 = new parallaxLayer("foreground_layer01", 128, 192, config.__LEVEL_GRAPHIC_DATA, 1, 0, 320, false);
 			addChild(__levelLayer01);
 		}
 		

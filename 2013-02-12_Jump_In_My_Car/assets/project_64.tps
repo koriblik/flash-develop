@@ -191,6 +191,9 @@
             <filename>textures_64/coin07.png</filename>
             <filename>textures_64/coin08.png</filename>
             <filename>textures_64/coin_shadow.png</filename>
+            <filename>textures_64/pillar.png</filename>
+            <filename>textures_64/ramp.png</filename>
+            <filename>textures_64/wall_high.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
