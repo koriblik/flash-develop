@@ -1,13 +1,12 @@
 package ui.scenes.game {
 	import config;
-	import flash.net.SharedObjectFlushStatus;
 	import starling.display.Image;
 	import starling.events.Event;
+	import starling.events.KeyboardEvent;
 	import ui.scenes.baseScene;
 	import ui.scenes.game.objects.backgroundLayersObject;
 	import ui.scenes.game.objects.coinController;
 	import ui.scenes.game.objects.objectsLayer;
-	import ui.scenes.game.objects.utils.parallaxLayer;
 	import ui.scenes.game.objects.speedController;
 	
 	/**
@@ -15,6 +14,8 @@ package ui.scenes.game {
 	 * @author Pavol Kusovsky
 	 */
 	public class gameScene extends baseScene {
+		private const __MAX_SPEED:uint = 20;
+		private const __SHAKE_BOUNDARIES:uint = 10;
 		private var __backgroundLayer:backgroundLayersObject;
 		private var __objectsLayer:objectsLayer;
 		private var __coinController:coinController;
@@ -23,6 +24,8 @@ package ui.scenes.game {
 		private var __frame:uint;
 		private var __position:Number;
 		private var __speed:speedController;
+		//array that holds the status of key pressed
+		private var __keyDown:Vector.<Boolean>;
 		
 		public function gameScene() {
 			super();
@@ -40,12 +43,13 @@ package ui.scenes.game {
 		}
 		
 		private function onSceneInitialized(e:Event):void {
+			var i:uint;
 			removeEventListener("SCENE_INITIALIZED", onSceneInitialized);
 			//in this point scene is fully visible
 			//...
 			__position = 0;
 			__frame = 0;
-			__speed = new speedController(20, 8, 0.3);
+			__speed = new speedController(__MAX_SPEED, 8, 0.3);
 			//background layer
 			__backgroundLayer = new backgroundLayersObject();
 			addChild(__backgroundLayer);
@@ -65,6 +69,23 @@ package ui.scenes.game {
 			__player.x = 100;
 			__player.y = 170;
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			//addd keyboard listener
+			__keyDown = new Vector.<Boolean>(256);
+			for (i = 0; i < 256; i++) {
+				__keyDown[i] = false;
+			}
+			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			this.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+		}
+		
+		private function onKeyUp(e:KeyboardEvent):void {
+			__keyDown[e.keyCode] = false;
+			trace(e.keyCode + " : " + __keyDown[e.keyCode]);
+		}
+		
+		private function onKeyDown(e:KeyboardEvent):void {
+			__keyDown[e.keyCode] = true;
+			trace(e.keyCode + " : " + __keyDown[e.keyCode]);
 		}
 		
 		private function onEnterFrame(event:Event):void {
@@ -81,10 +102,21 @@ package ui.scenes.game {
 			__coinController.updateFrame(__position);
 			//update object layers
 			__objectsLayer.updateFrame(__position);
+			//shake scene
+			shake(__speed.getSpeed());
 			//
 			__player.y = 270 + 10 * Math.sin(Math.PI * __position / 180);
 			__playerShadow.scaleX = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
 			__playerShadow.scaleY = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
+		}
+		
+		private function shake(nSpeed:Number):void {
+			var delta:Number;
+			if (nSpeed >= __MAX_SPEED / 2) {
+				delta = ((nSpeed / __MAX_SPEED) - 0.5) * 2;
+				this.x = int(delta * (-__SHAKE_BOUNDARIES + 2 * __SHAKE_BOUNDARIES * Math.random()));
+				//this.y = delta * (-__SHAKE_BOUNDARIES + 2 * __SHAKE_BOUNDARIES * Math.random());
+			}
 		}
 	}
 }

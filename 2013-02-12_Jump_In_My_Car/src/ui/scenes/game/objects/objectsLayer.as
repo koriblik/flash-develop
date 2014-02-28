@@ -8,10 +8,7 @@ package ui.scenes.game.objects {
 	 */
 	public class objectsLayer extends Sprite {
 		private var __layers:Vector.<Sprite>;
-		private var __layer01:Sprite;
-		private var __layer02:Sprite;
-		private var __layer03:Sprite;
-		private var __layerPlayer:Sprite;
+		private var __layerPlayer:objectPlayer;
 		private var __playerIndex:uint;
 		public function objectsLayer() {
 			super()
@@ -25,13 +22,19 @@ package ui.scenes.game.objects {
 			__layers.push(new Sprite());
 			__layers.push(new Sprite());
 			__layers.push(new Sprite());
+			__layers.push(new Sprite());
+			__layers.push(new Sprite());
+			__layers.push(new Sprite());
+			__layers[5].y = 340+120;
+			__layers[4].y = 370+120;
+			__layers[3].y = 400+120;
 			__layers[2].y = 340;
 			addChild(__layers[2]);
 			__layers[1].y = 370;
 			addChild(__layers[1]);
 			__layers[0].y = 400;
 			addChild(__layers[0]);
-			__layerPlayer = new Sprite();
+			__layerPlayer = new objectPlayer();
 			addChild(__layerPlayer);
 			__playerIndex = 0;
 		}

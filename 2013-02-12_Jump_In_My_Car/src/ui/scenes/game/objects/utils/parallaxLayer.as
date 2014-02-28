@@ -1,4 +1,5 @@
 package ui.scenes.game.objects.utils {
+	import flash.geom.Point;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -18,6 +19,7 @@ package ui.scenes.game.objects.utils {
 		private var __tileDataLength:uint;
 		private var __parallaxLayerWidth:uint;
 		private var __parallaxLayerID:String;
+		private var __tileOffset:Point;
 		//is looping possible
 		private var __parallaxLoop:Boolean;
 		//speed ratio
@@ -27,7 +29,6 @@ package ui.scenes.game.objects.utils {
 		
 		public function parallaxLayer(sID:String, iTileWidth:uint, iTileHeight:uint, aTileData:Array, nSpeed:Number = 1, iTopLeftX:int = 0, iTopLeftY:int = 0, bLoop:Boolean = true) {
 			super();
-			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 			//create vector of images that hold the tiles
 			__vectorImages = new Vector.<Image>();
 			//set up variables
@@ -39,30 +40,32 @@ package ui.scenes.game.objects.utils {
 			__tileDataLength = __tileData.length;
 			__speed = nSpeed;
 			__oldOffsetX = -1;
+			__tileOffset = new Point(iTopLeftX, iTopLeftY);
 			__parallaxLayerWidth = __tileWidth * __tileDataLength - config.__WINDOW_WIDTH;
 			//throw error if paralax X size is less then stageWidth
 			if ((__tileDataLength * iTileWidth) < config.__WINDOW_WIDTH) {
 				throw new Error("[parallaxLayer \"" + __parallaxLayerID + "\"] Error: Layer width is less than stageWidth!");
 			}
+			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
+		}
+		
+		private function onAddedToStage(event:Event):void {
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			var i:uint;
-			__vectorImagesLength = Math.ceil(config.__WINDOW_WIDTH / iTileWidth) + 1;
+			__vectorImagesLength = Math.ceil(config.__WINDOW_WIDTH / __tileWidth) + 1;
 			var image:Image;
 			for (i = 0; i < __vectorImagesLength; i++) {
 				//TODO zatial to mam iba jednoriadkovy paralax
 				//set image as empty but set correct size
 				image = new Image(assets.getAtlas().getTexture("background_empty"));
-				image.width = iTileWidth;
-				image.height = iTileHeight;
+				image.width = __tileWidth;
+				image.height = __tileHeight;
 				//set position
-				image.x = iTopLeftX + i * iTileWidth;
-				image.y = iTopLeftY;
+				image.x = __tileOffset.x + i * __tileWidth;
+				image.y = __tileOffset.y;
 				__vectorImages.push(image);
 				addChild(image);
 			}
-		}
-		
-		private function onAddedToStage(event:Event):void {
-			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
 		public function setPosition(iPosition:Number):void {
