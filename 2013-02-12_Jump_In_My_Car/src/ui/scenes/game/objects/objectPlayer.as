@@ -15,22 +15,36 @@ package ui.scenes.game.objects {
 		public const __ON_HOLD:String = "onHold";
 		//time in sec to get from one line to another
 		public const __SPEED:Number = 0.2;
+		//time in sec for the jump
+		public const __JUMP_SPEED:Number = 1;
 		private var __sprite:Image;
 		//current position interval <0,2>
 		private var __xPosition:Number;
+		//current position in jump <0,1>
+		private var __yPosition:Number;
 		//active line (where I am touching line)
 		private var __line:uint;
 		//height of the line
 		private var __lineHeight:uint;
+		//status __IN_JUMP, __IN_RUN
 		private var __status:String;
+		//target line fhere to move
 		private var __targetLine:uint;
+		//status if target has been reached so I can catch another move request
 		private var __targetReached:Boolean;
+		//move status - where I am moving __MOVE_UP, __MOVE_DOWN, __ON_HOLD
 		private var __moveStatus:String;
+		//calculated movement speed
 		private var __movementSpeed:Number;
+		//calculated movement speed
+		private var __jumpSpeed:Number;
+		//height of the jump
+		private var __jumpHeight:uint;
 		
-		public function objectPlayer(uLineHeight:uint) {
+		public function objectPlayer(uLineHeight:uint, uJumpHeight:uint) {
 			super();
 			__lineHeight = uLineHeight;
+			__jumpHeight = uJumpHeight;
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
@@ -48,11 +62,14 @@ package ui.scenes.game.objects {
 			//center line, no jump, run, no movement
 			__line = 1;
 			__xPosition = __line;
+			__yPosition = 0;
 			__targetLine = __line;
 			__targetReached = true;
 			__status = __IN_RUN;
 			__moveStatus = __ON_HOLD;
+			//calculate speed based on frame rate
 			__movementSpeed = config.__DELTA_TIME / __SPEED;
+			__jumpSpeed = config.__DELTA_TIME / __JUMP_SPEED;
 		}
 		
 		public function moveUp():void {
@@ -79,7 +96,11 @@ package ui.scenes.game.objects {
 		}
 		
 		public function jump():void {
-			__status = __IN_JUMP;
+			//if not in jump
+			if (__status != __IN_JUMP) {
+				__status = __IN_JUMP;
+				__yPosition = 0;
+			}
 		}
 		
 		public function updateFrame(nSpeed:Number):void {
@@ -105,10 +126,19 @@ package ui.scenes.game.objects {
 					}
 				}
 			}
+			//jump
+			if (__status == __IN_JUMP) {
+				if ((__yPosition + __jumpSpeed) <= 1) {
+					__yPosition += __jumpSpeed;
+				} else {
+					__yPosition = 0;
+					__status = __IN_RUN;
+				}
+			}
 			//set line I am touching
 			__line = (__xPosition >= 0.5) ? 1 : 0;
 			__line = (__xPosition > 1.5) ? 2 : __line;
-			__sprite.y = uint(__xPosition * __lineHeight);
+			__sprite.y = uint(__xPosition * __lineHeight) - uint(__jumpHeight * Math.sin(Math.PI * __yPosition));
 			//TODO handle jump
 		}
 		

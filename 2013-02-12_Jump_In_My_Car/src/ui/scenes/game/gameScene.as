@@ -16,9 +16,10 @@ package ui.scenes.game {
 	 * @author Pavol Kusovsky
 	 */
 	public class gameScene extends baseScene {
-		private const __MAX_SPEED:uint = 2;
+		private const __MAX_SPEED:uint = 20;
 		private const __SHAKE_BOUNDARIES:uint = 10;
 		private const __LINE_HEIGHT:uint = 30;
+		private const __JUMP_HEIGHT:uint = 100;
 		private var __backgroundLayer:backgroundLayersObject;
 		private var __objectsLayer:objectsLayer;
 		private var __coinController:coinController;
@@ -60,7 +61,7 @@ package ui.scenes.game {
 			__backgroundLayer = new backgroundLayersObject();
 			addChild(__backgroundLayer);
 			//add player
-			__objectPlayer = new objectPlayer(__LINE_HEIGHT);
+			__objectPlayer = new objectPlayer(__LINE_HEIGHT, __JUMP_HEIGHT);
 			//objects layer
 			__objectsLayer = new objectsLayer(__objectPlayer);
 			addChild(__objectsLayer);
@@ -117,6 +118,10 @@ package ui.scenes.game {
 			//DOWN
 			if (__keyDown[Keyboard.DOWN]) {
 				__objectPlayer.moveDown();
+			}
+			//JUMP
+			if (__keyDown[Keyboard.SPACE]) {
+				__objectPlayer.jump();
 			}
 			__objectPlayer.updateFrame(__speed.getSpeed());
 			//update object layers
