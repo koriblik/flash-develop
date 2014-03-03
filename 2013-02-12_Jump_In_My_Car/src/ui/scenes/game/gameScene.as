@@ -1,11 +1,13 @@
 package ui.scenes.game {
 	import config;
+	import flash.ui.Keyboard;
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.events.KeyboardEvent;
 	import ui.scenes.baseScene;
 	import ui.scenes.game.objects.backgroundLayersObject;
 	import ui.scenes.game.objects.coinController;
+	import ui.scenes.game.objects.objectPlayer;
 	import ui.scenes.game.objects.objectsLayer;
 	import ui.scenes.game.objects.speedController;
 	
@@ -14,13 +16,17 @@ package ui.scenes.game {
 	 * @author Pavol Kusovsky
 	 */
 	public class gameScene extends baseScene {
-		private const __MAX_SPEED:uint = 20;
+		private const __MAX_SPEED:uint = 2;
 		private const __SHAKE_BOUNDARIES:uint = 10;
+		private const __LINE_HEIGHT:uint = 30;
 		private var __backgroundLayer:backgroundLayersObject;
 		private var __objectsLayer:objectsLayer;
 		private var __coinController:coinController;
-		private var __player:Image;
-		private var __playerShadow:Image;
+		private var __objectPlayer:objectPlayer;
+		/*TODO delete
+		   private var __player:Image;
+		   private var __playerShadow:Image;
+		 */
 		private var __frame:uint;
 		private var __position:Number;
 		private var __speed:speedController;
@@ -53,21 +59,25 @@ package ui.scenes.game {
 			//background layer
 			__backgroundLayer = new backgroundLayersObject();
 			addChild(__backgroundLayer);
+			//add player
+			__objectPlayer = new objectPlayer(__LINE_HEIGHT);
 			//objects layer
-			__objectsLayer = new objectsLayer();
+			__objectsLayer = new objectsLayer(__objectPlayer);
 			addChild(__objectsLayer);
 			//coin controller
 			__coinController = new coinController(__objectsLayer);
-			__playerShadow = new Image(assets.getAtlas().getTexture("player_fly_shadow"));
-			addChild(__playerShadow);
-			__playerShadow.x = 130;
-			__playerShadow.y = 340;
-			__playerShadow.pivotX = __playerShadow.width / 2;
-			__playerShadow.pivotY = __playerShadow.height / 2;
-			__player = new Image(assets.getAtlas().getTexture("player_fly"));
-			addChild(__player);
-			__player.x = 100;
-			__player.y = 170;
+			/*TODO delete
+			   __playerShadow = new Image(assets.getAtlas().getTexture("player_fly_shadow"));
+			   addChild(__playerShadow);
+			   __playerShadow.x = 130;
+			   __playerShadow.y = 340;
+			   __playerShadow.pivotX = __playerShadow.width / 2;
+			   __playerShadow.pivotY = __playerShadow.height / 2;
+			   __player = new Image(assets.getAtlas().getTexture("player_fly"));
+			   addChild(__player);
+			   __player.x = 100;
+			   __player.y = 170;
+			 */
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 			//addd keyboard listener
 			__keyDown = new Vector.<Boolean>(256);
@@ -80,12 +90,11 @@ package ui.scenes.game {
 		
 		private function onKeyUp(e:KeyboardEvent):void {
 			__keyDown[e.keyCode] = false;
-			trace(e.keyCode + " : " + __keyDown[e.keyCode]);
 		}
 		
 		private function onKeyDown(e:KeyboardEvent):void {
 			__keyDown[e.keyCode] = true;
-			trace(e.keyCode + " : " + __keyDown[e.keyCode]);
+			//!trace(e.keyCode + " : " + __keyDown[e.keyCode]);
 		}
 		
 		private function onEnterFrame(event:Event):void {
@@ -100,14 +109,26 @@ package ui.scenes.game {
 			__backgroundLayer.updateFrame(__position);
 			//update coins controller
 			__coinController.updateFrame(__position);
+			//update player movement in objectsLayer
+			//UP
+			if (__keyDown[Keyboard.UP]) {
+				__objectPlayer.moveUp();
+			}
+			//DOWN
+			if (__keyDown[Keyboard.DOWN]) {
+				__objectPlayer.moveDown();
+			}
+			__objectPlayer.updateFrame(__speed.getSpeed());
 			//update object layers
 			__objectsLayer.updateFrame(__position);
 			//shake scene
-			shake(__speed.getSpeed());
+			//!shake(__speed.getSpeed());
 			//
-			__player.y = 270 + 10 * Math.sin(Math.PI * __position / 180);
-			__playerShadow.scaleX = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
-			__playerShadow.scaleY = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
+		/*TODO delete
+		   __player.y = 270 + 10 * Math.sin(Math.PI * __position / 180);
+		   __playerShadow.scaleX = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
+		   __playerShadow.scaleY = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
+		 */
 		}
 		
 		private function shake(nSpeed:Number):void {
@@ -115,7 +136,7 @@ package ui.scenes.game {
 			if (nSpeed >= __MAX_SPEED / 2) {
 				delta = ((nSpeed / __MAX_SPEED) - 0.5) * 2;
 				this.x = int(delta * (-__SHAKE_BOUNDARIES + 2 * __SHAKE_BOUNDARIES * Math.random()));
-				//this.y = delta * (-__SHAKE_BOUNDARIES + 2 * __SHAKE_BOUNDARIES * Math.random());
+					//this.y = delta * (-__SHAKE_BOUNDARIES + 2 * __SHAKE_BOUNDARIES * Math.random());
 			}
 		}
 	}
