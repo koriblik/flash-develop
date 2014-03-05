@@ -36,29 +36,69 @@ package {
 			__MENU_BG_COLOR = 0xffff00ff;
 			__LEVEL_GRAPHIC_DATA = new Array();
 			__LEVEL_COINS_DATA = new Array();
+			__LEVEL_OBSTACLES_DATA = new Array();
 			loadLevelData();
 			loadCoinsData();
 			loadObstaclesData();
 		}
 		
 		static private function loadObstaclesData():void {
-		
+			var i:uint;
+			var j:uint;
+			var k:uint;
+			var l:uint;
+			var m:uint;
+			var maxItems:uint;
+			var maxSections:uint;
+			var maxFor:uint;
+			var repeats:uint;
+			var subSize:uint;
+			var templateList:XML = new XML();
+			//load textures from the obstacles
+			maxItems = assets.__obstaclesXML.descendants("type").length();
+			var textures:Array = new Array();
+			for (i = 0; i < maxItems; i++) {
+				textures[assets.__obstaclesXML.descendants("type")[i].@id] = assets.__obstaclesXML.descendants("type")[i];
+			}
+			maxItems = assets.__obstaclesXML.descendants("obstacle").length();
+			for (i = 0; i < maxItems; i++) {
+				__LEVEL_OBSTACLES_DATA.push( { name: textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@id, position: uint(assets.__obstaclesXML.descendants("obstacle")[i].@position), line: uint(assets.__obstaclesXML.descendants("obstacle")[i].@line) } );
+				//TODO add the rest of parameters from texture array
+				//align="top" wide="1" tall="1" row="0" pivotx="0" pivoty="106" width="48" height="138" 
+				trace(__LEVEL_OBSTACLES_DATA[__LEVEL_OBSTACLES_DATA.length - 1].position);
+			}
+			//TODO sort them
 		}
 		
 		static public function loadCoinsData():void {
 			var i:uint;
 			var j:uint;
+			var k:uint;
 			var maxItems:uint;
+			var maxSections:uint;
+			var position:uint;
 			var repeats:uint;
 			var space:uint;
-			var tempObject:Array;
-			maxItems = assets.__coinsXML.descendants("coin").length();
-			//load conis data
+			var templateList:XML = new XML();
+			//load templates from the coins
+			maxItems = assets.__coinsXML.descendants("template").length();
+			var templates:Array = new Array();
 			for (i = 0; i < maxItems; i++) {
-				repeats = uint(assets.__coinsXML.descendants("coin")[i].@repeat);
-				space = uint(assets.__coinsXML.descendants("coin")[i].@space);
-				for (j = 0; j < repeats; j++) {
-					__LEVEL_COINS_DATA.push({position: uint(assets.__coinsXML.descendants("coin")[i].@position) + j * space, line: uint(assets.__coinsXML.descendants("coin")[i].@line)});
+				templates[assets.__coinsXML.descendants("template")[i].@id] = assets.__coinsXML.descendants("template")[i];
+			}
+			//load coins from sections defined
+			maxSections = assets.__coinsXML.descendants("section").length();
+			for (i = 0; i < maxSections; i++) {
+				position = uint(assets.__coinsXML.descendants("section")[i].@position);
+				templateList = templates[assets.__coinsXML.descendants("section")[i].@template_id];
+				//load number of items in Template
+				maxItems = templateList.children().length();
+				for (j = 0; j < maxItems; j++) {
+					repeats = uint(templateList.children()[j].@repeat);
+					space = uint(templateList.children()[j].@space);
+					for (k = 0; k < repeats; k++) {
+						__LEVEL_COINS_DATA.push({position: uint(position + Number(templateList.children()[j].@position) * space + k * space), line: uint(templateList.children()[j].@line)});
+					}
 				}
 			}
 			//sort the data
@@ -66,10 +106,13 @@ package {
 				j = i;
 				if (j > 0) {
 					//if current position is less then previous - bubble down
-					while ((__LEVEL_COINS_DATA[j].position < __LEVEL_COINS_DATA[j - 1].position) && (j > 0)) {
+					while ((__LEVEL_COINS_DATA[j].position < __LEVEL_COINS_DATA[j - 1].position)) {
 						//switch
 						__LEVEL_COINS_DATA.splice(j - 1, 0, __LEVEL_COINS_DATA.splice(j, 1)[0]);
 						j--;
+						if (j == 0) {
+							break;
+						}
 					}
 				}
 			}

@@ -195,10 +195,10 @@
             <filename>textures_64/ramp.png</filename>
             <filename>textures_64/wall_high.png</filename>
             <filename>textures_64/wall_fly_jump.png</filename>
-            <filename>textures_64/wall_fly_low.png</filename>
             <filename>textures_64/wall_jump.png</filename>
             <filename>textures_64/wall_low.png</filename>
             <filename>textures_64/wall_low_full.png</filename>
+            <filename>textures_64/wall_fly_low_full.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

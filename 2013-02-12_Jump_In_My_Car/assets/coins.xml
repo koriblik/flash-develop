@@ -1,8 +1,25 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <coins>
-	<coin position="180" line="0" space="128" repeat="3"/>
-	<coin position="700" line="0" space="128" repeat="2"/>
-	<coin position="764" line="1" space="128" repeat="2"/>
-	<coin position="828" line="2" space="128" repeat="4"/>
-	<coin position="2048" line="2" space="128" repeat="40"/>
+	<sections>
+		<section template_id="arrow" position="256" />
+		<section template_id="up_triangle" position="768" />
+		<section template_id="down_triangle" position="1024" />
+	</sections>
+	<templates>
+		<template id="arrow">
+			<coin position="0.5" line="0" space="64" repeat="4"/>
+			<coin position="0" line="1" space="64" repeat="5"/>
+			<coin position="0.5" line="2" space="64" repeat="4"/>
+		</template>
+		<template id="up_triangle">
+			<coin position="1" line="0" space="64" repeat="1"/>
+			<coin position="0.5" line="1" space="64" repeat="2"/>
+			<coin position="0" line="2" space="64" repeat="3"/>
+		</template>
+		<template id="down_triangle">
+			<coin position="0" line="0" space="64" repeat="3"/>
+			<coin position="0.5" line="1" space="64" repeat="2"/>
+			<coin position="1" line="2" space="64" repeat="1"/>
+		</template>
+	</templates>
 </coins>
