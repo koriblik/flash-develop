@@ -37,14 +37,14 @@ package ui.scenes.game.objects {
 			addChild(__layers[1]);
 			__layers[2].y = 400;
 			addChild(__layers[2]);
-			__layers[3].y = 340 + 120;
+			__layers[3].y = 340 - 52;
 			addChild(__layers[3]);
-			__layers[4].y = 370 + 120;
+			__layers[4].y = 370 - 52;
 			addChild(__layers[4]);
-			__layers[5].y = 400 + 120;
+			__layers[5].y = 400 - 52;
 			addChild(__layers[5]);
 			addChild(__layerPlayer);
-			__layerPlayer.x = 100;
+			__layerPlayer.x = __layerPlayer.__X_POSITION;
 			__layerPlayer.y = 340;
 			__playerIndex = 0;
 		}

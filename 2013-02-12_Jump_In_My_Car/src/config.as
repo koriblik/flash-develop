@@ -60,14 +60,26 @@ package {
 			for (i = 0; i < maxItems; i++) {
 				textures[assets.__obstaclesXML.descendants("type")[i].@id] = assets.__obstaclesXML.descendants("type")[i];
 			}
+			//add attributes of the obstacle
 			maxItems = assets.__obstaclesXML.descendants("obstacle").length();
 			for (i = 0; i < maxItems; i++) {
-				__LEVEL_OBSTACLES_DATA.push( { name: textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@id, position: uint(assets.__obstaclesXML.descendants("obstacle")[i].@position), line: uint(assets.__obstaclesXML.descendants("obstacle")[i].@line) } );
-				//TODO add the rest of parameters from texture array
-				//align="top" wide="1" tall="1" row="0" pivotx="0" pivoty="106" width="48" height="138" 
-				trace(__LEVEL_OBSTACLES_DATA[__LEVEL_OBSTACLES_DATA.length - 1].position);
+				__LEVEL_OBSTACLES_DATA.push({name: textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@id, position: uint(assets.__obstaclesXML.descendants("obstacle")[i].@position), line: uint(assets.__obstaclesXML.descendants("obstacle")[i].@line), blink: uint(assets.__obstaclesXML.descendants("obstacle")[i].@blink), wide: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@wide), tall: Number(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@tall), row: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@row), pivotX: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@pivotx), pivotY: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@pivoty), width: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@width), height: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@height), action: textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@action});
 			}
 			//TODO sort them
+			for (i = 0; i < __LEVEL_OBSTACLES_DATA.length; i++) {
+				j = i;
+				if (j > 0) {
+					//if current position is less then previous - bubble down
+					while ((__LEVEL_OBSTACLES_DATA[j].position < __LEVEL_OBSTACLES_DATA[j - 1].position)) {
+						//switch
+						__LEVEL_OBSTACLES_DATA.splice(j - 1, 0, __LEVEL_OBSTACLES_DATA.splice(j, 1)[0]);
+						j--;
+						if (j == 0) {
+							break;
+						}
+					}
+				}
+			}
 		}
 		
 		static public function loadCoinsData():void {

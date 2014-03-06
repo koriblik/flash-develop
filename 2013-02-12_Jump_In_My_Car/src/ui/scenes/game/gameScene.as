@@ -9,6 +9,7 @@ package ui.scenes.game {
 	import ui.scenes.game.objects.coinController;
 	import ui.scenes.game.objects.objectPlayer;
 	import ui.scenes.game.objects.objectsLayer;
+	import ui.scenes.game.objects.obstacleController;
 	import ui.scenes.game.objects.speedController;
 	
 	/**
@@ -23,11 +24,8 @@ package ui.scenes.game {
 		private var __backgroundLayer:backgroundLayersObject;
 		private var __objectsLayer:objectsLayer;
 		private var __coinController:coinController;
+		private var __obstacleController:obstacleController;
 		private var __objectPlayer:objectPlayer;
-		/*TODO delete
-		   private var __player:Image;
-		   private var __playerShadow:Image;
-		 */
 		private var __frame:uint;
 		private var __position:Number;
 		private var __speed:speedController;
@@ -56,7 +54,7 @@ package ui.scenes.game {
 			//...
 			__position = 0;
 			__frame = 0;
-			__speed = new speedController(__MAX_SPEED, 8, 0.3);
+			__speed = new speedController(2, 8, 0.3);
 			//background layer
 			__backgroundLayer = new backgroundLayersObject();
 			addChild(__backgroundLayer);
@@ -67,18 +65,9 @@ package ui.scenes.game {
 			addChild(__objectsLayer);
 			//coin controller
 			__coinController = new coinController(__objectsLayer);
-			/*TODO delete
-			   __playerShadow = new Image(assets.getAtlas().getTexture("player_fly_shadow"));
-			   addChild(__playerShadow);
-			   __playerShadow.x = 130;
-			   __playerShadow.y = 340;
-			   __playerShadow.pivotX = __playerShadow.width / 2;
-			   __playerShadow.pivotY = __playerShadow.height / 2;
-			   __player = new Image(assets.getAtlas().getTexture("player_fly"));
-			   addChild(__player);
-			   __player.x = 100;
-			   __player.y = 170;
-			 */
+			//obstacle controller
+			__obstacleController = new obstacleController(__objectsLayer);
+			//add EnterFrame handler
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 			//addd keyboard listener
 			__keyDown = new Vector.<Boolean>(256);
@@ -95,7 +84,6 @@ package ui.scenes.game {
 		
 		private function onKeyDown(e:KeyboardEvent):void {
 			__keyDown[e.keyCode] = true;
-			//!trace(e.keyCode + " : " + __keyDown[e.keyCode]);
 		}
 		
 		private function onEnterFrame(event:Event):void {
@@ -110,6 +98,8 @@ package ui.scenes.game {
 			__backgroundLayer.updateFrame(__position);
 			//update coins controller
 			__coinController.updateFrame(__position);
+			//update obstacle controller
+			__obstacleController.updateFrame(__position);
 			//update player movement in objectsLayer
 			//UP
 			if (__keyDown[Keyboard.UP]) {
@@ -126,6 +116,8 @@ package ui.scenes.game {
 			__objectPlayer.updateFrame(__speed.getSpeed());
 			//update object layers
 			__objectsLayer.updateFrame(__position);
+			//TODO check player interraction with coins and handle return value - change it to score
+			var returnValue:uint = __coinController.colisionWithPlayer(__objectPlayer, __position);
 			//shake scene
 			//!shake(__speed.getSpeed());
 			//

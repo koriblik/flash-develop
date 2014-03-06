@@ -17,7 +17,7 @@ package ui.scenes.game.objects.items {
 		public function coin() {
 			super();
 			__shadow = new Image(assets.getAtlas().getTexture("coin_shadow"));
-			__shadow.y = -__shadow.height/2;
+			__shadow.y = -__shadow.height / 2;
 			addChild(__shadow);
 			__sprite = new Image(assets.getAtlas().getTexture("coin00_empty"));
 			addChild(__sprite);
@@ -66,6 +66,21 @@ package ui.scenes.game.objects.items {
 		 */
 		public function get line():uint {
 			return __line;
+		}
+		
+		/**
+		 * Getter - return position of coin
+		 */
+		public function get position():uint {
+			return __position;
+		}
+		
+		/**
+		 * Get width of the coin
+		 * @return	uint	width of the coin
+		 */
+		public function coinWidth():uint {
+			return __sprite.width;
 		}
 	}
 }

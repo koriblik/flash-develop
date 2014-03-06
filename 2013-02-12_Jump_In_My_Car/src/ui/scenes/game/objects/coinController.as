@@ -49,5 +49,39 @@ package ui.scenes.game.objects {
 				}
 			}
 		}
+		
+		public function colisionWithPlayer(oObjectPlayer:objectPlayer, uPosition:uint):uint {
+			var returnValue:uint = 0;
+			var playerX:uint = oObjectPlayer.__X_POSITION + uPosition;
+			var playerXW:uint = oObjectPlayer.__X_POSITION + uPosition + oObjectPlayer.playerCollisionWidth();
+			var coinX:uint;
+			var coinXW:uint;
+			var tempCoin:coin;
+			//check if there are coins on scene
+			if (__activeCoins.length > 0) {
+				//check if the player is not in jump
+				var i:int = __activeCoins.length-1;
+				if (oObjectPlayer.status != oObjectPlayer.__IN_JUMP) {
+					var playerLine:uint = oObjectPlayer.line;
+					//go through all cains if there is touching
+					while (i >= 0) {
+						//if on the same line
+						if (__activeCoins[i].line == playerLine) {
+							//check if the possition is fine to take coin
+							coinX = __activeCoins[i].position;
+							coinXW = __activeCoins[i].position + __activeCoins[i].width;
+							if (((playerX <= coinX) && (playerXW > coinX)) || ((playerX <= coinXW) && (playerXW > coinXW))) {
+								//remove coin
+								tempCoin = __activeCoins.splice(i, 1)[0];
+								__objectsLayer.removeObjectFromLayer(tempCoin, tempCoin.line);
+								returnValue++;
+							}
+						}
+						i--;
+					}
+				}
+			}
+			return returnValue;
+		}
 	}
 }

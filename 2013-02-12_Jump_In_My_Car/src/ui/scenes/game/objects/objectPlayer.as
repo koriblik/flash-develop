@@ -13,6 +13,8 @@ package ui.scenes.game.objects {
 		public const __MOVE_UP:String = "moveUp";
 		public const __MOVE_DOWN:String = "moveDown";
 		public const __ON_HOLD:String = "onHold";
+		//player x position - for 
+		public const __X_POSITION:uint = 200;
 		//time in sec to get from one line to another
 		public const __SPEED:Number = 0.2;
 		//time in sec for the jump
@@ -156,6 +158,10 @@ package ui.scenes.game.objects {
 		 */
 		public function get line():uint {
 			return __line;
+		}
+		
+		public function playerCollisionWidth():uint {
+			return __sprite.width;
 		}
 	
 	}

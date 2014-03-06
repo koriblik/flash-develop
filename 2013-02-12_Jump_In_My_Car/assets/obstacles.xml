@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <obstacles>
 	<level>
-		<obstacle type_id="wall_high" position="512" line="0"/>
+		<obstacle type_id="wall_fly_low_full" position="512" line="0" blink="200" />
 	</level>
 	<types width="128">
-   		<type id="wall_high" align="top" wide="1" tall="1" row="0" pivotx="0" pivoty="106" width="48" height="138" />
-		<type id="wall_low" align="top" wide="1" tall=".5" row="0" pivotx="0" pivoty="52" width="48" height="86"/>
-		<type id="wall_low_full" align="top" wide="2" tall=".5" row="0" pivotx="0" pivoty="52" width="64" height="120"/>
-		<type id="wall_jump" align="center" wide="1" tall=".5" row="0" pivotx="6" pivoty="36" width="64" height="60"/>
-		<type id="wall_fly_low_full" align="top" wide="2" tall=".5" row="1" pivotx="0" pivoty="52" width="52" height="172"/>
-		<type id="wall_fly_jump" align="center" wide="1" tall=".5" row="1" pivotx="6" pivoty="36" width="58" height="154"/>
+   		<type id="wall_high" wide="1" tall="1" row="0" pivotx="0" pivoty="106" width="48" height="138" action="end" />
+		<type id="wall_low" wide="1" tall=".5" row="0" pivotx="0" pivoty="52" width="48" height="86" action="end" />
+		<type id="wall_low_full" wide="2" tall=".5" row="0" pivotx="0" pivoty="52" width="64" height="120" action="end" />
+		<type id="wall_jump" wide="1" tall=".5" row="0" pivotx="6" pivoty="36" width="64" height="60" action="jumpSmall" />
+		<type id="wall_fly_low_full" wide="2" tall=".5" row="1" pivotx="0" pivoty="52" width="52" height="172" action="end" />
+		<type id="wall_fly_jump" wide="1" tall=".5" row="1" pivotx="6" pivoty="36" width="58" height="154" action="jumpHigh" />
    	</types>
 </obstacles>

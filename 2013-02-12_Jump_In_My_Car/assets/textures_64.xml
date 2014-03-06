@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:a6634778cac1c9d76be600de15c76cc3:04d15e56a63cd470b3bd95dc695f7dbb:79b0df89fca4e6f763f07950667e1678$ -->
+<!-- $TexturePacker:SmartUpdate:9b8151dbf92da7cae2f60e215ccb9d54:402833317260f4f19d174c4fcb2cb9eb:79b0df89fca4e6f763f07950667e1678$ -->
 <TextureAtlas imagePath="textures_64.png">
     <SubTexture name="background_empty" x="0" y="0" width="1" height="1"/>
     <SubTexture name="background_layer01" x="3" y="0" width="128" height="192"/>
@@ -15,9 +15,10 @@
     <SubTexture name="coin07" x="0" y="194" width="32" height="32"/>
     <SubTexture name="coin08" x="34" y="194" width="32" height="32"/>
     <SubTexture name="coin_shadow" x="68" y="194" width="32" height="32"/>
-    <SubTexture name="foreground_layer01" x="102" y="194" width="128" height="192"/>
-    <SubTexture name="foreground_layer02a" x="232" y="194" width="128" height="192"/>
-    <SubTexture name="foreground_layer02b" x="362" y="194" width="128" height="192"/>
+    <SubTexture name="empty_1x1" x="102" y="194" width="1" height="1"/>
+    <SubTexture name="foreground_layer01" x="105" y="194" width="128" height="192"/>
+    <SubTexture name="foreground_layer02a" x="235" y="194" width="128" height="192"/>
+    <SubTexture name="foreground_layer02b" x="365" y="194" width="128" height="192"/>
     <SubTexture name="foreground_layer03" x="0" y="388" width="128" height="192"/>
     <SubTexture name="foreground_layer04" x="130" y="388" width="128" height="192"/>
     <SubTexture name="pillar" x="260" y="388" width="32" height="68"/>
