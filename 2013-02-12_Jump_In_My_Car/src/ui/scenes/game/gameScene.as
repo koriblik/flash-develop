@@ -54,7 +54,7 @@ package ui.scenes.game {
 			//...
 			__position = 0;
 			__frame = 0;
-			__speed = new speedController(2, 8, 0.3);
+			__speed = new speedController(__MAX_SPEED, 8, 0.3);
 			//background layer
 			__backgroundLayer = new backgroundLayersObject();
 			addChild(__backgroundLayer);
@@ -117,6 +117,7 @@ package ui.scenes.game {
 			//update object layers
 			__objectsLayer.updateFrame(__position);
 			//TODO check player interraction with coins and handle return value - change it to score
+			trace("::"+__position)
 			var returnValue:uint = __coinController.colisionWithPlayer(__objectPlayer, __position);
 			//shake scene
 			//!shake(__speed.getSpeed());

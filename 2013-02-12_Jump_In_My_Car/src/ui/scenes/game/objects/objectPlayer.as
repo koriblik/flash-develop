@@ -54,7 +54,7 @@ package ui.scenes.game.objects {
 			//remove listener
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			__sprite = new Image(assets.getAtlas().getTexture("player_fly"));
-			__sprite.alignPivot("center", "bottom");
+			__sprite.alignPivot("left", "bottom");
 			addChild(__sprite);
 			initialize();
 		}

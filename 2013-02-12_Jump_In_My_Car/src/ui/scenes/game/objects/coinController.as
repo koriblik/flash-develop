@@ -60,7 +60,8 @@ package ui.scenes.game.objects {
 			//check if there are coins on scene
 			if (__activeCoins.length > 0) {
 				//check if the player is not in jump
-				var i:int = __activeCoins.length-1;
+				var i:int = __activeCoins.length - 1;
+				//TODO - zmen kontrolu zo skoku na vysku skoku aby som zberal aj pri skoku ked som vo vyske coinu
 				if (oObjectPlayer.status != oObjectPlayer.__IN_JUMP) {
 					var playerLine:uint = oObjectPlayer.line;
 					//go through all cains if there is touching
@@ -71,6 +72,9 @@ package ui.scenes.game.objects {
 							coinX = __activeCoins[i].position;
 							coinXW = __activeCoins[i].position + __activeCoins[i].width;
 							if (((playerX <= coinX) && (playerXW > coinX)) || ((playerX <= coinXW) && (playerXW > coinXW))) {
+								Main.__tempDraw.graphics.clear();
+								Main.__tempDraw.graphics.lineStyle(1, 0xff0000);
+								Main.__tempDraw.graphics.drawRect(oObjectPlayer.__X_POSITION,0, oObjectPlayer.playerCollisionWidth(), config.__WINDOW_HEIGHT);
 								//remove coin
 								tempCoin = __activeCoins.splice(i, 1)[0];
 								__objectsLayer.removeObjectFromLayer(tempCoin, tempCoin.line);
