@@ -18,7 +18,7 @@ package ui.scenes.game.objects {
 		//time in sec to get from one line to another
 		public const __SPEED:Number = 0.2;
 		//time in sec for the jump
-		public const __JUMP_SPEED:Number = 1;
+		public const __JUMP_SPEED:Number = 3;
 		private var __sprite:Image;
 		//current position interval <0,2>
 		private var __xPosition:Number;
@@ -56,6 +56,9 @@ package ui.scenes.game.objects {
 			__sprite = new Image(assets.getAtlas().getTexture("player_fly"));
 			__sprite.alignPivot("left", "bottom");
 			addChild(__sprite);
+			//calculate speed based on frame rate
+			__movementSpeed = config.__DELTA_TIME / __SPEED;
+			__jumpSpeed = config.__DELTA_TIME / __JUMP_SPEED;
 			initialize();
 		}
 		
@@ -69,9 +72,7 @@ package ui.scenes.game.objects {
 			__targetReached = true;
 			__status = __IN_RUN;
 			__moveStatus = __ON_HOLD;
-			//calculate speed based on frame rate
-			__movementSpeed = config.__DELTA_TIME / __SPEED;
-			__jumpSpeed = config.__DELTA_TIME / __JUMP_SPEED;
+			updateFrame(0);
 		}
 		
 		public function moveUp():void {
@@ -140,8 +141,9 @@ package ui.scenes.game.objects {
 			//set line I am touching
 			__line = (__xPosition >= 0.5) ? 1 : 0;
 			__line = (__xPosition > 1.5) ? 2 : __line;
+			//TODO handle small jump and high jump
+			//this formula works only for normal jump
 			__sprite.y = uint(__xPosition * __lineHeight) - uint(__jumpHeight * Math.sin(Math.PI * __yPosition));
-			//TODO handle jump
 		}
 		
 		/**
@@ -160,9 +162,19 @@ package ui.scenes.game.objects {
 			return __line;
 		}
 		
+		/**
+		 * Return width of the player - for collision
+		 * @return
+		 */
 		public function playerCollisionWidth():uint {
 			return __sprite.width;
 		}
 	
+		public function getJumpHeight():Number {
+			if (status == __IN_JUMP) {
+				return uint(__jumpHeight * Math.sin(Math.PI * __yPosition));
+			}
+			return 0;
+		}
 	}
 }

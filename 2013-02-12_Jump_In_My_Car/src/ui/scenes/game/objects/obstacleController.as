@@ -17,8 +17,19 @@ package ui.scenes.game.objects {
 			__objectsLayer = oObjectsLayer;
 			__pooler = new objectPool(obstacle, 20);
 			__activeObstacles = new Vector.<obstacle>();
+			initialize();
+		}
+		
+		public function initialize():void {
 			__lastObjectTakenAtPosition = 0;
 			__lastPosition = 0;
+			var tempObstacle:obstacle;
+			//clear pool
+			while (__activeObstacles.length > 0) {
+				tempObstacle = __activeObstacles.splice(0, 1)[0];
+				__objectsLayer.removeObjectFromLayer(tempObstacle, tempObstacle.getLine());
+			}
+			updateFrame(0);
 		}
 		
 		public function updateFrame(nPosition:Number):void {
@@ -50,5 +61,6 @@ package ui.scenes.game.objects {
 				}
 			}
 		}
+	
 	}
 }

@@ -82,5 +82,13 @@ package ui.scenes.game.objects.items {
 		public function coinWidth():uint {
 			return __sprite.width;
 		}
+		
+		/**
+		 * Get height of the coin
+		 * @return	uint	width of the coin
+		 */
+		public function coinHeight():uint {
+			return __sprite.height;
+		}
 	}
 }

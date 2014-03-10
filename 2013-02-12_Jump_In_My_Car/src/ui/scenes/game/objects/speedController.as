@@ -16,12 +16,18 @@ package ui.scenes.game.objects {
 		private var __direction:String;
 		
 		public function speedController(nMaxSpeed:Number = 10, nSpeedMaxTime:Number = 5, nSpeedMinTime:Number = .5) {
-			__speed = 0;
-			__counter = 0;
 			__speedMax = nMaxSpeed;
 			__speedMaxTime = nSpeedMaxTime;
 			__speedMinTime = nSpeedMinTime;
 			__direction = __ACCELERATE;
+		}
+		
+		/**
+		 * Initlaize variables for restart
+		 */
+		public function initialize():void {
+			__speed = 0;
+			__counter = 0;
 		}
 		
 		public function updateFrame(nDelta:Number = 1):void {

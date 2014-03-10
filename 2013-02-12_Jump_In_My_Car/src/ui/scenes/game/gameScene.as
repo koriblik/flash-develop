@@ -10,6 +10,8 @@ package ui.scenes.game {
 	import ui.scenes.game.objects.objectPlayer;
 	import ui.scenes.game.objects.objectsLayer;
 	import ui.scenes.game.objects.obstacleController;
+	import ui.scenes.game.objects.overlays.overlayGameOver;
+	import ui.scenes.game.objects.overlays.overlayStartGame;
 	import ui.scenes.game.objects.speedController;
 	
 	/**
@@ -21,14 +23,21 @@ package ui.scenes.game {
 		private const __SHAKE_BOUNDARIES:uint = 10;
 		private const __LINE_HEIGHT:uint = 30;
 		private const __JUMP_HEIGHT:uint = 100;
+		private const __IN_GAME_STATE:String = "inGameState";
+		private const __IN_START_DELAY_STATE:String = "inStartDelayState";
+		private const __IN_GAME_OVER_STATE:String = "inGameOverState";
 		private var __backgroundLayer:backgroundLayersObject;
 		private var __objectsLayer:objectsLayer;
 		private var __coinController:coinController;
 		private var __obstacleController:obstacleController;
 		private var __objectPlayer:objectPlayer;
+		private var __overlayStartGame:overlayStartGame;
+		private var __overlayGameOver:overlayGameOver;
 		private var __frame:uint;
 		private var __position:Number;
 		private var __speed:speedController;
+		//game state
+		private var __state:String;
 		//array that holds the status of key pressed
 		private var __keyDown:Vector.<Boolean>;
 		
@@ -51,9 +60,7 @@ package ui.scenes.game {
 			var i:uint;
 			removeEventListener("SCENE_INITIALIZED", onSceneInitialized);
 			//in this point scene is fully visible
-			//...
-			__position = 0;
-			__frame = 0;
+			//set variables
 			__speed = new speedController(__MAX_SPEED, 8, 0.3);
 			//background layer
 			__backgroundLayer = new backgroundLayersObject();
@@ -67,15 +74,70 @@ package ui.scenes.game {
 			__coinController = new coinController(__objectsLayer);
 			//obstacle controller
 			__obstacleController = new obstacleController(__objectsLayer);
-			//add EnterFrame handler
-			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
-			//addd keyboard listener
+			//overlays
+			__overlayStartGame = new overlayStartGame();
+			addChild(__overlayStartGame);
+			__overlayGameOver = new overlayGameOver();
+			addChild(__overlayGameOver);
+			//add keyboard vector
 			__keyDown = new Vector.<Boolean>(256);
+			initialize();
+		}
+		
+		/**
+		 * Use this method to reset all data before restarting level
+		 */
+		public function initialize():void {
+			//initalize data
+			__position = 0;
+			__frame = 0;
+			__speed.initialize();
+			__backgroundLayer.initialize();
+			__coinController.initialize();
+			__obstacleController.initialize();
+			__objectPlayer.initialize();
+			__objectsLayer.initialize();
+			//set start delay state
+			__state = __IN_START_DELAY_STATE;
+			//overlays
+			__overlayStartGame.initialize();
+			__overlayStartGame.addEventListener(overlayStartGame.__EVENT_START, onStartGameClicked);
+			//clear all keys states
+			var i:uint;
 			for (i = 0; i < 256; i++) {
 				__keyDown[i] = false;
 			}
+		}
+		
+		private function onStartGameClicked(e:Event):void {
+			__overlayStartGame.removeEventListener(overlayStartGame.__EVENT_START, onStartGameClicked);
+			//add EnterFrame handler
+			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			//add keyboard listeners
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			this.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			//set new state
+			__state = __IN_GAME_STATE;
+		}
+		
+		/**
+		 * Call this method once game is over
+		 */
+		private function gameOver():void {
+			//add EnterFrame handler
+			this.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+			//add keyboard listeners
+			this.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			this.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			__overlayGameOver.initialize();
+			__overlayGameOver.addEventListener(overlayGameOver.__EVENT_OVER, onGameOverClicked);
+			//set new state
+			__state = __IN_GAME_OVER_STATE;
+		}
+		
+		private function onGameOverClicked(e:Event):void {
+			__overlayGameOver.removeEventListener(overlayGameOver.__EVENT_OVER, onGameOverClicked);
+			initialize();
 		}
 		
 		private function onKeyUp(e:KeyboardEvent):void {
@@ -87,6 +149,9 @@ package ui.scenes.game {
 		}
 		
 		private function onEnterFrame(event:Event):void {
+			if (__frame == 1000) {
+				gameOver();
+			}
 			//update frame counter
 			__frame++;
 			//calculate new speed
@@ -117,7 +182,6 @@ package ui.scenes.game {
 			//update object layers
 			__objectsLayer.updateFrame(__position);
 			//TODO check player interraction with coins and handle return value - change it to score
-			trace("::"+__position)
 			var returnValue:uint = __coinController.colisionWithPlayer(__objectPlayer, __position);
 			//shake scene
 			//!shake(__speed.getSpeed());

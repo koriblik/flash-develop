@@ -29,6 +29,11 @@ package ui.scenes.game.objects {
 			addChild(__layer02);
 			__levelLayer01 = new parallaxLayer("foreground_layer01", 128, 192, config.__LEVEL_GRAPHIC_DATA, 1, 0, 320, false);
 			addChild(__levelLayer01);
+			initialize();
+		}
+		
+		public function initialize():void {
+			updateFrame(0);
 		}
 		
 		public function updateFrame(nPosition:Number):void {

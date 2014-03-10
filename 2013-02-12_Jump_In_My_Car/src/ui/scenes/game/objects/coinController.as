@@ -17,8 +17,19 @@ package ui.scenes.game.objects {
 			__objectsLayer = oObjectsLayer;
 			__pooler = new objectPool(coin, 20);
 			__activeCoins = new Vector.<coin>();
+			initialize();
+		}
+		
+		public function initialize():void {
+			var tempCoin:coin;
 			__lastObjectTakenAtPosition = 0;
 			__lastPosition = 0;
+			//clear pool
+			while (__activeCoins.length > 0) {
+				tempCoin = __activeCoins.splice(0, 1)[0];
+				__objectsLayer.removeObjectFromLayer(tempCoin, tempCoin.line);
+			}
+			updateFrame(0);
 		}
 		
 		public function updateFrame(nPosition:Number):void {
@@ -59,30 +70,29 @@ package ui.scenes.game.objects {
 			var tempCoin:coin;
 			//check if there are coins on scene
 			if (__activeCoins.length > 0) {
-				//check if the player is not in jump
 				var i:int = __activeCoins.length - 1;
-				//TODO - zmen kontrolu zo skoku na vysku skoku aby som zberal aj pri skoku ked som vo vyske coinu
-				if (oObjectPlayer.status != oObjectPlayer.__IN_JUMP) {
-					var playerLine:uint = oObjectPlayer.line;
-					//go through all cains if there is touching
-					while (i >= 0) {
+				var playerLine:uint = oObjectPlayer.line;
+				//go through all cains if there is touching
+				while (i >= 0) {
+					//check if player is in good height to take coin
+					if (oObjectPlayer.getJumpHeight() < __activeCoins[i].coinHeight()) {
 						//if on the same line
 						if (__activeCoins[i].line == playerLine) {
 							//check if the possition is fine to take coin
 							coinX = __activeCoins[i].position;
-							coinXW = __activeCoins[i].position + __activeCoins[i].width;
+							coinXW = __activeCoins[i].position + __activeCoins[i].coinWidth();
 							if (((playerX <= coinX) && (playerXW > coinX)) || ((playerX <= coinXW) && (playerXW > coinXW))) {
 								Main.__tempDraw.graphics.clear();
 								Main.__tempDraw.graphics.lineStyle(1, 0xff0000);
-								Main.__tempDraw.graphics.drawRect(oObjectPlayer.__X_POSITION,0, oObjectPlayer.playerCollisionWidth(), config.__WINDOW_HEIGHT);
+								Main.__tempDraw.graphics.drawRect(oObjectPlayer.__X_POSITION, 0, oObjectPlayer.playerCollisionWidth(), config.__WINDOW_HEIGHT);
 								//remove coin
 								tempCoin = __activeCoins.splice(i, 1)[0];
 								__objectsLayer.removeObjectFromLayer(tempCoin, tempCoin.line);
 								returnValue++;
 							}
 						}
-						i--;
 					}
+					i--;
 				}
 			}
 			return returnValue;

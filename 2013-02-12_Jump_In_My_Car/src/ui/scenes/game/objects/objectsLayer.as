@@ -24,6 +24,7 @@ package ui.scenes.game.objects {
 		private function onAddedToStage(e:Event):void {
 			//remove listener
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			//setup all layers that holds objects
 			__layers = new Vector.<Sprite>();
 			__layers.push(new Sprite());
 			__layers.push(new Sprite());
@@ -47,6 +48,11 @@ package ui.scenes.game.objects {
 			__layerPlayer.x = __layerPlayer.__X_POSITION;
 			__layerPlayer.y = 340;
 			__playerIndex = 0;
+			initialize();
+		}
+		
+		public function initialize():void {
+			updateFrame(0);
 		}
 		
 		public function addObjectToLayer(sObject:Sprite, uLayer:uint):void {
@@ -72,5 +78,6 @@ package ui.scenes.game.objects {
 			__playerIndex = (__layerPlayer.line + inJump) + 1;
 			this.setChildIndex(__layerPlayer, __playerIndex);
 		}
+	
 	}
 }
