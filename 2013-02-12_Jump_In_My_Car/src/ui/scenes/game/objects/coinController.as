@@ -82,7 +82,6 @@ package ui.scenes.game.objects {
 							coinX = __activeCoins[i].position;
 							coinXW = __activeCoins[i].position + __activeCoins[i].coinWidth();
 							if (((playerX <= coinX) && (playerXW > coinX)) || ((playerX <= coinXW) && (playerXW > coinXW))) {
-								Main.__tempDraw.graphics.clear();
 								Main.__tempDraw.graphics.lineStyle(1, 0xff0000);
 								Main.__tempDraw.graphics.drawRect(oObjectPlayer.__X_POSITION, 0, oObjectPlayer.playerCollisionWidth(), config.__WINDOW_HEIGHT);
 								//remove coin

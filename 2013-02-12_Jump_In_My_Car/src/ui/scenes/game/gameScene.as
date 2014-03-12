@@ -182,7 +182,10 @@ package ui.scenes.game {
 			//update object layers
 			__objectsLayer.updateFrame(__position);
 			//TODO check player interraction with coins and handle return value - change it to score
-			var returnValue:uint = __coinController.colisionWithPlayer(__objectPlayer, __position);
+			Main.__tempDraw.graphics.clear();
+			Main.__tempOutput.htmlText = "";
+			var returnValueCoin:uint = __coinController.colisionWithPlayer(__objectPlayer, __position);
+			var returnValueObstacle:String = __obstacleController.colisionWithPlayer(__objectPlayer, __position);
 			//shake scene
 			//!shake(__speed.getSpeed());
 			//

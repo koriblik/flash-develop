@@ -18,7 +18,7 @@ package ui.scenes.game.objects {
 		//time in sec to get from one line to another
 		public const __SPEED:Number = 0.2;
 		//time in sec for the jump
-		public const __JUMP_SPEED:Number = 3;
+		public const __JUMP_SPEED:Number = 1;
 		private var __sprite:Image;
 		//current position interval <0,2>
 		private var __xPosition:Number;

@@ -4,6 +4,7 @@ package {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.text.TextField;
 	import starling.core.Starling;
 	import ui.applicationClass;
 	
@@ -14,6 +15,7 @@ package {
 	public class Main extends Sprite {
 		private var __starling:Starling;
 		public static var __tempDraw:MovieClip;
+		public static var __tempOutput:TextField;
 		public function Main():void {
 			if (stage)
 				init();
@@ -33,8 +35,15 @@ package {
 			__starling.showStats = true;
 			__starling.showStatsAt("left", "bottom", 1);
 			__starling.start();
+			//TODO delete
 			__tempDraw = new MovieClip();
 			addChild(__tempDraw);
+			__tempOutput = new TextField();
+			addChild(__tempOutput);
+			__tempOutput.width = config.__WINDOW_WIDTH;
+			__tempOutput.height = 60;
+			__tempOutput.textColor = 0x000000;
+			__tempOutput.htmlText = "<b>Pablo</b> dnes nie."
 		}
 	}
 }
