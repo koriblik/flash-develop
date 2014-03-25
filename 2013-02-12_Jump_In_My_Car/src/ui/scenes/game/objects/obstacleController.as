@@ -65,6 +65,7 @@ package ui.scenes.game.objects {
 			var returnValue:String = "";
 			var playerX:uint = oObjectPlayer.__X_POSITION + uPosition;
 			var playerXW:uint = oObjectPlayer.__X_POSITION + uPosition + oObjectPlayer.playerCollisionWidth();
+			var playerHeight:Number = oObjectPlayer.getJumpHeight();
 			var obstacleX:int;
 			var tempObstacle:obstacle;
 			/*
@@ -78,38 +79,49 @@ package ui.scenes.game.objects {
 				var playerLine:uint = oObjectPlayer.line;
 				//go through all obstacles if there is touching
 				while (i >= 0) {
-					//get obstacle colision point
-					obstacleX = __activeObstacles[i].__data.position + __activeObstacles[i].__data.collisionxpoint;
-					//!delete start
-					Main.__tempOutput.htmlText += obstacleX.toString() + ":" + playerX.toString();
-					Main.__tempDraw.graphics.lineStyle(1, 0x00ff00);
-					Main.__tempDraw.graphics.moveTo(obstacleX-uPosition, 0);
-					Main.__tempDraw.graphics.lineTo(obstacleX-uPosition, config.__WINDOW_HEIGHT);
-					//!end
-					//check if obstacle is in the position of player
-					if ((playerX <= obstacleX) && (playerXW > obstacleX)) {
-						Main.__tempDraw.graphics.lineStyle(1, 0xff0000);
-						Main.__tempDraw.graphics.moveTo(obstacleX-uPosition, 0);
-						Main.__tempDraw.graphics.lineTo(obstacleX-uPosition, config.__WINDOW_HEIGHT);
-						/*
-						   //check if player is in good height to take coin
-						   if (oObjectPlayer.getJumpHeight() < __activeCoins[i].coinHeight()) {
-						   //if on the same line
-						   if (__activeCoins[i].line == playerLine) {
-						   //check if the possition is fine to take coin
-						 */ /*
-						   coinXW = __activeCoins[i].position + __activeCoins[i].coinWidth();
-						   if (((playerX <= coinX) && (playerXW > coinX)) || ((playerX <= coinXW) && (playerXW > coinXW))) {
-						   Main.__tempDraw.graphics.clear();
-						   Main.__tempDraw.graphics.lineStyle(1, 0xff0000);
-						   Main.__tempDraw.graphics.drawRect(oObjectPlayer.__X_POSITION, 0, oObjectPlayer.playerCollisionWidth(), config.__WINDOW_HEIGHT);
-						   //remove coin
-						   tempCoin = __activeCoins.splice(i, 1)[0];
-						   __objectsLayer.removeObjectFromLayer(tempCoin, tempCoin.line);
-						   returnValue++;
-						   }
-						   }
-						 */
+					//if obstacle has not been hit before
+					if (!__activeObstacles[i].hit) {
+						//get obstacle colision point
+						obstacleX = __activeObstacles[i].__data.position + __activeObstacles[i].__data.collisionxpoint;
+						//!delete start
+						Main.__tempOutput.htmlText += "player line: " + playerLine + "\n";
+						Main.__tempOutput.htmlText += "player height :" + playerHeight + "\n";
+						Main.__tempOutput.htmlText += obstacleX.toString() + ":" + playerX.toString() + "\n";
+						Main.__tempDraw.graphics.lineStyle(1, 0x00ff00);
+						Main.__tempDraw.graphics.moveTo(obstacleX - uPosition, 0);
+						Main.__tempDraw.graphics.lineTo(obstacleX - uPosition, config.__WINDOW_HEIGHT);
+						//!end
+						//check if obstacle is in the position of player
+						if ((playerX <= obstacleX) && (playerXW > obstacleX)) {
+							//check if player is in the same line as obstacle
+							if ((playerLine >= __activeObstacles[i].__data.line) && (playerLine <= __activeObstacles[i].__data.line + __activeObstacles[i].__data.wide)) {
+								//if row = 0
+								switch (__activeObstacles[i].__data.row) {
+									case 0: 
+										//if player height is lower that the obstacle tall
+										if (playerHeight <= __activeObstacles[i].__data.tall) {
+											//TODO - hit of the row 0
+											__activeObstacles[i].hit = true;
+											Main.__tempOutput.htmlText += "HIT!\n";
+											Main.__tempDraw.graphics.lineStyle(1, 0xff0000);
+											Main.__tempDraw.graphics.moveTo(obstacleX - uPosition, 0);
+											Main.__tempDraw.graphics.lineTo(obstacleX - uPosition, config.__WINDOW_HEIGHT);
+										}
+										break;
+									case 1: 
+										//if player height is greater than 0 and less that (row height + obstacle height)
+										if ((playerHeight > 0) && (playerHeight < obstacle.__UP_ROW_SPACE + __activeObstacles[i].__data.tall)) {
+											//TODO - hit of the row 1
+											__activeObstacles[i].hit = true;
+											Main.__tempOutput.htmlText += "HIT!\n";
+											Main.__tempDraw.graphics.lineStyle(1, 0x0000ff);
+											Main.__tempDraw.graphics.moveTo(obstacleX - uPosition, 0);
+											Main.__tempDraw.graphics.lineTo(obstacleX - uPosition, config.__WINDOW_HEIGHT);
+										}
+										break;
+								}
+							}
+						}
 					}
 					i--;
 				}

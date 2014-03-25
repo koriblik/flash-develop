@@ -19,7 +19,7 @@ package ui.scenes.game {
 	 * @author Pavol Kusovsky
 	 */
 	public class gameScene extends baseScene {
-		private const __MAX_SPEED:uint = 20;
+		private const __MAX_SPEED:uint = 1;
 		private const __SHAKE_BOUNDARIES:uint = 10;
 		private const __LINE_HEIGHT:uint = 30;
 		private const __JUMP_HEIGHT:uint = 100;
@@ -149,9 +149,6 @@ package ui.scenes.game {
 		}
 		
 		private function onEnterFrame(event:Event):void {
-			if (__frame == 1000) {
-				gameOver();
-			}
 			//update frame counter
 			__frame++;
 			//calculate new speed
@@ -186,6 +183,10 @@ package ui.scenes.game {
 			Main.__tempOutput.htmlText = "";
 			var returnValueCoin:uint = __coinController.colisionWithPlayer(__objectPlayer, __position);
 			var returnValueObstacle:String = __obstacleController.colisionWithPlayer(__objectPlayer, __position);
+			if (returnValueObstacle == "HIT") {
+				gameOver();
+				
+			}
 			//shake scene
 			//!shake(__speed.getSpeed());
 			//

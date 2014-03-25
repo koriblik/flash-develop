@@ -41,7 +41,8 @@ package {
 			__tempOutput = new TextField();
 			addChild(__tempOutput);
 			__tempOutput.width = config.__WINDOW_WIDTH;
-			__tempOutput.height = 60;
+			__tempOutput.height = 180;
+			__tempOutput.multiline = true;
 			__tempOutput.textColor = 0x000000;
 			__tempOutput.htmlText = "<b>Pablo</b> dnes nie."
 		}

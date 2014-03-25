@@ -19,7 +19,10 @@ package ui.scenes.game.objects {
 		public const __SPEED:Number = 0.2;
 		//time in sec for the jump
 		public const __JUMP_SPEED:Number = 1;
+		//graphics
 		private var __sprite:Image;
+		//height
+		private var __height:Number;
 		//current position interval <0,2>
 		private var __xPosition:Number;
 		//current position in jump <0,1>
@@ -56,6 +59,7 @@ package ui.scenes.game.objects {
 			__sprite = new Image(assets.getAtlas().getTexture("player_fly"));
 			__sprite.alignPivot("left", "bottom");
 			addChild(__sprite);
+			__height = __sprite.height;
 			//calculate speed based on frame rate
 			__movementSpeed = config.__DELTA_TIME / __SPEED;
 			__jumpSpeed = config.__DELTA_TIME / __JUMP_SPEED;
@@ -172,8 +176,13 @@ package ui.scenes.game.objects {
 	
 		public function getJumpHeight():Number {
 			if (status == __IN_JUMP) {
-				return uint(__jumpHeight * Math.sin(Math.PI * __yPosition));
+				return Number(__jumpHeight * Math.sin(Math.PI * __yPosition));
 			}
+			//TODO add another types of jump
+			return 0;
+		}
+		
+		public function getPlayerHeight():Number {
 			return 0;
 		}
 	}

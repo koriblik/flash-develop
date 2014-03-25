@@ -8,9 +8,12 @@ package ui.scenes.game.objects.items {
 	 */
 	public class obstacle extends Sprite {
 		
-		private const BLINK_DELAY:uint = 30;
+		private const __BLINK_DELAY:uint = 30;
+		public static const __UP_ROW_SPACE:uint = 52;
 		private var __sprite:Image;
 		public var __data:Object;
+		//variable to indicate if already hit happened (due to jump obstacles - so I can check only once)
+		private var __hit:Boolean;
 		private var __frame:uint;
 		
 		public function obstacle() {
@@ -20,7 +23,7 @@ package ui.scenes.game.objects.items {
 		}
 		
 		public function initialize(oData:Object):void {
-			//data name, position, line, wide, tall, row, pivotX, pivotY, width, height
+			//data name, position, line, wide, tall, row, pivotX, pivotY, width, height, collisionxpoint, action
 			__data = oData;
 			//set texture
 			__sprite.texture = assets.getAtlas().getTexture(__data.name);
@@ -29,6 +32,7 @@ package ui.scenes.game.objects.items {
 			__sprite.pivotY = __data.pivotY;
 			this.x = __data.position;
 			this.y = 0;
+			__hit = false;
 			__frame = 0;
 		}
 		
@@ -63,6 +67,22 @@ package ui.scenes.game.objects.items {
 		 */
 		public function getLine():uint {
 			return __data.line + __data.row * 3;
+		}
+		
+		/**
+		 * __hit Getter
+		 * @return	Boolean		if already hit happened on this obstacle
+		 */
+		public function get hit():Boolean {
+			return __hit;
+		}
+		
+		/**
+		 * __hit Setter
+		 * @param	Boolean		set __hit value
+		 */
+		public function set hit(bHit:Boolean):void {
+			__hit = bHit;
 		}
 	}
 }
