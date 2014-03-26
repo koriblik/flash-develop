@@ -9,6 +9,8 @@ package ui.scenes.game.objects {
 	 */
 	public class objectPlayer extends Sprite {
 		public const __IN_JUMP:String = "inJump";
+		public const __IN_SMALL_JUMP:String = "inSmallJump";
+		public const __IN_BIG_JUMP:String = "inBigJump";
 		public const __IN_RUN:String = "inRun";
 		public const __MOVE_UP:String = "moveUp";
 		public const __MOVE_DOWN:String = "moveDown";
@@ -19,6 +21,8 @@ package ui.scenes.game.objects {
 		public const __SPEED:Number = 0.2;
 		//time in sec for the jump
 		public const __JUMP_SPEED:Number = 1;
+		public const __JUMP_SMALL_SPEED:Number = 2.2;
+		public const __JUMP_BIG_SPEED:Number = 3.4;
 		//graphics
 		private var __sprite:Image;
 		//height
@@ -43,26 +47,36 @@ package ui.scenes.game.objects {
 		private var __movementSpeed:Number;
 		//calculated movement speed
 		private var __jumpSpeed:Number;
-		//height of the jump
+		private var __jumpSmallSpeed:Number;
+		private var __jumpBigSpeed:Number;
+		//height of the jumps
 		private var __jumpHeight:uint;
+		private var __jumpSmallHeight:uint;
+		private var __jumpBigHeight:uint;
 		
-		public function objectPlayer(uLineHeight:uint, uJumpHeight:uint) {
+		public function objectPlayer(uLineHeight:uint, uJumpHeight:uint = 100) {
 			super();
 			__lineHeight = uLineHeight;
 			__jumpHeight = uJumpHeight;
+			__jumpSmallHeight = __jumpHeight * __JUMP_SMALL_SPEED;
+			__jumpBigHeight = __jumpHeight * __JUMP_BIG_SPEED;
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
 		private function onAddedToStage(e:Event):void {
 			//remove listener
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			//add player sprite and align it to left bottom
 			__sprite = new Image(assets.getAtlas().getTexture("player_fly"));
 			__sprite.alignPivot("left", "bottom");
 			addChild(__sprite);
 			__height = __sprite.height;
 			//calculate speed based on frame rate
 			__movementSpeed = config.__DELTA_TIME / __SPEED;
+			//jump speed - how long I stay in jump
 			__jumpSpeed = config.__DELTA_TIME / __JUMP_SPEED;
+			__jumpSmallSpeed = config.__DELTA_TIME / __JUMP_SMALL_SPEED;
+			__jumpBigSpeed = config.__DELTA_TIME / __JUMP_BIG_SPEED;
 			initialize();
 		}
 		
@@ -103,11 +117,26 @@ package ui.scenes.game.objects {
 		}
 		
 		public function jump():void {
-			//if not in jump
-			if (__status != __IN_JUMP) {
+			//if not in any jump type
+			if (__status == __IN_RUN) {
 				__status = __IN_JUMP;
 				__yPosition = 0;
 			}
+		}
+		
+		public function smallJump():void {
+			//calculate initial yposition based on the current height
+			__yPosition = Math.asin(getPlayerHeight()/__jumpSmallHeight)/Math.PI;
+			//set jump type
+			__status = __IN_SMALL_JUMP;
+		}
+		
+		public function bigJump():void {
+			//calculate initial yposition based on the current height
+			__yPosition = Math.asin(getPlayerHeight() / __jumpBigHeight) / Math.PI;
+			trace(getPlayerHeight());
+			//set jump type
+			__status = __IN_BIG_JUMP;
 		}
 		
 		public function updateFrame(nSpeed:Number):void {
@@ -134,20 +163,38 @@ package ui.scenes.game.objects {
 				}
 			}
 			//jump
-			if (__status == __IN_JUMP) {
-				if ((__yPosition + __jumpSpeed) <= 1) {
-					__yPosition += __jumpSpeed;
-				} else {
-					__yPosition = 0;
-					__status = __IN_RUN;
-				}
+			switch (__status) {
+				case __IN_JUMP: 
+					if ((__yPosition + __jumpSpeed) <= 1) {
+						__yPosition += __jumpSpeed;
+					} else {
+						__yPosition = 0;
+						__status = __IN_RUN;
+					}
+					break;
+				case __IN_SMALL_JUMP: 
+					if ((__yPosition + __jumpSmallSpeed) <= 1) {
+						__yPosition += __jumpSmallSpeed;
+					} else {
+						__yPosition = 0;
+						__status = __IN_RUN;
+					}
+					break;
+				case __IN_BIG_JUMP: 
+					if ((__yPosition + __jumpBigSpeed) <= 1) {
+						__yPosition += __jumpBigSpeed;
+					} else {
+						__yPosition = 0;
+						__status = __IN_RUN;
+					}
+					break;
 			}
 			//set line I am touching
 			__line = (__xPosition >= 0.5) ? 1 : 0;
 			__line = (__xPosition > 1.5) ? 2 : __line;
 			//TODO handle small jump and high jump
 			//this formula works only for normal jump
-			__sprite.y = uint(__xPosition * __lineHeight) - uint(__jumpHeight * Math.sin(Math.PI * __yPosition));
+			__sprite.y = uint(__xPosition * __lineHeight) - uint(getJumpHeight());
 		}
 		
 		/**
@@ -173,13 +220,25 @@ package ui.scenes.game.objects {
 		public function playerCollisionWidth():uint {
 			return __sprite.width;
 		}
-	
+		
+		/**
+		 * Return Altitude of the player
+		 * @return	Number	Altitude of the Player
+		 */
 		public function getJumpHeight():Number {
-			if (status == __IN_JUMP) {
-				return Number(__jumpHeight * Math.sin(Math.PI * __yPosition));
+			var returnValue:Number = 0;
+			switch (__status) {
+				case __IN_JUMP: 
+					returnValue = __jumpHeight * Math.sin(Math.PI * __yPosition);
+					break;
+				case __IN_SMALL_JUMP: 
+					returnValue = __jumpSmallHeight * Math.sin(Math.PI * __yPosition);
+					break;
+				case __IN_BIG_JUMP: 
+					returnValue = __jumpBigHeight * Math.sin(Math.PI * __yPosition);
+					break;
 			}
-			//TODO add another types of jump
-			return 0;
+			return returnValue;
 		}
 		
 		public function getPlayerHeight():Number {

@@ -19,7 +19,7 @@ package ui.scenes.game {
 	 * @author Pavol Kusovsky
 	 */
 	public class gameScene extends baseScene {
-		private const __MAX_SPEED:uint = 1;
+		private const __MAX_SPEED:uint = 20;
 		private const __SHAKE_BOUNDARIES:uint = 10;
 		private const __LINE_HEIGHT:uint = 30;
 		private const __JUMP_HEIGHT:uint = 100;

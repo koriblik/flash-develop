@@ -63,7 +63,7 @@ package {
 			//add attributes of the obstacle
 			maxItems = assets.__obstaclesXML.descendants("obstacle").length();
 			for (i = 0; i < maxItems; i++) {
-				__LEVEL_OBSTACLES_DATA.push({name: textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@id, position: uint(assets.__obstaclesXML.descendants("obstacle")[i].@position), line: uint(assets.__obstaclesXML.descendants("obstacle")[i].@line), blink: uint(assets.__obstaclesXML.descendants("obstacle")[i].@blink), wide: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@wide), tall: Number(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@tall), row: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@row), pivotX: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@pivotx), pivotY: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@pivoty), width: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@width), height: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@height), collisionxpoint: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@collisionxpoint), action: textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@action});
+				__LEVEL_OBSTACLES_DATA.push({name: String(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@id), position: uint(assets.__obstaclesXML.descendants("obstacle")[i].@position), line: uint(assets.__obstaclesXML.descendants("obstacle")[i].@line), blink: uint(assets.__obstaclesXML.descendants("obstacle")[i].@blink), wide: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@wide), tall: Number(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@tall), row: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@row), pivotX: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@pivotx), pivotY: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@pivoty), width: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@width), height: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@height), collisionXPoint: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@collisionxpoint), action: String(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@action)});
 			}
 			//TODO sort them
 			for (i = 0; i < __LEVEL_OBSTACLES_DATA.length; i++) {
@@ -96,13 +96,13 @@ package {
 			maxItems = assets.__coinsXML.descendants("template").length();
 			var templates:Array = new Array();
 			for (i = 0; i < maxItems; i++) {
-				templates[assets.__coinsXML.descendants("template")[i].@id] = assets.__coinsXML.descendants("template")[i];
+				templates[String(assets.__coinsXML.descendants("template")[i].@id)] = assets.__coinsXML.descendants("template")[i];
 			}
 			//load coins from sections defined
 			maxSections = assets.__coinsXML.descendants("section").length();
 			for (i = 0; i < maxSections; i++) {
 				position = uint(assets.__coinsXML.descendants("section")[i].@position);
-				templateList = templates[assets.__coinsXML.descendants("section")[i].@template_id];
+				templateList = templates[String(assets.__coinsXML.descendants("section")[i].@template_id)];
 				//load number of items in Template
 				maxItems = templateList.children().length();
 				for (j = 0; j < maxItems; j++) {
@@ -146,13 +146,13 @@ package {
 			maxItems = assets.__levelXML.descendants("texture").length();
 			var textures:Array = new Array();
 			for (i = 0; i < maxItems; i++) {
-				textures[assets.__levelXML.descendants("texture")[i].@id] = assets.__levelXML.descendants("texture")[i].@name;
+				textures[String(assets.__levelXML.descendants("texture")[i].@id)] = assets.__levelXML.descendants("texture")[i].@name;
 			}
 			//load templates from the game level
 			maxItems = assets.__levelXML.descendants("template").length();
 			var templates:Array = new Array();
 			for (i = 0; i < maxItems; i++) {
-				templates[assets.__levelXML.descendants("template")[i].@id] = assets.__levelXML.descendants("template")[i];
+				templates[String(assets.__levelXML.descendants("template")[i].@id)] = assets.__levelXML.descendants("template")[i];
 			}
 			//load the level textures from sections defined
 			maxSections = assets.__levelXML.descendants("section").length();
@@ -160,7 +160,7 @@ package {
 				repeats = uint(assets.__levelXML.descendants("section")[i].@repeat);
 				subSize = uint(assets.__levelXML.descendants("section")[i].@sub_size);
 				for (j = 0; j < repeats; j++) {
-					templateList = templates[assets.__levelXML.descendants("section")[i].@template_id];
+					templateList = templates[String(assets.__levelXML.descendants("section")[i].@template_id)];
 					//load number of items in Template
 					maxItems = templateList.children().length();
 					for (k = 0; k < maxItems; k++) {
@@ -169,12 +169,12 @@ package {
 								maxFor = templateList.children()[k].children().length();
 								for (l = 0; l < subSize; l++) {
 									for (m = 0; m < maxFor; m++) {
-										__LEVEL_GRAPHIC_DATA.push(textures[templateList.children()[k].children()[m].@texture_id]);
+										__LEVEL_GRAPHIC_DATA.push(textures[String(templateList.children()[k].children()[m].@texture_id)]);
 									}
 								}
 								break;
 							case "item": 
-								__LEVEL_GRAPHIC_DATA.push(textures[templateList.children()[k].@texture_id]);
+								__LEVEL_GRAPHIC_DATA.push(textures[String(templateList.children()[k].@texture_id)]);
 								break;
 						}
 					}

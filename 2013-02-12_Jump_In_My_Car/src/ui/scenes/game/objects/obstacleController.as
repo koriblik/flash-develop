@@ -68,9 +68,6 @@ package ui.scenes.game.objects {
 			var playerHeight:Number = oObjectPlayer.getJumpHeight();
 			var obstacleX:int;
 			var tempObstacle:obstacle;
-			/*
-			   var coinXW:uint;
-			 */
 			//check if there are obstacles on scene
 			if (__activeObstacles.length > 0) {
 				//load the number of active obstacles
@@ -82,7 +79,7 @@ package ui.scenes.game.objects {
 					//if obstacle has not been hit before
 					if (!__activeObstacles[i].hit) {
 						//get obstacle colision point
-						obstacleX = __activeObstacles[i].__data.position + __activeObstacles[i].__data.collisionxpoint;
+						obstacleX = __activeObstacles[i].__data.position + __activeObstacles[i].__data.collisionXPoint;
 						//!delete start
 						Main.__tempOutput.htmlText += "player line: " + playerLine + "\n";
 						Main.__tempOutput.htmlText += "player height :" + playerHeight + "\n";
@@ -106,6 +103,14 @@ package ui.scenes.game.objects {
 											Main.__tempDraw.graphics.lineStyle(1, 0xff0000);
 											Main.__tempDraw.graphics.moveTo(obstacleX - uPosition, 0);
 											Main.__tempDraw.graphics.lineTo(obstacleX - uPosition, config.__WINDOW_HEIGHT);
+											switch (__activeObstacles[i].__data.action) {
+												case "jumpSmall":
+													//call small jump - will not occure more than once on the same obstacle
+													oObjectPlayer.smallJump();
+													break;
+												case "end":
+													break;
+											}
 										}
 										break;
 									case 1: 
@@ -117,6 +122,14 @@ package ui.scenes.game.objects {
 											Main.__tempDraw.graphics.lineStyle(1, 0x0000ff);
 											Main.__tempDraw.graphics.moveTo(obstacleX - uPosition, 0);
 											Main.__tempDraw.graphics.lineTo(obstacleX - uPosition, config.__WINDOW_HEIGHT);
+											switch (__activeObstacles[i].__data.action) {
+												case "jumpBig":
+													//call big jump - will not occure more than once on the same obstacle
+													oObjectPlayer.bigJump();
+													break;
+												case "end":
+													break;
+											}
 										}
 										break;
 								}

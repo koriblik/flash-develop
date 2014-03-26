@@ -23,7 +23,7 @@ package ui.scenes.game.objects.items {
 		}
 		
 		public function initialize(oData:Object):void {
-			//data name, position, line, wide, tall, row, pivotX, pivotY, width, height, collisionxpoint, action
+			//data name, position, line, wide, tall, row, pivotX, pivotY, width, height, collisionXPoint, action
 			__data = oData;
 			//set texture
 			__sprite.texture = assets.getAtlas().getTexture(__data.name);
