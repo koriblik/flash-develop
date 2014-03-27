@@ -1,6 +1,6 @@
 package {
 	import flash.display.Stage;
-	
+	import flash.display.StageOrientation;
 	/**
 	 * 2014-01-14
 	 * @author Pavol Kusovsky
@@ -31,8 +31,8 @@ package {
 			__STAGE = stage;
 			__FRAME_RATE = __STAGE.frameRate;
 			__DELTA_TIME = 1 / __FRAME_RATE;
-			__WINDOW_WIDTH = stage.stageWidth;
-			__WINDOW_HEIGHT = stage.stageHeight;
+			__WINDOW_WIDTH = stage.fullScreenWidth;
+			__WINDOW_HEIGHT = stage.fullScreenHeight;
 			__MENU_BG_COLOR = 0xffff00ff;
 			__LEVEL_GRAPHIC_DATA = new Array();
 			__LEVEL_COINS_DATA = new Array();

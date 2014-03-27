@@ -19,9 +19,12 @@ package ui.scenes.game {
 	 * @author Pavol Kusovsky
 	 */
 	public class gameScene extends baseScene {
-		private const __MAX_SPEED:uint = 20;
+		//speed in pixels per second
+		private const __MAX_SPEED:uint = 1000;
 		private const __SHAKE_BOUNDARIES:uint = 10;
+		//space betveen lines
 		private const __LINE_HEIGHT:uint = 30;
+		//basic jump height (small and big are calculated based on this)
 		private const __JUMP_HEIGHT:uint = 100;
 		private const __IN_GAME_STATE:String = "inGameState";
 		private const __IN_START_DELAY_STATE:String = "inStartDelayState";
@@ -185,7 +188,6 @@ package ui.scenes.game {
 			var returnValueObstacle:String = __obstacleController.colisionWithPlayer(__objectPlayer, __position);
 			if (returnValueObstacle == "HIT") {
 				gameOver();
-				
 			}
 			//shake scene
 			//!shake(__speed.getSpeed());

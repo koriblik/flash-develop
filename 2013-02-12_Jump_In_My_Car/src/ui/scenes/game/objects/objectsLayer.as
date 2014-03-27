@@ -71,7 +71,7 @@ package ui.scenes.game.objects {
 			}
 			//if in jump then index + 3
 			var inJump:uint = 0;
-			if (__layerPlayer.status == __layerPlayer.__IN_JUMP) {
+			if (__layerPlayer.status != __layerPlayer.__IN_RUN) {
 				inJump = 3;
 			}
 			//set z-index for player

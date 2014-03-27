@@ -4,6 +4,7 @@ package {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import starling.core.Starling;
 	import ui.applicationClass;
@@ -30,10 +31,10 @@ package {
 			config.initialize(stage);
 			//Create a Starling instance that will run the "application" class
 			Starling.multitouchEnabled = false;
-			__starling = new Starling(applicationClass, stage);
+			__starling = new Starling(applicationClass, stage, new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight));
 			__starling.antiAliasing = 1;
 			__starling.showStats = true;
-			__starling.showStatsAt("left", "bottom", 1);
+			__starling.showStatsAt("left", "bottom", 3);
 			__starling.start();
 			//TODO delete
 			__tempDraw = new MovieClip();
@@ -43,8 +44,8 @@ package {
 			__tempOutput.width = config.__WINDOW_WIDTH;
 			__tempOutput.height = 180;
 			__tempOutput.multiline = true;
-			__tempOutput.textColor = 0x000000;
-			__tempOutput.htmlText = "<b>Pablo</b> dnes nie."
+			__tempOutput.textColor = 0xff0000;
+			__tempOutput.htmlText = "STATUS"
 		}
 	}
 }

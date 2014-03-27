@@ -126,15 +126,14 @@ package ui.scenes.game.objects {
 		
 		public function smallJump():void {
 			//calculate initial yposition based on the current height
-			__yPosition = Math.asin(getPlayerHeight()/__jumpSmallHeight)/Math.PI;
+			__yPosition = Math.asin(getJumpHeight()/__jumpSmallHeight)/Math.PI;
 			//set jump type
 			__status = __IN_SMALL_JUMP;
 		}
 		
 		public function bigJump():void {
 			//calculate initial yposition based on the current height
-			__yPosition = Math.asin(getPlayerHeight() / __jumpBigHeight) / Math.PI;
-			trace(getPlayerHeight());
+			__yPosition = Math.asin(getJumpHeight() / __jumpBigHeight) / Math.PI;
 			//set jump type
 			__status = __IN_BIG_JUMP;
 		}
@@ -239,10 +238,6 @@ package ui.scenes.game.objects {
 					break;
 			}
 			return returnValue;
-		}
-		
-		public function getPlayerHeight():Number {
-			return 0;
 		}
 	}
 }

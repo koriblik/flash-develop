@@ -99,16 +99,13 @@ package ui.scenes.game.objects {
 										if (playerHeight <= __activeObstacles[i].__data.tall) {
 											//TODO - hit of the row 0
 											__activeObstacles[i].hit = true;
-											Main.__tempOutput.htmlText += "HIT!\n";
-											Main.__tempDraw.graphics.lineStyle(1, 0xff0000);
-											Main.__tempDraw.graphics.moveTo(obstacleX - uPosition, 0);
-											Main.__tempDraw.graphics.lineTo(obstacleX - uPosition, config.__WINDOW_HEIGHT);
 											switch (__activeObstacles[i].__data.action) {
-												case "jumpSmall":
+												case "jumpSmall": 
 													//call small jump - will not occure more than once on the same obstacle
 													oObjectPlayer.smallJump();
 													break;
-												case "end":
+												case "end": 
+													returnValue = "HIT";
 													break;
 											}
 										}
@@ -116,18 +113,19 @@ package ui.scenes.game.objects {
 									case 1: 
 										//if player height is greater than 0 and less that (row height + obstacle height)
 										if ((playerHeight > 0) && (playerHeight < obstacle.__UP_ROW_SPACE + __activeObstacles[i].__data.tall)) {
-											//TODO - hit of the row 1
-											__activeObstacles[i].hit = true;
-											Main.__tempOutput.htmlText += "HIT!\n";
-											Main.__tempDraw.graphics.lineStyle(1, 0x0000ff);
-											Main.__tempDraw.graphics.moveTo(obstacleX - uPosition, 0);
-											Main.__tempDraw.graphics.lineTo(obstacleX - uPosition, config.__WINDOW_HEIGHT);
+											//set hit status for this obstacle
 											switch (__activeObstacles[i].__data.action) {
-												case "jumpBig":
-													//call big jump - will not occure more than once on the same obstacle
-													oObjectPlayer.bigJump();
+												case "jumpBig": 
+													//check if player is not too under the jump obstacle - otherwise skip
+													if (playerHeight > __activeObstacles[i].__data.pivotY) {
+														//call big jump - will not occure more than once on the same obstacle
+														__activeObstacles[i].hit = true;
+														oObjectPlayer.bigJump();
+													}
 													break;
-												case "end":
+												case "end": 
+													__activeObstacles[i].hit = true;
+													returnValue = "HIT";
 													break;
 											}
 										}

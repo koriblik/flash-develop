@@ -11,6 +11,8 @@
    		<section template_id="island" sub_size="0" repeat="1"/>
    		<section template_id="hole" sub_size="3" repeat="1"/>
    		<section template_id="island" sub_size="0" repeat="1"/>
+   		<section template_id="hole" sub_size="4" repeat="1"/>
+   		<section template_id="island" sub_size="0" repeat="1"/>
    	</sections>
    	<templates>
    		<template id="hole">

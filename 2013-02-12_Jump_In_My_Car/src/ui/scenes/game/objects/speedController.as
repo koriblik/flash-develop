@@ -35,12 +35,12 @@ package ui.scenes.game.objects {
 				case __ACCELERATE: 
 					__counter += nDelta;
 					__counter = Math.min(__speedMaxTime, __counter);
-					__speed = __speedMax * Math.sin((__counter * (Math.PI / 2)) / __speedMaxTime);
+					__speed = nDelta*__speedMax * Math.sin((__counter * (Math.PI / 2)) / __speedMaxTime);
 					break;
 				case __BREAK: 
 					__counter += nDelta;
 					__counter = Math.min(__speedMinTime, __counter);
-					__speed = __speedMax * Math.cos((__counter * (Math.PI / 2)) / __speedMinTime);
+					__speed = nDelta*__speedMax * Math.cos((__counter * (Math.PI / 2)) / __speedMinTime);
 					if (__counter == __speedMinTime) {
 						__direction = __ACCELERATE;
 						__counter = 0;
