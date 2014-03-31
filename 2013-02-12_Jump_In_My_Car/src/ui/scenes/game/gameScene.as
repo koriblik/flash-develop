@@ -2,8 +2,6 @@ package ui.scenes.game {
 	import config;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
-	import starling.core.Starling;
-	import starling.display.Image;
 	import starling.events.Event;
 	import starling.events.KeyboardEvent;
 	import starling.events.Touch;
@@ -44,12 +42,16 @@ package ui.scenes.game {
 		private var __frame:uint;
 		private var __position:Number;
 		private var __speed:speedController;
+		//cursor positions
+		private var __currentPosition:Point = new Point();
+		private var __previousPosition:Point = new Point();
 		//game state
 		private var __state:String;
 		//array that holds the status of key pressed
 		private var __keyDown:Vector.<Boolean>;
-		//is clicked down
+		//is clicked down/movement
 		private var __fingerDown:Boolean;
+		private var __fingerMoved:Boolean;
 		
 		public function gameScene() {
 			super();
@@ -119,6 +121,7 @@ package ui.scenes.game {
 			}
 			//set up click
 			__fingerDown = false;
+			__fingerMoved = false;
 		}
 		
 		private function onStartGameClicked(e:Event):void {
@@ -150,21 +153,29 @@ package ui.scenes.game {
 		}
 		
 		private function onTouch(event:TouchEvent):void {
-			var touchB:Touch = event.getTouch(this, TouchPhase.BEGAN);
+			var touchB:Touch = event.getTouch(this.stage, TouchPhase.BEGAN);
+			var touchE:Touch = event.getTouch(this.stage, TouchPhase.ENDED);
+			var touchM:Touch = event.getTouch(this.stage, TouchPhase.MOVED);
 			if (touchB) {
 				__fingerDown = true;
 			}
-			var touchE:Touch = event.getTouch(this, TouchPhase.ENDED);
 			if (touchE) {
-				trace("up");
 				__fingerDown = false;
+				if (!__fingerMoved) {
+					__objectPlayer.jump();
+				}
+				__fingerMoved = false;
 			}
-			var touchM:Touch = event.getTouch(this, TouchPhase.MOVED);
 			if (touchM) {
 				if (__fingerDown) {
-					var currentPos:Point = touchM.getLocation(this);
-					var previousPos:Point = touchM.getPreviousLocation(this);
-					trace("Touched object at position: " + currentPos + "/" + previousPos);
+					__fingerMoved = true;
+					__currentPosition = touchM.getLocation(this);
+					__previousPosition = touchM.getPreviousLocation(this);
+					if ((__currentPosition.y - __previousPosition.y) > 0) {
+						__objectPlayer.moveDown();
+					}else {
+						__objectPlayer.moveUp();
+					}
 				}
 			}
 		}

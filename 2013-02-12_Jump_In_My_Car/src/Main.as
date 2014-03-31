@@ -46,7 +46,7 @@ package {
 			addChild(__tempDraw);
 			__tempOutput = new TextField();
 			addChild(__tempOutput);
-			__tempOutput.width = config.__WINDOW_WIDTH;
+			__tempOutput.width = 300;
 			__tempOutput.height = 180;
 			__tempOutput.multiline = true;
 			__tempOutput.textColor = 0xff0000;

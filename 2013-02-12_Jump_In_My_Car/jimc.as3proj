@@ -6,8 +6,8 @@
     <movie input="" />
     <movie path="bin\jimc.swf" />
     <movie fps="30" />
-    <movie width="910" />
-    <movie height="512" />
+    <movie width="640" />
+    <movie height="368" />
     <movie version="11" />
     <movie minorVersion="9" />
     <movie platform="Flash Player" />
