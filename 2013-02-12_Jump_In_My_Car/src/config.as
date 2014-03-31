@@ -1,6 +1,6 @@
 package {
 	import flash.display.Stage;
-	import flash.display.StageOrientation;
+	
 	/**
 	 * 2014-01-14
 	 * @author Pavol Kusovsky
@@ -9,14 +9,17 @@ package {
 		static public const __SHARED_OBJECT_LOCAL_NAME:String = "koriblik/jimc";
 		static public const __SHARED_OBJECT_LOCAL_PATH:String = "/";
 		static public const __FADE_SCENE_DELAY:Number = 0.2;
+		static public const __DEFAULT_WIDTH:uint = 910;
+		static public const __DEFAULT_HEIGHT:uint = 512;
 		static public var __ACTIVE_SCENE:String = "";
 		static public var __STAGE:Stage;
 		static public var __FRAME_RATE:uint;
 		static public var __DELTA_TIME:Number;
 		static public var __SCENES:Array;
+		static public var __MENU_BG_COLOR:uint;
 		static public var __WINDOW_WIDTH:uint;
 		static public var __WINDOW_HEIGHT:uint;
-		static public var __MENU_BG_COLOR:uint;
+		static public var __WINDOW_SCALE:Number;
 		//textures in the level - ground
 		static public var __LEVEL_GRAPHIC_DATA:Array;
 		//length of the level in pixels
@@ -31,12 +34,17 @@ package {
 			__STAGE = stage;
 			__FRAME_RATE = __STAGE.frameRate;
 			__DELTA_TIME = 1 / __FRAME_RATE;
-			__WINDOW_WIDTH = stage.fullScreenWidth;
-			__WINDOW_HEIGHT = stage.fullScreenHeight;
+			//TODO on release to mobile chnage to stage.fullScreen WIDTH/HEIGHT
+			__WINDOW_WIDTH = stage.stageWidth;
+			__WINDOW_HEIGHT = stage.stageHeight;
+			__WINDOW_SCALE = (__WINDOW_HEIGHT / __DEFAULT_HEIGHT);
 			__MENU_BG_COLOR = 0xffff00ff;
 			__LEVEL_GRAPHIC_DATA = new Array();
 			__LEVEL_COINS_DATA = new Array();
 			__LEVEL_OBSTACLES_DATA = new Array();
+		}
+		
+		static public function loadData():void {
 			loadLevelData();
 			loadCoinsData();
 			loadObstaclesData();

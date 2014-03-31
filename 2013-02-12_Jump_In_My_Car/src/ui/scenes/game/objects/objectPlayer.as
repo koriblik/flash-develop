@@ -60,6 +60,7 @@ package ui.scenes.game.objects {
 			__jumpHeight = uJumpHeight;
 			__jumpSmallHeight = __jumpHeight * __JUMP_SMALL_SPEED;
 			__jumpBigHeight = __jumpHeight * __JUMP_BIG_SPEED;
+			touchable = false;
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		

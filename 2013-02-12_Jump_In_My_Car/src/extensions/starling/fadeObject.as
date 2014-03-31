@@ -41,7 +41,7 @@ package extensions.starling {
 		}
 		
 		private function tweenCompleted():void {
-			dispatchEvent(new Event("FADE_COMPLETED"));
+			dispatchEventWith("FADE_COMPLETED");
 			removeFromParent(true);
 		}
 	}

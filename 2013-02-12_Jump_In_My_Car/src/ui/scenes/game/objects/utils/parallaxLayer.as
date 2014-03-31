@@ -3,6 +3,7 @@ package ui.scenes.game.objects.utils {
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.textures.TextureSmoothing;
 	
 	/**
 	 * 2014-02-11
@@ -58,11 +59,12 @@ package ui.scenes.game.objects.utils {
 				//TODO zatial to mam iba jednoriadkovy paralax
 				//set image as empty but set correct size
 				image = new Image(assets.getAtlas().getTexture("background_empty"));
+				image.smoothing = TextureSmoothing.NONE;
 				image.width = __tileWidth;
 				image.height = __tileHeight;
 				//set position
-				image.x = __tileOffset.x + i * __tileWidth;
-				image.y = __tileOffset.y;
+				image.x = uint(__tileOffset.x + i * __tileWidth);
+				image.y = uint(__tileOffset.y);
 				__vectorImages.push(image);
 				addChild(image);
 			}
@@ -77,7 +79,7 @@ package ui.scenes.game.objects.utils {
 				trace("[parallaxLayer \"" + __parallaxLayerID + "\"] Warning: iPosition less then 0. Value changed to 0.");
 			}
 			//if loop is OFF and iPosition is less then layerWidth I can proceed
-			if ((iPosition > __parallaxLayerWidth) && (!__parallaxLoop)) {
+			if ((iPosition > (__parallaxLayerWidth)) && (!__parallaxLoop)) {
 				//set iPosition to the latest value
 				iPosition = __parallaxLayerWidth;
 			}

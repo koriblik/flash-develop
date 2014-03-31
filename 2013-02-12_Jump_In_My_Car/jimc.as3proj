@@ -5,8 +5,8 @@
     <movie outputType="Application" />
     <movie input="" />
     <movie path="bin\jimc.swf" />
-    <movie fps="60" />
-    <movie width="640" />
+    <movie fps="30" />
+    <movie width="910" />
     <movie height="512" />
     <movie version="11" />
     <movie minorVersion="9" />
@@ -85,7 +85,7 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
-    <option testMovie="Default" />
+    <option testMovie="ExternalPlayer" />
     <option testMovieCommand="" />
   </options>
   <!-- Plugin storage -->

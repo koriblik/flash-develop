@@ -20,6 +20,7 @@ package ui.scenes.game.objects {
 			__speedMaxTime = nSpeedMaxTime;
 			__speedMinTime = nSpeedMinTime;
 			__direction = __ACCELERATE;
+			initialize();
 		}
 		
 		/**

@@ -1,6 +1,7 @@
 package ui.scenes.game.objects.items {
 	import starling.display.Image;
 	import starling.display.Sprite;
+	import starling.textures.TextureSmoothing;
 	
 	/**
 	 * 2014-03-05
@@ -27,6 +28,7 @@ package ui.scenes.game.objects.items {
 			__data = oData;
 			//set texture
 			__sprite.texture = assets.getAtlas().getTexture(__data.name);
+			__sprite.smoothing = TextureSmoothing.NONE;
 			__sprite.readjustSize();
 			__sprite.pivotX = __data.pivotX;
 			__sprite.pivotY = __data.pivotY;

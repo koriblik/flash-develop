@@ -17,6 +17,7 @@ package ui.scenes.game.objects {
 		 */
 		public function objectsLayer(oLayerPlayer:objectPlayer) {
 			super()
+			touchable = false;
 			__layerPlayer = oLayerPlayer;
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}

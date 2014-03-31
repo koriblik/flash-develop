@@ -46,7 +46,7 @@ package ui.scenes.game.objects.overlays {
 			this.removeEventListener(TouchEvent.TOUCH, touchHandler);
 			this.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			//dispatch event that I am finished
-			dispatchEvent(new Event(__EVENT_START));
+			dispatchEventWith(__EVENT_START);
 		}
 		
 		private function onKeyDown(e:KeyboardEvent):void {

@@ -14,6 +14,7 @@ package ui.scenes.game.objects {
 		
 		public function backgroundLayersObject() {
 			super();
+			touchable = false;
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		

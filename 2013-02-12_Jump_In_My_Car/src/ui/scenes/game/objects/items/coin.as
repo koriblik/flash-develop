@@ -1,6 +1,7 @@
 package ui.scenes.game.objects.items {
 	import starling.display.Image;
 	import starling.display.Sprite;
+	import starling.textures.TextureSmoothing;
 	
 	/**
 	 * 2014-02-24
@@ -17,9 +18,11 @@ package ui.scenes.game.objects.items {
 		public function coin() {
 			super();
 			__shadow = new Image(assets.getAtlas().getTexture("coin_shadow"));
+			__shadow.smoothing = TextureSmoothing.NONE;
 			__shadow.y = -__shadow.height / 2;
 			addChild(__shadow);
 			__sprite = new Image(assets.getAtlas().getTexture("coin00_empty"));
+			__sprite.smoothing = TextureSmoothing.NONE;
 			addChild(__sprite);
 			__width = __sprite.width;
 			__sprite.pivotX = 0;
@@ -29,6 +32,7 @@ package ui.scenes.game.objects.items {
 		
 		public function initialize(uPosition:uint, uLine:uint, uX:uint, uY:uint):void {
 			__sprite.texture = assets.getAtlas().getTexture("coin00_empty");
+			__sprite.smoothing = TextureSmoothing.NONE;
 			__shadow.visible = false;
 			__position = uPosition;
 			__line = uLine;

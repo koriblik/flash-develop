@@ -22,14 +22,14 @@ package ui.scenes {
 				addChild(__fadeObject);
 				__fadeObject.addEventListener("FADE_COMPLETED", onFadeInCompleted);
 			} else {
-				dispatchEvent(new Event("SCENE_INITIALIZED"));
+				dispatchEventWith("SCENE_INITIALIZED");
 			}
 		}
 		
 		protected function onFadeInCompleted(e:Event):void {
 			//remove listener
 			__fadeObject.removeEventListener("FADE_COMPLETED", onFadeInCompleted);
-			dispatchEvent(new Event("SCENE_INITIALIZED"));
+			dispatchEventWith("SCENE_INITIALIZED");
 		}
 		
 		protected function fadeOutAndClose(varParametres:Object):void {
@@ -53,7 +53,7 @@ package ui.scenes {
 		private function onRemovedFromStage(e:Event):void {
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			//this event should "bubles=true"
-			dispatchEvent(new Event("SCENE_CLOSED", true));
+			dispatchEventWith("SCENE_CLOSED", true);
 		}
 	}
 }

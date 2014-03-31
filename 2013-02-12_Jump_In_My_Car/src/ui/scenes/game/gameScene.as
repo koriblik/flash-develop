@@ -1,9 +1,14 @@
 package ui.scenes.game {
 	import config;
+	import flash.geom.Point;
 	import flash.ui.Keyboard;
+	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.events.KeyboardEvent;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import ui.scenes.baseScene;
 	import ui.scenes.game.objects.backgroundLayersObject;
 	import ui.scenes.game.objects.coinController;
@@ -43,6 +48,8 @@ package ui.scenes.game {
 		private var __state:String;
 		//array that holds the status of key pressed
 		private var __keyDown:Vector.<Boolean>;
+		//is clicked down
+		private var __fingerDown:Boolean;
 		
 		public function gameScene() {
 			super();
@@ -110,6 +117,8 @@ package ui.scenes.game {
 			for (i = 0; i < 256; i++) {
 				__keyDown[i] = false;
 			}
+			//set up click
+			__fingerDown = false;
 		}
 		
 		private function onStartGameClicked(e:Event):void {
@@ -119,6 +128,7 @@ package ui.scenes.game {
 			//add keyboard listeners
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			this.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			this.stage.addEventListener(TouchEvent.TOUCH, onTouch);
 			//set new state
 			__state = __IN_GAME_STATE;
 		}
@@ -132,10 +142,31 @@ package ui.scenes.game {
 			//add keyboard listeners
 			this.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			this.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			this.stage.removeEventListener(TouchEvent.TOUCH, onTouch);
 			__overlayGameOver.initialize();
 			__overlayGameOver.addEventListener(overlayGameOver.__EVENT_OVER, onGameOverClicked);
 			//set new state
 			__state = __IN_GAME_OVER_STATE;
+		}
+		
+		private function onTouch(event:TouchEvent):void {
+			var touchB:Touch = event.getTouch(this, TouchPhase.BEGAN);
+			if (touchB) {
+				__fingerDown = true;
+			}
+			var touchE:Touch = event.getTouch(this, TouchPhase.ENDED);
+			if (touchE) {
+				trace("up");
+				__fingerDown = false;
+			}
+			var touchM:Touch = event.getTouch(this, TouchPhase.MOVED);
+			if (touchM) {
+				if (__fingerDown) {
+					var currentPos:Point = touchM.getLocation(this);
+					var previousPos:Point = touchM.getPreviousLocation(this);
+					trace("Touched object at position: " + currentPos + "/" + previousPos);
+				}
+			}
 		}
 		
 		private function onGameOverClicked(e:Event):void {
@@ -191,7 +222,7 @@ package ui.scenes.game {
 			}
 			//shake scene
 			//!shake(__speed.getSpeed());
-			//
+		
 		/*TODO delete
 		   __player.y = 270 + 10 * Math.sin(Math.PI * __position / 180);
 		   __playerShadow.scaleX = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
