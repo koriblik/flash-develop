@@ -39,7 +39,7 @@ package {
 			config.loadData();
 			__starling.antiAliasing = 1;
 			__starling.showStats = true;
-			__starling.showStatsAt("left", "bottom", 3);
+			__starling.showStatsAt("left", "bottom", 2);
 			__starling.start();
 			//TODO delete
 			__tempDraw = new MovieClip();

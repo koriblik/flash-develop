@@ -11,6 +11,7 @@ package {
 		static public const __FADE_SCENE_DELAY:Number = 0.2;
 		static public const __DEFAULT_WIDTH:uint = 910;
 		static public const __DEFAULT_HEIGHT:uint = 512;
+		static public const __TOUCH_PANEL_SIZE:Number = .7;
 		static public var __ACTIVE_SCENE:String = "";
 		static public var __STAGE:Stage;
 		static public var __FRAME_RATE:uint;
@@ -20,6 +21,8 @@ package {
 		static public var __WINDOW_WIDTH:uint;
 		static public var __WINDOW_HEIGHT:uint;
 		static public var __WINDOW_SCALE:Number;
+		//storage data object
+		static public var __DATA_OBJECT:Object;
 		//textures in the level - ground
 		static public var __LEVEL_GRAPHIC_DATA:Array;
 		//length of the level in pixels
@@ -42,6 +45,9 @@ package {
 			__LEVEL_GRAPHIC_DATA = new Array();
 			__LEVEL_COINS_DATA = new Array();
 			__LEVEL_OBSTACLES_DATA = new Array();
+			//TODO set data
+			__DATA_OBJECT = new Object();
+			__DATA_OBJECT.leftHanededAlignment = false;
 		}
 		
 		static public function loadData():void {

@@ -214,6 +214,15 @@ package ui.scenes.game.objects {
 		}
 		
 		/**
+		 * Get the movement status
+		 * @return	Boolean	__movementStatus
+		 */
+		public function get moveStatus():String 
+		{
+			return __moveStatus;
+		}
+		
+		/**
 		 * Return width of the player - for collision
 		 * @return
 		 */

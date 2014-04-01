@@ -206,6 +206,13 @@
             <filename>textures_64/wall_low_full.png</filename>
             <filename>textures_64/wall_fly_low_full.png</filename>
             <filename>textures_64/empty_1x1.png</filename>
+            <filename>textures_64/04b_0.png</filename>
+            <filename>textures_64/gesture_swipe_down.png</filename>
+            <filename>textures_64/gesture_swipe_up.png</filename>
+            <filename>textures_64/gesture_tap.png</filename>
+            <filename>textures_64/overlay_rectangle_9slice.png</filename>
+            <filename>textures_64/overlay_jump.png</filename>
+            <filename>textures_64/overlay_move.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

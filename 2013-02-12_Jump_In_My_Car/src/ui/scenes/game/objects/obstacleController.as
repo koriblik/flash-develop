@@ -80,14 +80,6 @@ package ui.scenes.game.objects {
 					if (!__activeObstacles[i].hit) {
 						//get obstacle colision point
 						obstacleX = __activeObstacles[i].__data.position + __activeObstacles[i].__data.collisionXPoint;
-						//!delete start
-						Main.__tempOutput.htmlText += "player line: " + playerLine + "\n";
-						Main.__tempOutput.htmlText += "player height :" + playerHeight + "\n";
-						Main.__tempOutput.htmlText += obstacleX.toString() + ":" + playerX.toString() + "\n";
-						Main.__tempDraw.graphics.lineStyle(1, 0x00ff00);
-						Main.__tempDraw.graphics.moveTo(obstacleX - uPosition, 0);
-						Main.__tempDraw.graphics.lineTo(obstacleX - uPosition, config.__WINDOW_HEIGHT);
-						//!end
 						//check if obstacle is in the position of player
 						if ((playerX <= obstacleX) && (playerXW > obstacleX)) {
 							//check if player is in the same line as obstacle

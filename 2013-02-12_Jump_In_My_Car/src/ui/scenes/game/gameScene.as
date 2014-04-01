@@ -25,6 +25,8 @@ package ui.scenes.game {
 		//speed in pixels per second
 		private const __MAX_SPEED:uint = 1000;
 		private const __SHAKE_BOUNDARIES:uint = 10;
+		//when I register movement - 10% of screen height
+		private const __MIN_DIFF_MOVEMENT:uint = config.__DEFAULT_HEIGHT / 10;
 		//space betveen lines
 		private const __LINE_HEIGHT:uint = 30;
 		//basic jump height (small and big are calculated based on this)
@@ -156,25 +158,48 @@ package ui.scenes.game {
 			var touchB:Touch = event.getTouch(this.stage, TouchPhase.BEGAN);
 			var touchE:Touch = event.getTouch(this.stage, TouchPhase.ENDED);
 			var touchM:Touch = event.getTouch(this.stage, TouchPhase.MOVED);
+			//if touch - remember position and enable movement
 			if (touchB) {
 				__fingerDown = true;
+				__previousPosition = touchB.getPreviousLocation(this);
 			}
+			//if touch ended disable movement
 			if (touchE) {
 				__fingerDown = false;
 				if (!__fingerMoved) {
-					__objectPlayer.jump();
+					//test if tap is on correct place (right side)
+					if (((touchE.getPreviousLocation(this).x >= ((1 - config.__TOUCH_PANEL_SIZE) * config.__WINDOW_WIDTH)) && (!config.__DATA_OBJECT.leftHanededAlignment)) || ((touchE.getPreviousLocation(this).x < config.__TOUCH_PANEL_SIZE * config.__WINDOW_WIDTH) && (config.__DATA_OBJECT.leftHanededAlignment))) {
+						__objectPlayer.jump();
+					}
+					//test if tap is on correct place (left side)
+					if ((touchE.getPreviousLocation(this).x < config.__TOUCH_PANEL_SIZE * config.__WINDOW_WIDTH) && (config.__DATA_OBJECT.leftHanededAlignment)) {
+						__objectPlayer.jump();
+					}
 				}
 				__fingerMoved = false;
 			}
+			//if moved and finder is down
 			if (touchM) {
 				if (__fingerDown) {
 					__fingerMoved = true;
+					//get current position
 					__currentPosition = touchM.getLocation(this);
-					__previousPosition = touchM.getPreviousLocation(this);
-					if ((__currentPosition.y - __previousPosition.y) > 0) {
-						__objectPlayer.moveDown();
-					}else {
-						__objectPlayer.moveUp();
+					//check if player is still in movement and update previous position acordingly
+					if (__objectPlayer.moveStatus != __objectPlayer.__ON_HOLD) {
+						__previousPosition = touchM.getPreviousLocation(this);
+					}
+					//check if I am at the correct dimensions for movement
+					if (((touchM.getPreviousLocation(this).x < ((1 - config.__TOUCH_PANEL_SIZE) * config.__WINDOW_WIDTH)) && (!config.__DATA_OBJECT.leftHanededAlignment)) || ((touchM.getPreviousLocation(this).x >= config.__TOUCH_PANEL_SIZE * config.__WINDOW_WIDTH) && (config.__DATA_OBJECT.leftHanededAlignment))) {
+						//check if movement is higher than MIN value to recognize movement - move down
+						if ((__currentPosition.y - __previousPosition.y) > __MIN_DIFF_MOVEMENT) {
+							__previousPosition = touchM.getPreviousLocation(this);
+							__objectPlayer.moveDown();
+						}
+						//check if movement is lower than MIN value to recognize movement  - move up
+						if ((__currentPosition.y - __previousPosition.y) < -__MIN_DIFF_MOVEMENT) {
+							__previousPosition = touchM.getPreviousLocation(this);
+							__objectPlayer.moveUp();
+						}
 					}
 				}
 			}

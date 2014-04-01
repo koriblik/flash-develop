@@ -1,9 +1,7 @@
 package ui.scenes.game.objects.overlays {
-	import flash.ui.Keyboard;
 	import starling.display.Image;
-	import starling.events.Event;
-	import starling.events.EventDispatcher;
 	import starling.display.Sprite;
+	import starling.events.Event;
 	import starling.events.KeyboardEvent;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -20,6 +18,11 @@ package ui.scenes.game.objects.overlays {
 		
 		public function overlayGameOver() {
 			super();
+			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		}
+		
+		private function onAddedToStage(e:Event):void {
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			__sprite = new Image(assets.getAtlas().getTexture("empty_1x1"));
 			addChild(__sprite);
 			__sprite.smoothing = TextureSmoothing.NONE;
@@ -57,7 +60,7 @@ package ui.scenes.game.objects.overlays {
 		private function touchHandler(e:TouchEvent):void {
 			//if clicked then deinitialize
 			var touchEnded:Touch = e.getTouch(this, TouchPhase.ENDED);
-			if (touchEnded){
+			if (touchEnded) {
 				deinitialize();
 			}
 		}

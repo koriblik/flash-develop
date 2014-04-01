@@ -7,7 +7,7 @@
     <movie path="bin\jimc.swf" />
     <movie fps="30" />
     <movie width="640" />
-    <movie height="368" />
+    <movie height="480" />
     <movie version="11" />
     <movie minorVersion="9" />
     <movie platform="Flash Player" />
@@ -53,6 +53,7 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="lib\starling.swc" />
+    <element path="lib\feathers.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
