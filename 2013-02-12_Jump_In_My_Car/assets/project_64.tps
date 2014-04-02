@@ -213,6 +213,8 @@
             <filename>textures_64/overlay_rectangle_9slice.png</filename>
             <filename>textures_64/overlay_jump.png</filename>
             <filename>textures_64/overlay_move.png</filename>
+            <filename>textures_64/buttonSwitch.png</filename>
+            <filename>textures_64/buttonPlay.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

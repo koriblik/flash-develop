@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:0c63781fe088d1c8835422b360d4a14a:24496c85318181ed85ab3ca01a3d52a2:79b0df89fca4e6f763f07950667e1678$ -->
+<!-- $TexturePacker:SmartUpdate:e4fbdc1802837b59dceb4ccc78a597d0:4387e0a9e02c00ce2b7fbd9dcf984cf2:79b0df89fca4e6f763f07950667e1678$ -->
 <TextureAtlas imagePath="textures_64.png">
     <SubTexture name="04b_0" x="1" y="1" width="512" height="256"/>
     <SubTexture name="background_empty" x="517" y="1" width="1" height="1"/>
     <SubTexture name="background_layer01" x="522" y="1" width="128" height="192"/>
     <SubTexture name="background_layer02" x="654" y="1" width="128" height="128"/>
-    <SubTexture name="coin00_empty" x="786" y="1" width="32" height="32"/>
-    <SubTexture name="coin01" x="822" y="1" width="32" height="32"/>
-    <SubTexture name="coin02" x="858" y="1" width="32" height="32"/>
-    <SubTexture name="coin03" x="894" y="1" width="32" height="32"/>
-    <SubTexture name="coin04" x="930" y="1" width="32" height="32"/>
-    <SubTexture name="coin05" x="966" y="1" width="32" height="32"/>
-    <SubTexture name="coin06" x="1" y="261" width="32" height="32"/>
-    <SubTexture name="coin07" x="37" y="261" width="32" height="32"/>
-    <SubTexture name="coin08" x="73" y="261" width="32" height="32"/>
-    <SubTexture name="coin_shadow" x="109" y="261" width="32" height="32"/>
-    <SubTexture name="empty_1x1" x="145" y="261" width="1" height="1"/>
-    <SubTexture name="foreground_layer01" x="150" y="261" width="128" height="192"/>
-    <SubTexture name="foreground_layer02a" x="282" y="261" width="128" height="192"/>
-    <SubTexture name="foreground_layer02b" x="414" y="261" width="128" height="192"/>
-    <SubTexture name="foreground_layer03" x="546" y="261" width="128" height="192"/>
-    <SubTexture name="foreground_layer04" x="678" y="261" width="128" height="192"/>
-    <SubTexture name="gesture_swipe_down" x="810" y="261" width="128" height="128"/>
-    <SubTexture name="gesture_swipe_up" x="1" y="457" width="128" height="128"/>
-    <SubTexture name="gesture_tap" x="133" y="457" width="128" height="128"/>
-    <SubTexture name="overlay_jump" x="265" y="457" width="128" height="128"/>
-    <SubTexture name="overlay_move" x="397" y="457" width="128" height="128"/>
-    <SubTexture name="overlay_rectangle_9slice" x="529" y="457" width="3" height="3"/>
-    <SubTexture name="pillar" x="536" y="457" width="32" height="68"/>
-    <SubTexture name="player_fly" x="572" y="457" width="72" height="56"/>
-    <SubTexture name="player_fly_shadow" x="648" y="457" width="36" height="28"/>
-    <SubTexture name="ramp" x="688" y="457" width="32" height="50"/>
-    <SubTexture name="wall_fly_jump" x="724" y="457" width="58" height="154"/>
-    <SubTexture name="wall_fly_low_full" x="786" y="457" width="52" height="172"/>
-    <SubTexture name="wall_high" x="842" y="457" width="48" height="138"/>
-    <SubTexture name="wall_jump" x="894" y="457" width="64" height="60"/>
-    <SubTexture name="wall_low" x="962" y="457" width="48" height="86"/>
-    <SubTexture name="wall_low_full" x="1" y="633" width="64" height="120"/>
+    <SubTexture name="buttonPlay" x="786" y="1" width="128" height="64"/>
+    <SubTexture name="buttonSwitch" x="918" y="1" width="64" height="64"/>
+    <SubTexture name="coin00_empty" x="986" y="1" width="32" height="32"/>
+    <SubTexture name="coin01" x="1" y="261" width="32" height="32"/>
+    <SubTexture name="coin02" x="37" y="261" width="32" height="32"/>
+    <SubTexture name="coin03" x="73" y="261" width="32" height="32"/>
+    <SubTexture name="coin04" x="109" y="261" width="32" height="32"/>
+    <SubTexture name="coin05" x="145" y="261" width="32" height="32"/>
+    <SubTexture name="coin06" x="181" y="261" width="32" height="32"/>
+    <SubTexture name="coin07" x="217" y="261" width="32" height="32"/>
+    <SubTexture name="coin08" x="253" y="261" width="32" height="32"/>
+    <SubTexture name="coin_shadow" x="289" y="261" width="32" height="32"/>
+    <SubTexture name="empty_1x1" x="325" y="261" width="1" height="1"/>
+    <SubTexture name="foreground_layer01" x="330" y="261" width="128" height="192"/>
+    <SubTexture name="foreground_layer02a" x="462" y="261" width="128" height="192"/>
+    <SubTexture name="foreground_layer02b" x="594" y="261" width="128" height="192"/>
+    <SubTexture name="foreground_layer03" x="726" y="261" width="128" height="192"/>
+    <SubTexture name="foreground_layer04" x="858" y="261" width="128" height="192"/>
+    <SubTexture name="gesture_swipe_down" x="1" y="457" width="128" height="128"/>
+    <SubTexture name="gesture_swipe_up" x="133" y="457" width="128" height="128"/>
+    <SubTexture name="gesture_tap" x="265" y="457" width="128" height="128"/>
+    <SubTexture name="overlay_jump" x="397" y="457" width="128" height="128"/>
+    <SubTexture name="overlay_move" x="529" y="457" width="128" height="128"/>
+    <SubTexture name="overlay_rectangle_9slice" x="661" y="457" width="3" height="3"/>
+    <SubTexture name="pillar" x="668" y="457" width="32" height="68"/>
+    <SubTexture name="player_fly" x="704" y="457" width="72" height="56"/>
+    <SubTexture name="player_fly_shadow" x="780" y="457" width="72" height="28"/>
+    <SubTexture name="ramp" x="856" y="457" width="32" height="50"/>
+    <SubTexture name="wall_fly_jump" x="892" y="457" width="58" height="154"/>
+    <SubTexture name="wall_fly_low_full" x="954" y="457" width="52" height="172"/>
+    <SubTexture name="wall_high" x="1" y="633" width="48" height="138"/>
+    <SubTexture name="wall_jump" x="53" y="633" width="64" height="60"/>
+    <SubTexture name="wall_low" x="121" y="633" width="48" height="86"/>
+    <SubTexture name="wall_low_full" x="173" y="633" width="64" height="120"/>
 </TextureAtlas>

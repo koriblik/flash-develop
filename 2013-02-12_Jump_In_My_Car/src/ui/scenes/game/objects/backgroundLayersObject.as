@@ -11,6 +11,7 @@ package ui.scenes.game.objects {
 		private var __layer01:parallaxLayer;
 		private var __layer02:parallaxLayer;
 		private var __levelLayer01:parallaxLayer;
+		private const __LEVEL_TILE_WIDTH:uint = 128;
 		
 		public function backgroundLayersObject() {
 			super();
@@ -38,7 +39,7 @@ package ui.scenes.game.objects {
 			}
 			__layer02 = new parallaxLayer("bg_layer02", 128, 128, tiles02, .4, 0, 0);
 			addChild(__layer02);
-			__levelLayer01 = new parallaxLayer("foreground_layer01", 128, 192, config.__LEVEL_GRAPHIC_DATA, 1, 0, 320, false);
+			__levelLayer01 = new parallaxLayer("foreground_layer01", __LEVEL_TILE_WIDTH, 192, config.__LEVEL_GRAPHIC_DATA, 1, 0, 320, false);
 			addChild(__levelLayer01);
 			initialize();
 		}
@@ -52,6 +53,35 @@ package ui.scenes.game.objects {
 			__layer01.setPosition(nPosition);
 			__layer02.setPosition(nPosition);
 			__levelLayer01.setPosition(nPosition);
+		}
+		
+		/**
+		 * Custom methot to return if the floor is presented under player
+		 * @param	nPosition
+		 * @return	int		-1 - FALL, 0 - OK
+		 */
+		public function getFrontLayerHeight(nPosition:Number):int {
+			var returnValue:int = 0;
+			var tileID:String = config.__LEVEL_GRAPHIC_DATA[uint(nPosition / __LEVEL_TILE_WIDTH)];
+			Main.__tempOutput.text = tileID;
+			switch (tileID) {
+				case "foreground_layer01": 
+					returnValue = 0;
+					break;
+				case "foreground_layer02a": 
+					returnValue = 0;
+					break;
+				case "foreground_layer02b": 
+					returnValue = 0;
+					break;
+				case "foreground_layer03": 
+					returnValue = 0;
+					break;
+				case "foreground_layer04": 
+					returnValue = -1;
+					break;
+			}
+			return returnValue;
 		}
 	}
 }

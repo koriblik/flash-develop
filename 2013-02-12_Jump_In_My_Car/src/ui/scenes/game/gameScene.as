@@ -10,6 +10,7 @@ package ui.scenes.game {
 	import ui.scenes.baseScene;
 	import ui.scenes.game.objects.backgroundLayersObject;
 	import ui.scenes.game.objects.coinController;
+	import ui.scenes.game.objects.levelController;
 	import ui.scenes.game.objects.objectPlayer;
 	import ui.scenes.game.objects.objectsLayer;
 	import ui.scenes.game.objects.obstacleController;
@@ -38,6 +39,7 @@ package ui.scenes.game {
 		private var __objectsLayer:objectsLayer;
 		private var __coinController:coinController;
 		private var __obstacleController:obstacleController;
+		private var __levelController:levelController;
 		private var __objectPlayer:objectPlayer;
 		private var __overlayStartGame:overlayStartGame;
 		private var __overlayGameOver:overlayGameOver;
@@ -84,6 +86,8 @@ package ui.scenes.game {
 			//objects layer
 			__objectsLayer = new objectsLayer(__objectPlayer);
 			addChild(__objectsLayer);
+			//level controller
+			__levelController = new levelController(__backgroundLayer);
 			//coin controller
 			__coinController = new coinController(__objectsLayer);
 			//obstacle controller
@@ -254,6 +258,10 @@ package ui.scenes.game {
 			var returnValueCoin:uint = __coinController.colisionWithPlayer(__objectPlayer, __position);
 			var returnValueObstacle:String = __obstacleController.colisionWithPlayer(__objectPlayer, __position);
 			if (returnValueObstacle == "HIT") {
+				gameOver();
+			}
+			var returnValueLevel:String = __levelController.colisionWithPlayer(__objectPlayer, __position);
+			if (returnValueLevel == levelController.__FALL) {
 				gameOver();
 			}
 			//shake scene

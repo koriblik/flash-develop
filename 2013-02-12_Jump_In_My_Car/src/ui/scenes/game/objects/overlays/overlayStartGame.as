@@ -1,4 +1,5 @@
 package ui.scenes.game.objects.overlays {
+	import extensions.starling.customButton;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -22,6 +23,8 @@ package ui.scenes.game.objects.overlays {
 		private var __reload:Boolean;
 		private var __panelTouch:objectStartGameTouchPanel;
 		private var __panelMove:objectStartGameMovePanel;
+		private var __switchButton:customButton;
+		private var __playButton:customButton;
 		
 		public function overlayStartGame() {
 			super();
@@ -42,6 +45,13 @@ package ui.scenes.game.objects.overlays {
 			__sprite.alignPivot("left", "top");
 			__sprite.x = 0;
 			__sprite.y = 0;
+			//switch button
+			__switchButton = new customButton(assets.getAtlas().getTexture("buttonSwitch"));
+			__switchButton.alignPivot("center", "center");
+			addChild(__switchButton);
+			__playButton = new customButton(assets.getAtlas().getTexture("buttonPlay"));
+			__playButton.alignPivot("center", "center");
+			addChild(__playButton);
 			this.visible = false;
 		}
 		
@@ -55,61 +65,48 @@ package ui.scenes.game.objects.overlays {
 				Tweener.addTween(__panelTouch, {x: uint(Number(1 - config.__TOUCH_PANEL_SIZE) * config.__WINDOW_WIDTH), time: __TWEEN_DURATION, delay: 0, transition: "easeInSine", onComplete: null});
 				Tweener.addTween(__panelMove, {x: 0, time: __TWEEN_DURATION, delay: 0, transition: "easeInSine", onComplete: tweenInCompleted});
 			}
+			Tweener.addTween(__switchButton, {y: __switchButton.height / 2, time: __TWEEN_DURATION, delay: 0, transition: "easeInSine", onComplete: null});
+			Tweener.addTween(__playButton, {y: config.__DEFAULT_HEIGHT - __switchButton.height, time: __TWEEN_DURATION, delay: 0, transition: "easeInSine", onComplete: null});
 			__reload = false;
 			//visualize
 			this.visible = true;
 		}
 		
-		private function tweenInCompleted():void {
-			//set handlers
-			this.addEventListener(TouchEvent.TOUCH, touchHandler);
-			//this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-		}
-		
 		private function setPositions():void {
 			//set position
+			__switchButton.y = -__switchButton.height / 2;
+			__playButton.x = config.__WINDOW_WIDTH / 2;
+			__playButton.y = config.__DEFAULT_HEIGHT + __switchButton.height / 2;
 			if (config.__DATA_OBJECT.leftHanededAlignment) {
 				__panelTouch.x = -uint(Number(config.__TOUCH_PANEL_SIZE) * config.__WINDOW_WIDTH);
 				__panelMove.x = config.__WINDOW_WIDTH;
+				__switchButton.x = uint(Number(config.__TOUCH_PANEL_SIZE) * config.__WINDOW_WIDTH);
 			} else {
 				__panelTouch.x = config.__WINDOW_WIDTH;
 				__panelMove.x = -uint(Number(1 - config.__TOUCH_PANEL_SIZE) * config.__WINDOW_WIDTH);
+				__switchButton.x = uint(Number(1 - config.__TOUCH_PANEL_SIZE) * config.__WINDOW_WIDTH);
 			}
-		/*
-		   if (config.__DATA_OBJECT.leftHanededAlignment) {
-		   __panelTouch.x = 0;
-		   __panelMove.x = uint(Number(config.__TOUCH_PANEL_SIZE) * config.__WINDOW_WIDTH);
-		   } else {
-		   __panelTouch.x = uint(Number(1 - config.__TOUCH_PANEL_SIZE) * config.__WINDOW_WIDTH);
-		   __panelMove.x = 0;
-		   }
-		 */
 		}
 		
-		public function deinitialize():void {
-			//visualize
-			this.visible = false;
-			//remove handlers
-			this.removeEventListener(TouchEvent.TOUCH, touchHandler);
-			this.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-			//dispatch event that I am finished
-			dispatchEventWith(__EVENT_START);
+		private function tweenInCompleted():void {
+			//set handlers
+			__switchButton.addEventListener(Event.TRIGGERED, onSwitchButtonClick);
+			__playButton.addEventListener(Event.TRIGGERED, onPlayButtonClick);
 		}
 		
-		private function onKeyDown(e:KeyboardEvent):void {
-			//TODO not declared yet - if any key pressed then deinitialize and start game
+		private function onPlayButtonClick(e:Event):void {
 			tweenOut();
 		}
 		
-		private function touchHandler(e:TouchEvent):void {
-			//if clicked then deinitialize
-			var touchEnded:Touch = e.getTouch(this, TouchPhase.ENDED);
-			if (touchEnded) {
-				tweenOut();
-			}
+		private function onSwitchButtonClick(e:Event):void {
+			tweenOut(true);
 		}
 		
 		private function tweenOut(bReload:Boolean = false):void {
+			//remove events
+			__switchButton.removeEventListener(Event.TRIGGERED, onSwitchButtonClick);
+			__playButton.removeEventListener(Event.TRIGGERED, onPlayButtonClick);
+			//set tweeners
 			if (config.__DATA_OBJECT.leftHanededAlignment) {
 				Tweener.addTween(__panelTouch, {x: -uint(Number(config.__TOUCH_PANEL_SIZE) * config.__WINDOW_WIDTH), time: __TWEEN_DURATION, delay: 0, transition: "easeInSine", onComplete: null});
 				Tweener.addTween(__panelMove, {x: config.__WINDOW_WIDTH, time: __TWEEN_DURATION, delay: 0, transition: "easeInSine", onComplete: tweenOutCompleted});
@@ -117,6 +114,9 @@ package ui.scenes.game.objects.overlays {
 				Tweener.addTween(__panelTouch, {x: config.__WINDOW_WIDTH, time: __TWEEN_DURATION, delay: 0, transition: "easeInSine", onComplete: null});
 				Tweener.addTween(__panelMove, {x: -uint(Number(1 - config.__TOUCH_PANEL_SIZE) * config.__WINDOW_WIDTH), time: __TWEEN_DURATION, delay: 0, transition: "easeInSine", onComplete: tweenOutCompleted});
 			}
+			Tweener.addTween(__switchButton, {y: -__switchButton.height / 2, time: __TWEEN_DURATION, delay: 0, transition: "easeInSine", onComplete: null});
+			Tweener.addTween(__playButton, {y: config.__DEFAULT_HEIGHT + __switchButton.height / 2, time: __TWEEN_DURATION, delay: 0, transition: "easeInSine", onComplete: null});
+			__reload = bReload;
 		}
 		
 		private function tweenOutCompleted():void {
@@ -127,5 +127,13 @@ package ui.scenes.game.objects.overlays {
 				deinitialize();
 			}
 		}
+		
+		public function deinitialize():void {
+			//visualize
+			this.visible = false;
+			//dispatch event that I am finished
+			dispatchEventWith(__EVENT_START);
+		}
+	
 	}
 }

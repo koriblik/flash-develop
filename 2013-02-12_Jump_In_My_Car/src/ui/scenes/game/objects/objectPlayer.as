@@ -25,6 +25,7 @@ package ui.scenes.game.objects {
 		public const __JUMP_BIG_SPEED:Number = 3.4;
 		//graphics
 		private var __sprite:Image;
+		private var __spriteShadow:Image;
 		//height
 		private var __height:Number;
 		//current position interval <0,2>
@@ -67,11 +68,17 @@ package ui.scenes.game.objects {
 		private function onAddedToStage(e:Event):void {
 			//remove listener
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			//add oplayer shadow
+			__spriteShadow = new Image(assets.getAtlas().getTexture("player_fly_shadow"));
+			__spriteShadow.alignPivot("center", "center");
+			addChild(__spriteShadow);
 			//add player sprite and align it to left bottom
 			__sprite = new Image(assets.getAtlas().getTexture("player_fly"));
 			__sprite.alignPivot("left", "bottom");
 			addChild(__sprite);
+			__spriteShadow.x = __sprite.width / 2;
 			__height = __sprite.height;
+			
 			//calculate speed based on frame rate
 			__movementSpeed = config.__DELTA_TIME / __SPEED;
 			//jump speed - how long I stay in jump
@@ -195,6 +202,9 @@ package ui.scenes.game.objects {
 			//TODO handle small jump and high jump
 			//this formula works only for normal jump
 			__sprite.y = uint(__xPosition * __lineHeight) - uint(getJumpHeight());
+			__spriteShadow.y = uint(__xPosition * __lineHeight);
+			__spriteShadow.scaleX = (500 - getJumpHeight()) / 500;
+			__spriteShadow.scaleY = __spriteShadow.scaleX;
 		}
 		
 		/**
