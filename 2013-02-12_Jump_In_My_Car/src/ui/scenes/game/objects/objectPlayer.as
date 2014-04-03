@@ -2,6 +2,7 @@ package ui.scenes.game.objects {
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.textures.TextureSmoothing;
 	
 	/**
 	 * 2014-02-28
@@ -70,10 +71,12 @@ package ui.scenes.game.objects {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			//add oplayer shadow
 			__spriteShadow = new Image(assets.getAtlas().getTexture("player_fly_shadow"));
+			__spriteShadow.smoothing = TextureSmoothing.NONE;
 			__spriteShadow.alignPivot("center", "center");
 			addChild(__spriteShadow);
 			//add player sprite and align it to left bottom
 			__sprite = new Image(assets.getAtlas().getTexture("player_fly"));
+			__sprite.smoothing = TextureSmoothing.NONE;
 			__sprite.alignPivot("left", "bottom");
 			addChild(__sprite);
 			__spriteShadow.x = __sprite.width / 2;

@@ -1,6 +1,8 @@
 package {
 	import flash.display.Bitmap;
 	import flash.utils.Dictionary;
+	import starling.text.BitmapFont;
+	import starling.text.TextField;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	
@@ -30,6 +32,9 @@ package {
 		[Embed(source="../assets/obstacles.xml",mimeType="application/octet-stream")]
 		private static const __obstaclesClass:Class;
 		public static var __obstaclesXML:XML;
+		//bitmap font
+		[Embed(source="../assets/textures_64/04b.fnt",mimeType="application/octet-stream")]
+		public static const fontXML:Class;
 		
 		static public function initialize():void {
 			__levelXML = XML(new __levelClass());
@@ -37,6 +42,12 @@ package {
 			__obstaclesXML = XML(new __obstaclesClass());
 			//TODO tu pridat vyber texturoveho subory na zaklade rozlisenia
 			__selectedTextureSheet = "__gameTexture64SpriteSheet";
+		}
+		
+		static public function initFonts():void {
+			//initialize font
+			TextField.registerBitmapFont(new BitmapFont(getAtlas().getTexture("04b_0"), XML(new fontXML())));
+		
 		}
 		
 		/**

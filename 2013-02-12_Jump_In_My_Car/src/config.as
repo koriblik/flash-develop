@@ -1,5 +1,7 @@
 package {
 	import flash.display.Stage;
+	import flash.sensors.Accelerometer;
+	import flash.system.Capabilities;
 	
 	/**
 	 * 2014-01-14
@@ -21,6 +23,8 @@ package {
 		static public var __WINDOW_WIDTH:uint;
 		static public var __WINDOW_HEIGHT:uint;
 		static public var __WINDOW_SCALE:Number;
+		static public var __MOBILE_DEVICE:Boolean;
+		static public var __ANDROID_DEVICE:Boolean;
 		//storage data object
 		static public var __DATA_OBJECT:Object;
 		//textures in the level - ground
@@ -37,9 +41,16 @@ package {
 			__STAGE = stage;
 			__FRAME_RATE = __STAGE.frameRate;
 			__DELTA_TIME = 1 / __FRAME_RATE;
-			//TODO on release to mobile chnage to stage.fullScreen WIDTH/HEIGHT
-			__WINDOW_WIDTH = stage.stageWidth;
-			__WINDOW_HEIGHT = stage.stageHeight;
+			//detect if this is mobile device)
+			__MOBILE_DEVICE =  Accelerometer.isSupported;
+			__ANDROID_DEVICE = true;
+			if (__MOBILE_DEVICE) {
+				__WINDOW_WIDTH = stage.fullScreenWidth;
+				__WINDOW_HEIGHT = stage.fullScreenHeight;
+			} else {
+				__WINDOW_WIDTH = stage.stageWidth;
+				__WINDOW_HEIGHT = stage.stageHeight;
+			}
 			__WINDOW_SCALE = (__WINDOW_HEIGHT / __DEFAULT_HEIGHT);
 			__MENU_BG_COLOR = 0xffff00ff;
 			__LEVEL_GRAPHIC_DATA = new Array();

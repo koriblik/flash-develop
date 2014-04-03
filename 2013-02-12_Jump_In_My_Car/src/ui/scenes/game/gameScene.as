@@ -7,6 +7,7 @@ package ui.scenes.game {
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.text.TextField;
 	import ui.scenes.baseScene;
 	import ui.scenes.game.objects.backgroundLayersObject;
 	import ui.scenes.game.objects.coinController;
@@ -46,6 +47,8 @@ package ui.scenes.game {
 		private var __frame:uint;
 		private var __position:Number;
 		private var __speed:speedController;
+		//score
+		private var __scoreText:TextField;
 		//cursor positions
 		private var __currentPosition:Point = new Point();
 		private var __previousPosition:Point = new Point();
@@ -59,6 +62,8 @@ package ui.scenes.game {
 		
 		public function gameScene() {
 			super();
+						assets.initFonts();
+
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
@@ -97,6 +102,9 @@ package ui.scenes.game {
 			addChild(__overlayStartGame);
 			__overlayGameOver = new overlayGameOver();
 			addChild(__overlayGameOver);
+			//score
+			__scoreText = new TextField(config.__WINDOW_WIDTH, 64, "0", "04b", 30, 0xffff00);
+			addChild(__scoreText);
 			//add keyboard vector
 			__keyDown = new Vector.<Boolean>(256);
 			initialize();
@@ -256,6 +264,7 @@ package ui.scenes.game {
 			Main.__tempDraw.graphics.clear();
 			Main.__tempOutput.htmlText = "";
 			var returnValueCoin:uint = __coinController.colisionWithPlayer(__objectPlayer, __position);
+			__scoreText.text = String(uint(__scoreText.text) + returnValueCoin);
 			var returnValueObstacle:String = __obstacleController.colisionWithPlayer(__objectPlayer, __position);
 			if (returnValueObstacle == "HIT") {
 				gameOver();

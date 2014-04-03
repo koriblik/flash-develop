@@ -21,6 +21,7 @@ package extensions.starling {
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.textures.Texture;
+	import starling.textures.TextureSmoothing;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	
@@ -70,6 +71,7 @@ package extensions.starling {
 			mDownState = downState ? downState : upState;
 			mOverState = overState ? overState : (downState ? downState : upState);
 			mBackground = new Image(upState);
+			mBackground.smoothing = TextureSmoothing.NONE;
 			mScaleWhenDown = downState ? 1.0 : 1.0;
 			mScaleWhenOver = overState ? 1.0 : 1.0;
 			mAlphaWhenDisabled = 0.5;
@@ -81,6 +83,7 @@ package extensions.starling {
 			mContents.addChild(mBackground);
 			if (overlay != null) {
 				mOverlay = new Image(overlay);
+				mOverlay.smoothing = TextureSmoothing.NONE;
 				mContents.addChild(mOverlay);
 			}
 			addChild(mContents);

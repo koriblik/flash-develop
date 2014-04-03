@@ -5,6 +5,7 @@ package extensions.starling {
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.textures.Texture;
+	import starling.textures.TextureSmoothing;
 	/**
 	 * ...
 	 * @author Pavol Kusovsky
@@ -28,6 +29,7 @@ package extensions.starling {
 			__height = int(varParametres.height);
 			__bitmapData = new BitmapData(__width, __height, false, __color);
 			__image = new Image(Texture.fromBitmapData(__bitmapData, false));
+			__image.smoothing = TextureSmoothing.NONE;
 			__image.x = 0;
 			__image.y = 0;
 			addChild(__image);

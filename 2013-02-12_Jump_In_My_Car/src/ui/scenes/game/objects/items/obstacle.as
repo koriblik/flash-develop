@@ -20,6 +20,7 @@ package ui.scenes.game.objects.items {
 		public function obstacle() {
 			super();
 			__sprite = new Image(assets.getAtlas().getTexture("empty_1x1"));
+			__sprite.smoothing = TextureSmoothing.NONE;
 			addChild(__sprite);
 		}
 		
@@ -28,7 +29,6 @@ package ui.scenes.game.objects.items {
 			__data = oData;
 			//set texture
 			__sprite.texture = assets.getAtlas().getTexture(__data.name);
-			__sprite.smoothing = TextureSmoothing.NONE;
 			__sprite.readjustSize();
 			__sprite.pivotX = __data.pivotX;
 			__sprite.pivotY = __data.pivotY;

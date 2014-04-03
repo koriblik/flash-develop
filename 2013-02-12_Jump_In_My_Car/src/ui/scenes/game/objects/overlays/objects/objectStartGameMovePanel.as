@@ -1,6 +1,5 @@
 package ui.scenes.game.objects.overlays.objects {
-	import feathers.display.Scale9Image;
-	import feathers.textures.Scale9Textures;
+	import extensions.starling.scale9Image;
 	import flash.geom.Rectangle;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -14,7 +13,7 @@ package ui.scenes.game.objects.overlays.objects {
 	public class objectStartGameMovePanel extends Sprite {
 		private var __leftHanededAlignment:Boolean;
 		private var __panelSize:uint;
-		private var __panelSprite:Scale9Image;
+		private var __panelSprite:scale9Image;
 		private var __gestureUp:Image;
 		private var __gestureDown:Image;
 		private var __iconMove:Image
@@ -27,18 +26,20 @@ package ui.scenes.game.objects.overlays.objects {
 		}
 		
 		private function onAddedToStage(e:Event):void {
-			__panelSprite = new Scale9Image(new Scale9Textures(assets.getAtlas().getTexture("overlay_rectangle_9slice"), new Rectangle(1, 1, 1, 1)));
-			__panelSprite.smoothing = TextureSmoothing.NONE;
+			__panelSprite = new scale9Image(assets.getAtlas().getTexture("overlay_rectangle_9slice"), new Rectangle(1, 1, 1, 1));
 			__panelSprite.width = __panelSize;
 			__panelSprite.height = config.__DEFAULT_HEIGHT;
 			this.addChild(__panelSprite);
 			__gestureUp = new Image(assets.getAtlas().getTexture("gesture_swipe_up"));
+			__gestureUp.smoothing = TextureSmoothing.NONE;
 			__gestureUp.alignPivot("center", "center");
 			addChild(__gestureUp);
 			__gestureDown = new Image(assets.getAtlas().getTexture("gesture_swipe_down"));
+			__gestureDown.smoothing = TextureSmoothing.NONE;
 			__gestureDown.alignPivot("center", "center");
 			addChild(__gestureDown);
 			__iconMove = new Image(assets.getAtlas().getTexture("overlay_move"));
+			__iconMove.smoothing = TextureSmoothing.NONE;
 			__iconMove.alignPivot("center", "center");
 			addChild(__iconMove);
 			updatePositions(__leftHanededAlignment);

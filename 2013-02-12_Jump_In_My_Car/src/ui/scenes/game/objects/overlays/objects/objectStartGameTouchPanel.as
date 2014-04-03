@@ -1,6 +1,5 @@
 package ui.scenes.game.objects.overlays.objects {
-	import feathers.display.Scale9Image;
-	import feathers.textures.Scale9Textures;
+	import extensions.starling.scale9Image;
 	import flash.geom.Rectangle;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -14,7 +13,7 @@ package ui.scenes.game.objects.overlays.objects {
 	public class objectStartGameTouchPanel extends Sprite {
 		private var __leftHanededAlignment:Boolean;
 		private var __panelSize:uint;
-		private var __panelSprite:Scale9Image;
+		private var __panelSprite:scale9Image;
 		private var __gestureTap:Image;
 		private var __iconJump:Image;
 		
@@ -26,15 +25,16 @@ package ui.scenes.game.objects.overlays.objects {
 		}
 		
 		private function onAddedToStage(e:Event):void {
-			__panelSprite = new Scale9Image(new Scale9Textures(assets.getAtlas().getTexture("overlay_rectangle_9slice"), new Rectangle(1, 1, 1, 1)));
-			__panelSprite.smoothing = TextureSmoothing.NONE;
+			__panelSprite = new scale9Image(assets.getAtlas().getTexture("overlay_rectangle_9slice"), new Rectangle(1, 1, 1, 1));
 			__panelSprite.width = __panelSize;
 			__panelSprite.height = config.__DEFAULT_HEIGHT;
 			this.addChild(__panelSprite);
 			__gestureTap = new Image(assets.getAtlas().getTexture("gesture_tap"));
+			__gestureTap.smoothing = TextureSmoothing.NONE;
 			__gestureTap.alignPivot("center", "center");
 			addChild(__gestureTap);
 			__iconJump = new Image(assets.getAtlas().getTexture("overlay_jump"));
+			__iconJump.smoothing = TextureSmoothing.NONE;
 			__iconJump.alignPivot("center", "center");
 			addChild(__iconJump);
 			updatePositions(__leftHanededAlignment);
