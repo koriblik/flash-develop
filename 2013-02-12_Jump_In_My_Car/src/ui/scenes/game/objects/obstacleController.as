@@ -7,6 +7,7 @@ package ui.scenes.game.objects {
 	 * @author Pavol Kusovsky
 	 */
 	public class obstacleController {
+		static public const __HIT:String = "HIT";
 		private var __pooler:objectPool;
 		private var __activeObstacles:Vector.<obstacle>;
 		private var __objectsLayer:objectsLayer;
@@ -117,7 +118,7 @@ package ui.scenes.game.objects {
 													break;
 												case "end": 
 													__activeObstacles[i].hit = true;
-													returnValue = "HIT";
+													returnValue = __HIT;
 													break;
 											}
 										}

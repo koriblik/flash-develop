@@ -1,4 +1,5 @@
 package ui.scenes.game.objects {
+	import caurina.transitions.Tweener;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -9,6 +10,7 @@ package ui.scenes.game.objects {
 	 * @author Pavol Kusovsky
 	 */
 	public class objectPlayer extends Sprite {
+		public static const __EVENT_ANIMATION_FALL_END:String = "event_animation_fall_end";
 		public const __IN_JUMP:String = "inJump";
 		public const __IN_SMALL_JUMP:String = "inSmallJump";
 		public const __IN_BIG_JUMP:String = "inBigJump";
@@ -24,6 +26,7 @@ package ui.scenes.game.objects {
 		public const __JUMP_SPEED:Number = 1;
 		public const __JUMP_SMALL_SPEED:Number = 2.2;
 		public const __JUMP_BIG_SPEED:Number = 3.4;
+		public const __FALL_ANIMATION_DURATION:Number = .5;
 		//graphics
 		private var __sprite:Image;
 		private var __spriteShadow:Image;
@@ -137,7 +140,7 @@ package ui.scenes.game.objects {
 		
 		public function smallJump():void {
 			//calculate initial yposition based on the current height
-			__yPosition = Math.asin(getJumpHeight()/__jumpSmallHeight)/Math.PI;
+			__yPosition = Math.asin(getJumpHeight() / __jumpSmallHeight) / Math.PI;
 			//set jump type
 			__status = __IN_SMALL_JUMP;
 		}
@@ -230,8 +233,7 @@ package ui.scenes.game.objects {
 		 * Get the movement status
 		 * @return	Boolean	__movementStatus
 		 */
-		public function get moveStatus():String 
-		{
+		public function get moveStatus():String {
 			return __moveStatus;
 		}
 		
@@ -261,6 +263,14 @@ package ui.scenes.game.objects {
 					break;
 			}
 			return returnValue;
+		}
+		
+		public function fall():void {
+			Tweener.addTween(this, {y: config.__DEFAULT_HEIGHT+__height, time: __FALL_ANIMATION_DURATION, delay: 0, transition: "easeInSine", onComplete: tweenCompleted});
+		}
+		
+		private function tweenCompleted():void {
+			dispatchEventWith(__EVENT_ANIMATION_FALL_END);
 		}
 	}
 }

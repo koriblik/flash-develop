@@ -63,10 +63,14 @@ package ui.scenes.game.objects {
 		public function getFrontLayerHeight(nPosition:Number):int {
 			var returnValue:int = 0;
 			var tileID:String = config.__LEVEL_GRAPHIC_DATA[uint(nPosition / __LEVEL_TILE_WIDTH)];
+			var mod:uint = uint(nPosition % __LEVEL_TILE_WIDTH);
 			Main.__tempOutput.text = tileID;
 			switch (tileID) {
 				case "foreground_layer01": 
 					returnValue = 0;
+					if (mod < __LEVEL_TILE_WIDTH/2) {
+						returnValue = -1;
+					}
 					break;
 				case "foreground_layer02a": 
 					returnValue = 0;
@@ -76,6 +80,9 @@ package ui.scenes.game.objects {
 					break;
 				case "foreground_layer03": 
 					returnValue = 0;
+					if (mod > __LEVEL_TILE_WIDTH/2) {
+						returnValue = -1;
+					}
 					break;
 				case "foreground_layer04": 
 					returnValue = -1;

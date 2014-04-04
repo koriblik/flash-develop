@@ -20,7 +20,9 @@ package ui.scenes.game.objects {
 		public function colisionWithPlayer(oObjectPlayer:objectPlayer, uPosition:uint):String {
 			var returnValue:String = "";
 			var playerHeight:Number = oObjectPlayer.getJumpHeight();
+			//if not over floor
 			if (__backgroundObject.getFrontLayerHeight(uPosition + oObjectPlayer.__X_POSITION) == -1) {
+				//if not in jump - __FALL.
 				if (oObjectPlayer.status == oObjectPlayer.__IN_RUN){
 					return __FALL;
 				}

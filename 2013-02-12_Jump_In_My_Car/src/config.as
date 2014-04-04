@@ -42,7 +42,7 @@ package {
 			__FRAME_RATE = __STAGE.frameRate;
 			__DELTA_TIME = 1 / __FRAME_RATE;
 			//detect if this is mobile device)
-			__MOBILE_DEVICE =  Accelerometer.isSupported;
+			__MOBILE_DEVICE = Accelerometer.isSupported;
 			__ANDROID_DEVICE = true;
 			if (__MOBILE_DEVICE) {
 				__WINDOW_WIDTH = stage.fullScreenWidth;
@@ -63,11 +63,11 @@ package {
 		
 		static public function loadData():void {
 			loadLevelData();
-			loadCoinsData();
-			loadObstaclesData();
+			//loadCoinsData();
+			//loadObstaclesData();
 		}
 		
-		static private function loadObstaclesData():void {
+		static public function loadLevelData():void {
 			var i:uint;
 			var j:uint;
 			var k:uint;
@@ -79,35 +79,57 @@ package {
 			var repeats:uint;
 			var subSize:uint;
 			var templateList:XML = new XML();
-			//load textures from the obstacles
-			maxItems = assets.__obstaclesXML.descendants("type").length();
+			var levelCounter:uint = 0;
+			var sectionStart:uint = 0;
+			//load textures from the game level
+			maxItems = assets.__levelXML.descendants("leveltexture").length();
 			var textures:Array = new Array();
 			for (i = 0; i < maxItems; i++) {
-				textures[assets.__obstaclesXML.descendants("type")[i].@id] = assets.__obstaclesXML.descendants("type")[i];
+				textures[String(assets.__levelXML.descendants("leveltexture")[i].@id)] = assets.__levelXML.descendants("leveltexture")[i].@name;
 			}
-			//add attributes of the obstacle
-			maxItems = assets.__obstaclesXML.descendants("obstacle").length();
+			//load templates from the game level
+			maxItems = assets.__levelXML.descendants("leveltemplate").length();
+			var templates:Array = new Array();
 			for (i = 0; i < maxItems; i++) {
-				__LEVEL_OBSTACLES_DATA.push({name: String(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@id), position: uint(assets.__obstaclesXML.descendants("obstacle")[i].@position), line: uint(assets.__obstaclesXML.descendants("obstacle")[i].@line), blink: uint(assets.__obstaclesXML.descendants("obstacle")[i].@blink), wide: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@wide), tall: Number(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@tall), row: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@row), pivotX: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@pivotx), pivotY: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@pivoty), width: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@width), height: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@height), collisionXPoint: uint(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@collisionxpoint), action: String(textures[assets.__obstaclesXML.descendants("obstacle")[i].@type_id].@action)});
+				templates[String(assets.__levelXML.descendants("leveltemplate")[i].@id)] = assets.__levelXML.descendants("leveltemplate")[i];
 			}
-			//TODO sort them
-			for (i = 0; i < __LEVEL_OBSTACLES_DATA.length; i++) {
-				j = i;
-				if (j > 0) {
-					//if current position is less then previous - bubble down
-					while ((__LEVEL_OBSTACLES_DATA[j].position < __LEVEL_OBSTACLES_DATA[j - 1].position)) {
-						//switch
-						__LEVEL_OBSTACLES_DATA.splice(j - 1, 0, __LEVEL_OBSTACLES_DATA.splice(j, 1)[0]);
-						j--;
-						if (j == 0) {
-							break;
+			//load the level textures from sections defined
+			maxSections = assets.__levelXML.descendants("section").length();
+			for (i = 0; i < maxSections; i++) {
+				repeats = uint(assets.__levelXML.descendants("section")[i].@repeat);
+				subSize = uint(assets.__levelXML.descendants("section")[i].@sub_size);
+				for (j = 0; j < repeats; j++) {
+					sectionStart = levelCounter;
+					templateList = templates[String(assets.__levelXML.descendants("section")[i].@template_id)];
+					//load number of items in Template
+					maxItems = templateList.children().length();
+					for (k = 0; k < maxItems; k++) {
+						switch (templateList.children()[k].name().toString()) {
+							case "for": 
+								maxFor = templateList.children()[k].children().length();
+								for (l = 0; l < subSize; l++) {
+									for (m = 0; m < maxFor; m++) {
+										__LEVEL_GRAPHIC_DATA.push(textures[String(templateList.children()[k].children()[m].@texture_id)]);
+										levelCounter++;
+									}
+								}
+								break;
+							case "item": 
+								__LEVEL_GRAPHIC_DATA.push(textures[String(templateList.children()[k].@texture_id)]);
+								levelCounter++;
+								break;
 						}
 					}
+					//lets add coins here
+					loadCoinsData(assets.__levelXML.descendants("section")[i], uint(assets.__levelXML.level.textures.@width) * sectionStart);
+					loadObstaclesData(assets.__levelXML.descendants("section")[i], uint(assets.__levelXML.level.textures.@width) * sectionStart);
 				}
 			}
+			//calculate level size
+			__LEVEL_SIZE = __LEVEL_GRAPHIC_DATA.length * uint(assets.__levelXML.level.textures.@width) - __WINDOW_WIDTH;
 		}
 		
-		static public function loadCoinsData():void {
+		static public function loadCoinsData(xXML:XML, uPosition:uint):void {
 			var i:uint;
 			var j:uint;
 			var k:uint;
@@ -118,23 +140,24 @@ package {
 			var space:uint;
 			var templateList:XML = new XML();
 			//load templates from the coins
-			maxItems = assets.__coinsXML.descendants("template").length();
+			//TODO this should be optimized by removing this part away from this function
+			maxItems = assets.__levelXML.descendants("cointemplate").length();
 			var templates:Array = new Array();
 			for (i = 0; i < maxItems; i++) {
-				templates[String(assets.__coinsXML.descendants("template")[i].@id)] = assets.__coinsXML.descendants("template")[i];
+				templates[String(assets.__levelXML.descendants("cointemplate")[i].@id)] = assets.__levelXML.descendants("cointemplate")[i];
 			}
 			//load coins from sections defined
-			maxSections = assets.__coinsXML.descendants("section").length();
+			maxSections = xXML.descendants("coin").length();
 			for (i = 0; i < maxSections; i++) {
-				position = uint(assets.__coinsXML.descendants("section")[i].@position);
-				templateList = templates[String(assets.__coinsXML.descendants("section")[i].@template_id)];
+				position = uint(xXML.descendants("coin")[i].@position);
+				templateList = templates[String(xXML.descendants("coin")[i].@template_id)];
 				//load number of items in Template
 				maxItems = templateList.children().length();
 				for (j = 0; j < maxItems; j++) {
 					repeats = uint(templateList.children()[j].@repeat);
 					space = uint(templateList.children()[j].@space);
 					for (k = 0; k < repeats; k++) {
-						__LEVEL_COINS_DATA.push({position: uint(position + Number(templateList.children()[j].@position) * space + k * space), line: uint(templateList.children()[j].@line)});
+						__LEVEL_COINS_DATA.push({position: uint(uPosition + position * uint(assets.__levelXML.level.textures.@width) + Number(templateList.children()[j].@position) * space + k * space), line: uint(templateList.children()[j].@line)});
 					}
 				}
 			}
@@ -155,7 +178,7 @@ package {
 			}
 		}
 		
-		static public function loadLevelData():void {
+		static private function loadObstaclesData(xXML:XML, uPosition:uint):void {
 			var i:uint;
 			var j:uint;
 			var k:uint;
@@ -167,46 +190,34 @@ package {
 			var repeats:uint;
 			var subSize:uint;
 			var templateList:XML = new XML();
-			//load textures from the game level
-			maxItems = assets.__levelXML.descendants("texture").length();
+			//load textures from the obstacles
+			//TODO this should be optimized by removing this part away from this function
+			maxItems = assets.__levelXML.descendants("obstacletype").length();
 			var textures:Array = new Array();
 			for (i = 0; i < maxItems; i++) {
-				textures[String(assets.__levelXML.descendants("texture")[i].@id)] = assets.__levelXML.descendants("texture")[i].@name;
+				textures[assets.__levelXML.descendants("obstacletype")[i].@id] = assets.__levelXML.descendants("obstacletype")[i];
 			}
-			//load templates from the game level
-			maxItems = assets.__levelXML.descendants("template").length();
-			var templates:Array = new Array();
+			//add attributes of the obstacle
+			maxItems = xXML.descendants("obstacle").length();
 			for (i = 0; i < maxItems; i++) {
-				templates[String(assets.__levelXML.descendants("template")[i].@id)] = assets.__levelXML.descendants("template")[i];
+				__LEVEL_OBSTACLES_DATA.push({name: String(textures[xXML.descendants("obstacle")[i].@type_id].@id), position: uPosition + uint(xXML.descendants("obstacle")[i].@position) * uint(assets.__levelXML.level.textures.@width), line: uint(xXML.descendants("obstacle")[i].@line), blink: uint(xXML.descendants("obstacle")[i].@blink), wide: uint(textures[xXML.descendants("obstacle")[i].@type_id].@wide), tall: Number(textures[xXML.descendants("obstacle")[i].@type_id].@tall), row: uint(textures[xXML.descendants("obstacle")[i].@type_id].@row), pivotX: uint(textures[xXML.descendants("obstacle")[i].@type_id].@pivotx), pivotY: uint(textures[xXML.descendants("obstacle")[i].@type_id].@pivoty), width: uint(textures[xXML.descendants("obstacle")[i].@type_id].@width), height: uint(textures[xXML.descendants("obstacle")[i].@type_id].@height), collisionXPoint: uint(textures[xXML.descendants("obstacle")[i].@type_id].@collisionxpoint), action: String(textures[xXML.descendants("obstacle")[i].@type_id].@action)});
 			}
-			//load the level textures from sections defined
-			maxSections = assets.__levelXML.descendants("section").length();
-			for (i = 0; i < maxSections; i++) {
-				repeats = uint(assets.__levelXML.descendants("section")[i].@repeat);
-				subSize = uint(assets.__levelXML.descendants("section")[i].@sub_size);
-				for (j = 0; j < repeats; j++) {
-					templateList = templates[String(assets.__levelXML.descendants("section")[i].@template_id)];
-					//load number of items in Template
-					maxItems = templateList.children().length();
-					for (k = 0; k < maxItems; k++) {
-						switch (templateList.children()[k].name().toString()) {
-							case "for": 
-								maxFor = templateList.children()[k].children().length();
-								for (l = 0; l < subSize; l++) {
-									for (m = 0; m < maxFor; m++) {
-										__LEVEL_GRAPHIC_DATA.push(textures[String(templateList.children()[k].children()[m].@texture_id)]);
-									}
-								}
-								break;
-							case "item": 
-								__LEVEL_GRAPHIC_DATA.push(textures[String(templateList.children()[k].@texture_id)]);
-								break;
+			//TODO sort them
+			for (i = 0; i < __LEVEL_OBSTACLES_DATA.length; i++) {
+				j = i;
+				if (j > 0) {
+					//if current position is less then previous - bubble down
+					while ((__LEVEL_OBSTACLES_DATA[j].position < __LEVEL_OBSTACLES_DATA[j - 1].position)) {
+						//switch
+						__LEVEL_OBSTACLES_DATA.splice(j - 1, 0, __LEVEL_OBSTACLES_DATA.splice(j, 1)[0]);
+						j--;
+						if (j == 0) {
+							break;
 						}
 					}
 				}
 			}
-			//calculate level size
-			__LEVEL_SIZE = __LEVEL_GRAPHIC_DATA.length * uint(assets.__levelXML.textures.@width) - __WINDOW_WIDTH;
 		}
+	
 	}
 }

@@ -59,11 +59,13 @@ package ui.scenes.game {
 		//is clicked down/movement
 		private var __fingerDown:Boolean;
 		private var __fingerMoved:Boolean;
+		//status of the player
+		private var __inEndAnimation:Boolean;
 		
 		public function gameScene() {
 			super();
-						assets.initFonts();
-
+			assets.initFonts();
+			
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
@@ -82,7 +84,7 @@ package ui.scenes.game {
 			removeEventListener("SCENE_INITIALIZED", onSceneInitialized);
 			//in this point scene is fully visible
 			//set variables
-			__speed = new speedController(__MAX_SPEED, 8, 0.3);
+			__speed = new speedController(__MAX_SPEED, 8, 1);
 			//background layer
 			__backgroundLayer = new backgroundLayersObject();
 			addChild(__backgroundLayer);
@@ -136,6 +138,8 @@ package ui.scenes.game {
 			//set up click
 			__fingerDown = false;
 			__fingerMoved = false;
+			//end animation
+			__inEndAnimation = false;
 		}
 		
 		private function onStartGameClicked(e:Event):void {
@@ -231,6 +235,12 @@ package ui.scenes.game {
 		}
 		
 		private function onEnterFrame(event:Event):void {
+			/*
+			//TODO if speed is stopped - game over (should be changed to something that controls dead anumation
+			if (__speed.direction == speedController.__STOP) {
+				gameOver();
+			}
+			*/
 			//update frame counter
 			__frame++;
 			//calculate new speed
@@ -263,15 +273,27 @@ package ui.scenes.game {
 			//TODO check player interraction with coins and handle return value - change it to score
 			Main.__tempDraw.graphics.clear();
 			Main.__tempOutput.htmlText = "";
-			var returnValueCoin:uint = __coinController.colisionWithPlayer(__objectPlayer, __position);
-			__scoreText.text = String(uint(__scoreText.text) + returnValueCoin);
-			var returnValueObstacle:String = __obstacleController.colisionWithPlayer(__objectPlayer, __position);
-			if (returnValueObstacle == "HIT") {
-				gameOver();
-			}
-			var returnValueLevel:String = __levelController.colisionWithPlayer(__objectPlayer, __position);
-			if (returnValueLevel == levelController.__FALL) {
-				gameOver();
+			//do not check this if in end animation:
+			if (!__inEndAnimation) {
+				//get # of coins taken and remove them if necessary in controller
+				var returnValueCoin:uint = __coinController.colisionWithPlayer(__objectPlayer, __position);
+				__scoreText.text = String(uint(__scoreText.text) + returnValueCoin);
+				//check the hit with obstacles
+				var returnValueObstacle:String = __obstacleController.colisionWithPlayer(__objectPlayer, __position);
+				if (returnValueObstacle == obstacleController.__HIT) {
+					__speed.startBreak(true);
+					__inEndAnimation = true;
+						//gameOver(obstacleController.__HIT);
+				}
+				//check if on way
+				var returnValueLevel:String = __levelController.colisionWithPlayer(__objectPlayer, __position);
+				if (returnValueLevel == levelController.__FALL) {
+					__speed.startBreak(true);
+					__inEndAnimation = true;
+					__objectPlayer.fall();
+					__objectPlayer.addEventListener(objectPlayer.__EVENT_ANIMATION_FALL_END, onPlayerFallCompleted);
+					
+				}
 			}
 			//shake scene
 			//!shake(__speed.getSpeed());
@@ -281,6 +303,11 @@ package ui.scenes.game {
 		   __playerShadow.scaleX = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
 		   __playerShadow.scaleY = 0.84 + 0.08 * Math.sin(Math.PI * __position / 180);
 		 */
+		}
+		
+		private function onPlayerFallCompleted(e:Event):void 
+		{
+			gameOver();
 		}
 		
 		private function shake(nSpeed:Number):void {

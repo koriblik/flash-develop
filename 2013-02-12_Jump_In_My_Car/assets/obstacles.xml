@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <obstacles>
 	<level>
+		<obstacle type_id="wall_high" position="280" line="0" blink="200" />
 		<obstacle type_id="wall_low" position="280" line="0" blink="200" />
 		<obstacle type_id="wall_jump" position="280" line="1" blink="200" />
 		<obstacle type_id="wall_low" position="310" line="2" blink="200" />

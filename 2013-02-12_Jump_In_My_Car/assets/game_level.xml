@@ -1,41 +1,69 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <level>
 	<sections>
-   		<section template_id="hole" sub_size="1" repeat="1" />
-   		<section template_id="island" sub_size="1" repeat="1"/>
-   		<section template_id="hole" sub_size="3" repeat="1"/>
-   		<section template_id="island" sub_size="3" repeat="1"/>
-   		<section template_id="hole" sub_size="3" repeat="1"/>
-   		<section template_id="island" sub_size="0" repeat="1"/>
-   		<section template_id="hole" sub_size="3" repeat="1"/>
-   		<section template_id="island" sub_size="0" repeat="1"/>
-   		<section template_id="hole" sub_size="3" repeat="1"/>
-   		<section template_id="island" sub_size="0" repeat="1"/>
-   		<section template_id="hole" sub_size="4" repeat="1"/>
-   		<section template_id="island" sub_size="0" repeat="1"/>
-		<section template_id="island" sub_size="13" repeat="2"/>
+   		<section template_id="hole" sub_size="1" repeat="1">
+		</section>
+   		<section template_id="island" sub_size="1" repeat="3">
+			<obstacle type_id="wall_high" position="3" line="0" blink="200" />
+			<coin template_id="arrow" position="1" />
+			<coin template_id="up_triangle" position="3" />
+		</section>
    	</sections>
-   	<templates>
-   		<template id="hole">
-			<for>
-				<item texture_id="04"/>
-			</for>
-		</template>
-   		<template id="island">
-   			<item texture_id="01"/>
-			<for>
+	<!-- level base templates and textures-->
+	<level>
+		<templates>
+			<leveltemplate id="hole">
+				<for>
+					<item texture_id="04"/>
+				</for>
+			</leveltemplate>
+			<leveltemplate id="island">
+				<item texture_id="01"/>
+				<for>
+					<item texture_id="02a"/>
+					<item texture_id="02b"/>
+				</for>
 				<item texture_id="02a"/>
-				<item texture_id="02b"/>
-			</for>
-			<item texture_id="02a"/>
-   			<item texture_id="03"/>
-   		</template>
-   	</templates>
-   	<textures width="128">
-   		<texture id="01" name="foreground_layer01"/>
-		<texture id="02a" name="foreground_layer02a"/>
-		<texture id="02b" name="foreground_layer02b"/>
-		<texture id="03" name="foreground_layer03"/>
-		<texture id="04" name="foreground_layer04"/>
-   	</textures>
+				<item texture_id="03"/>
+			</leveltemplate>
+		</templates>
+		<textures width="128">
+			<leveltexture id="01" name="foreground_layer01"/>
+			<leveltexture id="02a" name="foreground_layer02a"/>
+			<leveltexture id="02b" name="foreground_layer02b"/>
+			<leveltexture id="03" name="foreground_layer03"/>
+			<leveltexture id="04" name="foreground_layer04"/>
+		</textures>
+	</level>
+	<!-- coins base templates-->
+	<coin>
+		<templates>
+			<cointemplate id="arrow">
+				<coin position="0.5" line="0" space="64" repeat="2"/>
+				<coin position="0" line="1" space="64" repeat="3"/>
+				<coin position="0.5" line="2" space="64" repeat="2"/>
+			</cointemplate>
+			<cointemplate id="up_triangle">
+				<coin position="1" line="0" space="64" repeat="1"/>
+				<coin position="0.5" line="1" space="64" repeat="2"/>
+				<coin position="0" line="2" space="64" repeat="3"/>
+			</cointemplate>
+			<cointemplate id="down_triangle">
+				<coin position="0" line="0" space="64" repeat="3"/>
+				<coin position="0.5" line="1" space="64" repeat="2"/>
+				<coin position="1" line="2" space="64" repeat="1"/>
+			</cointemplate>
+		</templates>
+	</coin>
+	<!-- obstacles base types-->
+	<obstacle>
+		<types width="128">
+			<obstacletype id="wall_high" wide="0" tall="104" row="0" pivotx="0" pivoty="106" width="48" height="138" collisionxpoint="0" action="end" />
+			<obstacletype id="wall_low" wide="0" tall="52" row="0" pivotx="0" pivoty="68" width="48" height="86" collisionxpoint="0" action="end" />
+			<obstacletype id="wall_low_full" wide="2" tall="52" row="0" pivotx="0" pivoty="52" width="64" height="120" collisionxpoint="0" action="end" />
+			<obstacletype id="wall_jump" wide="0" tall="52" row="0" pivotx="6" pivoty="40" width="64" height="60" collisionxpoint="6" action="jumpSmall" />
+			<obstacletype id="wall_fly_low_full" wide="2" tall="52" row="1" pivotx="0" pivoty="52" width="52" height="172" collisionxpoint="0" action="end" />
+			<obstacletype id="wall_fly_jump" wide="0" tall="52" row="1" pivotx="6" pivoty="94" width="58" height="154" collisionxpoint="6" action="jumpBig" />
+		</types>
+	</obstacle>
 </level>

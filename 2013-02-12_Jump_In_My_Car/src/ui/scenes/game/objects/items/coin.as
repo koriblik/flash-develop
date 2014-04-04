@@ -46,7 +46,7 @@ package ui.scenes.game.objects.items {
 		 */
 		public function updateSprite():void {
 			//set frame based on current position
-			var frame:uint = ((__position + __frame) / 8) % 8;
+			var frame:uint = ((__position + __frame) / 4) % 8;
 			__sprite.texture = assets.getAtlas().getTexture("coin0" + (frame + 1).toString());
 			__shadow.visible = true;
 			__frame++;

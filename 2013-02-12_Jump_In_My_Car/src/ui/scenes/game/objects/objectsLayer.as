@@ -47,12 +47,12 @@ package ui.scenes.game.objects {
 			addChild(__layers[5]);
 			addChild(__layerPlayer);
 			__layerPlayer.x = __layerPlayer.__X_POSITION;
-			__layerPlayer.y = 340;
 			__playerIndex = 0;
 			initialize();
 		}
 		
 		public function initialize():void {
+			__layerPlayer.y = 340;
 			updateFrame(0);
 		}
 		
