@@ -35,6 +35,7 @@ package ui.scenes.coloring.objects {
 			
 			__image = Image.fromBitmap(new Pooh());
 			__objectSize = new Point(config.__WINDOW_WIDTH, config.__WINDOW_HEIGHT);
+			trace("__objectSize:" + __objectSize);
 			var frame:Rectangle;
 			var objectScale:Number = __objectSize.x / __objectSize.y;
 			var imageScale:Number = __image.width / __image.height;
@@ -47,8 +48,8 @@ package ui.scenes.coloring.objects {
 			}
 			
 			__fullImage = new Image(Texture.fromTexture(__image.texture, null, frame));
-			__fullImage.alignPivot("left", "top");
 			__finalSize = new Point(__fullImage.width, __fullImage.height);
+			trace("__finalSize:" + __finalSize);
 			addChild(__fullImage);
 			
 			this.scaleX = __finalScale;
@@ -84,20 +85,20 @@ package ui.scenes.coloring.objects {
 				
 				//NO ROTATION
 				/*
-				var currentAngle:Number = Math.atan2(currentVector.y, currentVector.x);
-				var previousAngle:Number = Math.atan2(previousVector.y, previousVector.x);
-				var deltaAngle:Number = currentAngle - previousAngle;
-				*/
+				   var currentAngle:Number = Math.atan2(currentVector.y, currentVector.x);
+				   var previousAngle:Number = Math.atan2(previousVector.y, previousVector.x);
+				   var deltaAngle:Number = currentAngle - previousAngle;
+				 */
 				// update pivot point based on previous center
 				var previousLocalA:Point = touchA.getPreviousLocation(this);
 				var previousLocalB:Point = touchB.getPreviousLocation(this);
-				pivotX = (previousLocalA.x + previousLocalB.x) * 0.5;
-				pivotY = (previousLocalA.y + previousLocalB.y) * 0.5;
+				this.pivotX = (previousLocalA.x + previousLocalB.x) * 0.5;
+				this.pivotY = (previousLocalA.y + previousLocalB.y) * 0.5;
 				
 				// update location based on the current center
 				this.x = (currentPosA.x + currentPosB.x) * 0.5;
 				this.y = (currentPosA.y + currentPosB.y) * 0.5;
-				
+				//Main.__tempOutput.text = this.pivotX + " / " + this.pivotY;
 				//NO ROTATION
 				// rotate
 				/*
@@ -108,9 +109,30 @@ package ui.scenes.coloring.objects {
 				var sizeDiff:Number = currentVector.length / previousVector.length;
 				this.scaleX = Math.max(__finalScale, this.scaleX * sizeDiff);
 				this.scaleY = Math.max(__finalScale, this.scaleY * sizeDiff);
+				Main.__tempOutput.text = this.pivotX + "\n";
+				Main.__tempOutput.text += this.pivotY + "\n";
+				Main.__tempOutput.text += this.scaleX + "\n";
+				Main.__tempOutput.text += this.scaleY + "\n";
+				Main.__tempOutput.text += this.x + "\n";
+				Main.__tempOutput.text += this.y + "\n";
 				
 			} else {
-				trace(__fullImage.x)
+				Main.__tempOutput.text = this.pivotX + "\n";
+				Main.__tempOutput.text += this.pivotY + "\n";
+				Main.__tempOutput.text += this.scaleX + "\n";
+				Main.__tempOutput.text += this.scaleY + "\n";
+				Main.__tempOutput.text += this.x + "\n";
+				Main.__tempOutput.text += this.y + "\n";
+				trace((this.y + this.pivotY));
+				if ((this.y + this.pivotY) > (__objectSize.y / 2)) {
+					trace("move");
+					this.y = __objectSize.y / 2;
+					this.pivotY = __finalSize.y / 2;
+				}
+					//this.pivotX = __finalSize.x / 2;
+				
+					//this.x = __objectSize.x / 2;
+				
 			}
 			
 			var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
