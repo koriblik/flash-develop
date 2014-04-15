@@ -9,6 +9,7 @@ package ui.scenes.coloring.objects {
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.filters.ColorMatrixFilter;
 	import starling.textures.Texture;
 	import starling.textures.TextureSmoothing;
 	import starling.utils.Color;
@@ -25,7 +26,7 @@ package ui.scenes.coloring.objects {
 		private var __finalSize:Point;
 		private var __inputBitmap:Bitmap;
 		private var __bitmapData:BitmapData;
-		private var __touchMoved:Boolean;
+		private var __deltaPoint:Point;
 		
 		public function freePaintingObject(contents:DisplayObject = null) {
 			super();
@@ -80,40 +81,34 @@ package ui.scenes.coloring.objects {
 			this.scaleX = __finalScale;
 			this.scaleY = __finalScale;
 			
-			__touchMoved = false;
+			__deltaPoint = new Point();
 		}
 		
 		private function onTouch(event:TouchEvent):void {
-			var touchesMoved:Vector.<Touch> = event.getTouches(this, TouchPhase.MOVED);
+			var touchesBegan:Vector.<Touch> = event.getTouches(this, TouchPhase.BEGAN);
 			var touchesEnded:Vector.<Touch> = event.getTouches(this, TouchPhase.ENDED);
-			var touchEnded:Touch = event.getTouch(this, TouchPhase.ENDED);
-			if (touchEnded) {
-				if (!__touchMoved) {
-					//hodnota kam user klikol - koli kresleniu do bitmapy
-					var click:Point = touchEnded.getLocation(this);
-					//kontrola ci som klikol na ciernu - v tom pripade nevyfarbujem
-					if (__bitmapData.getPixel32(click.x, click.y) != 0xff000000) {
-						__bitmapData.floodFill(click.x, click.y, Color.argb(1, 256 * Math.random(), 256 * Math.random(), 256 * Math.random()));
-						__fullImage.texture = Texture.fromBitmapData(__bitmapData);
-					}
-				}
-			}
-			
-			if (touchesEnded.length == 1) {
-				__touchMoved = false;
-			}
-			
+			var touchesMoved:Vector.<Touch> = event.getTouches(this, TouchPhase.MOVED);
+			var touchesHover:Vector.<Touch> = event.getTouches(this, TouchPhase.HOVER);
+			var touchesStationary:Vector.<Touch> = event.getTouches(this, TouchPhase.STATIONARY);
+			Main.__tempOutput.htmlText = "BEGAN: " + touchesBegan.length + "\n";
+			Main.__tempOutput.htmlText += "ENDED: " + touchesEnded.length + "\n";
+			Main.__tempOutput.htmlText += "MOVED: " + touchesMoved.length + "\n";
+			Main.__tempOutput.htmlText += "HOVER: " + touchesHover.length + "\n";
+			Main.__tempOutput.htmlText += "STATIONARY: " + touchesStationary.length + "\n";
+			//MOVED Touch
 			if (touchesMoved.length == 1) {
 				// one finger touching -> posun
 				var delta:Point = touchesMoved[0].getMovement(parent);
 				this.x += delta.x;
 				this.y += delta.y;
-				__touchMoved = true;
+				__deltaPoint = __deltaPoint.add(delta);
+				Main.__tempOutput.htmlText += "touchesMoved 1: " + __deltaPoint + "\n";
 			} else if (touchesMoved.length == 2) {
 				// two fingers touching -> scale
 				var touchA:Touch = touchesMoved[0];
 				var touchB:Touch = touchesMoved[1];
-				
+				__deltaPoint = __deltaPoint.add(touchesMoved[1].getMovement(parent));
+				Main.__tempOutput.htmlText += "touchesMoved 2: " + __deltaPoint + "\n";
 				// update pivota na zaklade predchadzajuceho centra (THIS)
 				var previousLocalA:Point = touchA.getPreviousLocation(this);
 				var previousLocalB:Point = touchB.getPreviousLocation(this);
@@ -128,14 +123,34 @@ package ui.scenes.coloring.objects {
 				this.x = (currentPosA.x + currentPosB.x) * 0.5;
 				this.y = (currentPosA.y + currentPosB.y) * 0.5;
 				
-				// scale
+				// zrataj scale
 				var currentVector:Point = currentPosA.subtract(currentPosB);
 				var previousVector:Point = previousPosA.subtract(previousPosB);
 				var sizeDiff:Number = currentVector.length / previousVector.length;
 				this.scaleX = Math.max(__finalScale, this.scaleX * sizeDiff);
 				this.scaleY = Math.max(__finalScale, this.scaleY * sizeDiff);
-				__touchMoved = true;
-			} else {
+			}
+			
+			//ENDED Touch
+			if (touchesEnded.length > 0) {
+				if (touchesEnded.length == 1) {
+					trace(__deltaPoint.length);
+					if (__deltaPoint.length == 0) {
+						//hodnota kam user klikol - koli kresleniu do bitmapy
+						var click:Point = touchesEnded[0].getLocation(this);
+						//kontrola ci som klikol na ciernu - v tom pripade nevyfarbujem
+						if (__bitmapData.getPixel32(click.x, click.y) != 0xff000000) {
+							trace("getPixel32");
+							__bitmapData.floodFill(click.x, click.y, Color.argb(1, 256 * Math.random(), 256 * Math.random(), 256 * Math.random()));
+							__fullImage.texture = Texture.fromBitmapData(__bitmapData);
+						}
+					}
+					if ((touchesStationary.length == 0) && (touchesMoved.length == 0)) {
+						trace("reset");
+						__deltaPoint.x = 0;
+						__deltaPoint.y = 0;
+					}
+				}
 				//ak sa skoncil zoom IN/OUT - tak zistim ci nie som mimo hranic - ak hej tak "prilepim objekt ku krajom"
 				var top:Number = (this.y - this.pivotY * this.scaleY);
 				var left:Number = (this.x - this.pivotX * this.scaleX);
@@ -156,13 +171,15 @@ package ui.scenes.coloring.objects {
 					this.pivotX = __finalSize.x - this.x / this.scaleX;
 				}
 			}
-			
-			if (touchEnded && touchEnded.tapCount == 2) {
-				//zoom?	
-				reset();
-					//parent.addChild(this); 
-					// bring self to front
-			}
+		
+		/*
+		   if (touchEnded && touchEnded.tapCount == 2) {
+		   //zoom?
+		   //reset();
+		   //parent.addChild(this);
+		   // bring self to front
+		   }
+		 */
 		}
 		
 		public override function dispose():void {

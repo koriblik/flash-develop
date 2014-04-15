@@ -39,7 +39,7 @@ package {
 			//Create a Starling instance that will run the "application" class
 			Starling.multitouchEnabled = true;
 			__starling = new Starling(applicationClass, stage, new Rectangle(0, 0, config.__WINDOW_WIDTH, config.__WINDOW_HEIGHT));
-			//__starling.simulateMultitouch = true;
+			__starling.simulateMultitouch = true;
 			Starling.current.stage.stageWidth = (config.__WINDOW_WIDTH / config.__WINDOW_SCALE);
 			Starling.current.stage.stageHeight = (config.__WINDOW_HEIGHT / config.__WINDOW_SCALE);
 			config.__WORKING_WIDTH = config.__WINDOW_WIDTH/config.__WINDOW_SCALE;
@@ -47,7 +47,7 @@ package {
 			//in this point my default height is __DEFAULT_HEIGHT and
 			__starling.antiAliasing = 1;
 			__starling.showStats = true;
-			__starling.showStatsAt("left", "bottom", 2);
+			__starling.showStatsAt("right", "top", 1);
 			__starling.start();
 			__tempOutput.htmlText += "__WINDOW_WIDTH: " + config.__WINDOW_WIDTH + "\n__WINDOW_HEIGHT: " + config.__WINDOW_HEIGHT + "\n__WINDOW_SCALE: " + config.__WINDOW_SCALE;
 		}
