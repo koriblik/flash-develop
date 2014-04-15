@@ -99,14 +99,14 @@ package ui.scenes.game {
 			__coinController = new coinController(__objectsLayer);
 			//obstacle controller
 			__obstacleController = new obstacleController(__objectsLayer);
+			//score
+			__scoreText = new TextField(config.__WINDOW_WIDTH, 64, "0", "04b", 30, 0xffff00);
+			addChild(__scoreText);
 			//overlays
 			__overlayStartGame = new overlayStartGame();
 			addChild(__overlayStartGame);
 			__overlayGameOver = new overlayGameOver();
 			addChild(__overlayGameOver);
-			//score
-			__scoreText = new TextField(config.__WINDOW_WIDTH, 64, "0", "04b", 30, 0xffff00);
-			addChild(__scoreText);
 			//add keyboard vector
 			__keyDown = new Vector.<Boolean>(256);
 			initialize();
