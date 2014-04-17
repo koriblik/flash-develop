@@ -42,7 +42,7 @@ package {
 			__starling.simulateMultitouch = true;
 			Starling.current.stage.stageWidth = (config.__WINDOW_WIDTH / config.__WINDOW_SCALE);
 			Starling.current.stage.stageHeight = (config.__WINDOW_HEIGHT / config.__WINDOW_SCALE);
-			config.__WORKING_WIDTH = config.__WINDOW_WIDTH/config.__WINDOW_SCALE;
+			config.__WORKING_WIDTH = config.__WINDOW_WIDTH / config.__WINDOW_SCALE;
 			config.__WORKING_HEIGHT = config.__DEFAULT_HEIGHT;
 			//in this point my default height is __DEFAULT_HEIGHT and
 			__starling.antiAliasing = 1;
@@ -51,11 +51,5 @@ package {
 			__starling.start();
 			__tempOutput.htmlText += "__WINDOW_WIDTH: " + config.__WINDOW_WIDTH + "\n__WINDOW_HEIGHT: " + config.__WINDOW_HEIGHT + "\n__WINDOW_SCALE: " + config.__WINDOW_SCALE;
 		}
-		
-		private function deactivate(e:Event):void {
-			// make sure the app behaves well (or exits) when in background
-			NativeApplication.nativeApplication.exit();
-		}
 	}
-
 }

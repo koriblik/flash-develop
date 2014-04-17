@@ -16,3 +16,6 @@ Prehravac rozpraviek - vo forme gramofonu - deti si mozu pretaact pomocou pohybu
 
 filters:
 http://gamua.com/blog/2013/01/starling-13/
+
+how to handle buttons on mobile device:
+http://johnstejskal.com/blog/how-to-exit-an-app-access-native-device-buttons-with-air-for-android/

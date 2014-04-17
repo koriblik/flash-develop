@@ -48,7 +48,7 @@ package ui.scenes.coloring {
 		 */
 		public function initialize():void {
 			__object = new freePaintingObject();
-			__object.init(new Pooh(), config.__WORKING_WIDTH, config.__WORKING_HEIGHT);
+			__object.init(new Pooh(), config.__WORKING_WIDTH, config.__WORKING_HEIGHT-128);
 			addChild(__object);
 		}
 	}
