@@ -8,6 +8,7 @@ package {
 	import starling.core.Starling;
 	import flash.text.TextField;
 	import ui.applicationClass;
+	import assets;
 	
 	/**
 	 * 2014-04-14
@@ -27,6 +28,7 @@ package {
 		private function init(e:Event = null):void {
 			// entry point
 			removeEventListener(Event.ADDED_TO_STAGE, init);
+			assets.initialize();
 			//!delete
 			__tempOutput = new TextField();
 			addChild(__tempOutput);

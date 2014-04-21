@@ -1,17 +1,20 @@
 Coloring Book:
-	Pallete Button (to choose diferent colors sets - sometimeds you do not need full pallete of colors)
-	Pancil Type (Pencil, Brush, Ppray, Pastel, Stamp)
+	Pencil
+	Spray, Pastel, Stamp
+	Brush - shader - rozmazava co je podtym + ubuda farba (JEBA SUPA napad)
 	Eraser (diferent sizes and types - feather)
 	Paint Bucket
-	Pattern
+	Magnifying glass
 	
 	Types:
 		Vsetko vo forme minihier - tie potom odomknu obrazky na vyfarbovanie.
 		Vyfarbovanie podla cisel - cosi mala aj adelka (coloring_book_type01.png)
 		Nalepovanie stvorcekov na miesta z cislami - adelka ma take 2 obrazky od janky
 		Spajanie cisel forma minihry (na boku budu male obrazceky ktore treba porobit a z nich vznikne finalny obrazok)
-		
+		Spajanie cisielok - ucenie sa piwsat abecedu a cisla, kreslit obrazky.
+
 Prehravac rozpraviek - vo forme gramofonu - deti si mozu pretaact pomocou pohybu ihly na platni?
+Obliekanie Jakubka. nove saty hranim minihier
 
 
 filters:

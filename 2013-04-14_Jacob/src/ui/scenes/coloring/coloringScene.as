@@ -19,7 +19,7 @@ package ui.scenes.coloring {
 	public class coloringScene extends baseScene {
 		private var __object:freePaintingObject;
 		//TODO remove this graphics
-		[Embed(source="../../../../assets/coloring_book/pooh01.png")]
+		[Embed(source="../../../../assets/coloring_book/coloring_books/cartoon/pooh01.png")]
 		public static const Pooh:Class;
 		
 		public function coloringScene() {
