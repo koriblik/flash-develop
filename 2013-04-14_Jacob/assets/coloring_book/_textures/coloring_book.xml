@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:4545e1d538209c9dd98e7328842d85e0:43ebfa63b08bdf4abe78344c724ec702:7d64d6cb0f5fa8de2a6d4d8ae73e68e8$ -->
+<TextureAtlas imagePath="coloring_book.png">
+    <SubTexture name="brush" x="0" y="0" width="32" height="32"/>
+    <SubTexture name="eraser" x="34" y="0" width="32" height="32"/>
+    <SubTexture name="pencil" x="68" y="0" width="32" height="32"/>
+    <SubTexture name="stickers/easter/basket-egs" x="102" y="0" width="64" height="85"/>
+    <SubTexture name="stickers/easter/bunny" x="0" y="87" width="128" height="128"/>
+    <SubTexture name="stickers/easter/chicken-egs-flowers" x="0" y="217" width="128" height="110"/>
+    <SubTexture name="stickers/easter/egg01" x="130" y="217" width="32" height="44"/>
+    <SubTexture name="stickers/easter/egg02" x="164" y="217" width="32" height="44"/>
+    <SubTexture name="stickers/easter/egg03" x="198" y="217" width="32" height="44"/>
+    <SubTexture name="stickers/easter/egg04" x="0" y="329" width="32" height="44"/>
+</TextureAtlas>
