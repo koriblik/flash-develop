@@ -15,7 +15,7 @@ package {
 	 * @author Pavol Kusovsky
 	 */
 	public class Main extends Sprite {
-		private var __starling:Starling;
+		public static var __starling:Starling;
 		public static var __tempOutput:TextField;
 		
 		public function Main():void {

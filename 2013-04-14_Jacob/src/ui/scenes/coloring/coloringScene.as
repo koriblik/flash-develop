@@ -11,6 +11,7 @@ package ui.scenes.coloring {
 	import starling.text.TextField;
 	import ui.scenes.baseScene;
 	import ui.scenes.coloring.objects.freePaintingObject;
+	import ui.scenes.coloring.objects.toolBar;
 	
 	/**
 	 * 2014-01-15
@@ -18,6 +19,7 @@ package ui.scenes.coloring {
 	 */
 	public class coloringScene extends baseScene {
 		private var __object:freePaintingObject;
+		private var __toolBar:toolBar;
 		//TODO remove this graphics
 		[Embed(source="../../../../assets/coloring_book/coloring_books/cartoon/pooh01.png")]
 		public static const Pooh:Class;
@@ -48,8 +50,12 @@ package ui.scenes.coloring {
 		 */
 		public function initialize():void {
 			__object = new freePaintingObject();
-			__object.init(new Pooh(), config.__WORKING_WIDTH, config.__WORKING_HEIGHT-128);
+			__object.init(new Pooh(), config.__WORKING_WIDTH, config.__WORKING_HEIGHT - 128);
 			addChild(__object);
+			__toolBar = new toolBar(__object);
+			__toolBar.y = config.__WORKING_HEIGHT - 128;
+			addChild(__toolBar);
+			__toolBar.init(1, 1, 2, 255, 0, 0);
 		}
 	}
 }

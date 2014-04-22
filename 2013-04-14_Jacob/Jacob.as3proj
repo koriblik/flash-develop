@@ -53,6 +53,8 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="lib\starling.swc" />
+    <element path="lib\feathers.swc" />
+    <element path="lib\MinimalMobileTheme.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

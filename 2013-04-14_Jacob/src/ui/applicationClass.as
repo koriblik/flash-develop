@@ -1,4 +1,5 @@
 package ui {
+	import feathers.themes.MinimalMobileTheme;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	import starling.display.Sprite;
@@ -14,6 +15,7 @@ package ui {
 	 */
 	public class applicationClass extends Sprite {
 		private var __currentScene:baseScene;
+		private var __theme:MinimalMobileTheme;
 		/**
 		 * Constructor
 		 */
@@ -31,6 +33,10 @@ package ui {
 			config.__SCENES["mainMenuScene"] = mainMenuScene;
 			config.__SCENES["coloringScene"] = coloringScene;
 			//... continue to add scenes here
+			
+			//init theme
+			__theme = new MinimalMobileTheme(this.stage);
+
 			//activate first scene
 			config.__ACTIVE_SCENE = "coloringScene";
 			showScene();

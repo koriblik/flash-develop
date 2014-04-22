@@ -34,5 +34,11 @@ package utils {
 			}
 			return result;
 		}
+		
+		static public function distanceBetweenPoints(pPoint1:Point, pPoint2:Point):Number {
+			var deltaX:Number = pPoint2.x - pPoint1.x;
+			var deltaY:Number = pPoint2.y - pPoint1.y;
+			return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		}
 	}
 }

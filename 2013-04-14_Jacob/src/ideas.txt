@@ -17,6 +17,10 @@ Prehravac rozpraviek - vo forme gramofonu - deti si mozu pretaact pomocou pohybu
 Obliekanie Jakubka. nove saty hranim minihier
 
 
+TODO:
+history on Canvas
+chenge all bitmaps to bytearrays and manipulate them
+
 filters:
 http://gamua.com/blog/2013/01/starling-13/
 

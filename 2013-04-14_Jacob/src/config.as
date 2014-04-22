@@ -37,7 +37,6 @@ package {
 			__DELTA_TIME = 1 / __FRAME_RATE;
 			//detect if this is mobile device)
 			__MOBILE_DEVICE = Accelerometer.isSupported;
-			//! delete
 			__MOBILE_DEVICE = true;
 			if (__MOBILE_DEVICE) {
 				__WINDOW_WIDTH = stage.fullScreenWidth;
