@@ -55,7 +55,7 @@ package ui.scenes.coloring {
 			__toolBar = new toolBar(__object);
 			__toolBar.y = config.__WORKING_HEIGHT - 128;
 			addChild(__toolBar);
-			__toolBar.init(1, 1, 1, 255, 0, 0);
+			__toolBar.init(1, 1, 2, 255, 0, 0);
 		}
 	}
 }

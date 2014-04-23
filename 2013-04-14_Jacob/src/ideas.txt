@@ -18,14 +18,14 @@ Obliekanie Jakubka. nove saty hranim minihier
 
 
 TODO:
-ok - smoothing mode for stickers
+[ok] - smoothing mode for stickers
 new Tool - Stamp - drow black line items into bucketpainting layer so one can fill 
-sticker should be added as image (and removed from stage from history)
+[declined] - sticker should be added as image (and removed from stage from history)
 reset button - all layers to be deleted and history as well
 historyAdd for tools should not be activated when no movement done
-separate canvas layers (bottom (simple color white/black), tools (pencil, brush, spray, eraser), fill (PaintBucket), stickers (sticker, eraser)
-history on Canvas nad fill
-chenge all bitmaps to bytearrays and manipulate them
+[ok] - separate canvas layers (bottom (simple color white/black), tools (pencil, brush, spray, eraser), fill (PaintBucket), stickers (sticker, eraser)
+history on 2 Canvas and, fill
+change all bitmaps to bytearrays and manipulate them
 
 filters:
 http://gamua.com/blog/2013/01/starling-13/

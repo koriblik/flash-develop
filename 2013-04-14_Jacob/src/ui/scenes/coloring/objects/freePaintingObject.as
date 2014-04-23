@@ -84,6 +84,7 @@ package ui.scenes.coloring.objects {
 		//render texture for brush and pencil
 		private var __renderTextureTool:RenderTexture;
 		private var __canvasTools:Image;
+		private var __renderTextureSticker:RenderTexture;
 		private var __canvasSticker:Image;
 		//history
 		private const __HISTORY_SIZE:uint = 10;
@@ -263,25 +264,25 @@ package ui.scenes.coloring.objects {
 			__historyIndex = Math.min(__HISTORY_SIZE - 1, (__historyIndex + 1));
 			if (bFromGPU) {
 				//vypnem vsetko co netreba screenshotovat off a zoberiem screenshot z GPU
-				__fullImage.visible = false;
-				Starling.current.showStats = false;
 				//zoberem screenshot
 				var stage:Stage = Starling.current.stage;
 				var rs:RenderSupport = new RenderSupport();
 				rs.clear();
-				rs.scaleMatrix(337 / 360, 1 / 1.125);
+				rs.scaleMatrix(__finalSize.x/config.__WINDOW_WIDTH, __finalSize.y/config.__WINDOW_HEIGHT);
+				//rs.setOrthographicProjection(0, 0, 360, 546);
 				rs.setOrthographicProjection(0, 0, __finalSize.x, __finalSize.y);
 				__canvasTools.render(rs, 1.0);
 				rs.finishQuadBatch();
 				var outBmp:BitmapData = new BitmapData(__finalSize.x, __finalSize.y, true);
 				Starling.context.drawToBitmapData(outBmp);
+				//algorithms.savePNGToPath("output.png", outBmp);
 				//zapnem vsetko co nebolo treba screenshotovat spat
-				__fullImage.visible = true;
-				Starling.current.showStats = true;
 				//zapis do history
 				trace("stage: " + stage.stageWidth + " / " + stage.stageHeight);
 				trace("__finalSize: " + __finalSize);
-				trace("window_scale: " + Starling.current.contentScaleFactor);
+				trace("default size: " + config.__DEFAULT_WIDTH+", "+config.__DEFAULT_HEIGHT);
+				trace("size: " + config.__WINDOW_WIDTH + ", " + config.__WINDOW_HEIGHT);
+				trace("working size: " + config.__WORKING_WIDTH+", "+config.__WORKING_HEIGHT);
 				trace("store: " + __HISTORY_LAYER_TOOLS);
 				__historyLayer[__historyIndex] = __HISTORY_LAYER_TOOLS;
 				__historyBitmaps[__historyIndex].copyPixels(outBmp, new Rectangle(0, 0, __finalSize.x, __finalSize.y), new Point(0, 0));
@@ -293,11 +294,11 @@ package ui.scenes.coloring.objects {
 			trace("----");
 		}
 		
-		public function init(bBitmap:Bitmap, uWidth:uint, uHeight:uint, uCanvasColor:uint=0xffffffff):void {
+		public function init(bBitmap:Bitmap, uWidth:uint, uHeight:uint, uCanvasColor:uint = 0xffffffff):void {
 			//ak nezadam null to znamena ze mam kde vyfarbovat - ak null tak layer bude prazdny
-			if (bBitmap!=null){
+			if (bBitmap != null) {
 				__inputBitmap = bBitmap;
-			}else {
+			} else {
 				__inputBitmap = new Bitmap(new BitmapData(config.__DEFAULT_WIDTH, config.__DEFAULT_HEIGHT, true, 0x00000000));
 			}
 			__canvasColor = uCanvasColor;
@@ -338,16 +339,21 @@ package ui.scenes.coloring.objects {
 				__finalSize = new Point(__fullImage.width, __fullImage.height);
 				__fullImage.smoothing = TextureSmoothing.NONE;
 				addChild(__fullImage);
-				//canvas
+				//canvasTool
 				__renderTextureTool = new RenderTexture(__finalSize.x, __finalSize.y);
 				__canvasTools = new Image(__renderTextureTool);
 				__canvasTools.smoothing = TextureSmoothing.NONE;
 				addChild(__canvasTools);
 				//contour
 				var tempBitmapData:BitmapData = new BitmapData(frame.width, frame.height, true, 0x00000000);
-				tempBitmapData.copyPixels(__inputBitmap.bitmapData, frame, point, null,null, true);
+				tempBitmapData.copyPixels(__inputBitmap.bitmapData, frame, point, null, null, true);
 				__contourImage = new Image(Texture.fromBitmapData(tempBitmapData));
 				addChild(__contourImage);
+				//canvasSticker
+				__renderTextureSticker = new RenderTexture(__finalSize.x, __finalSize.y);
+				__canvasSticker = new Image(__renderTextureSticker);
+				__canvasSticker.smoothing = TextureSmoothing.NONE;
+				addChild(__canvasSticker);
 				//history init if first time only
 				var bitmapData:BitmapData;
 				for (i = 0; i < __HISTORY_SIZE; i++) {
@@ -486,7 +492,7 @@ package ui.scenes.coloring.objects {
 					var click:Point = touchesBegan[0].getLocation(this);
 					//kontrola ci som klikol na ciernu - v tom pripade nevyfarbujem
 					if (__bitmapData.getPixel32(click.x, click.y) != 0xff000000) {
-						trace(__toolsAlpha+","+__toolsColorR+","+__toolsColorG+","+ __toolsColorB);
+						trace(__toolsAlpha + "," + __toolsColorR + "," + __toolsColorG + "," + __toolsColorB);
 						__bitmapData.floodFill(click.x, click.y, Color.argb(__toolsAlpha, __toolsColorR, __toolsColorG, __toolsColorB));
 						__fullImage.texture = Texture.fromBitmapData(__bitmapData);
 						historyAdd();
@@ -525,7 +531,7 @@ package ui.scenes.coloring.objects {
 					var click:Point = touchesBegan[0].getLocation(this);
 					matrix.tx = click.x - __toolsScale * (__stickerImage.width / 2);
 					matrix.ty = click.y - __toolsScale * (__stickerImage.height / 2);
-					__renderTextureTool.draw(__stickerImage, matrix);
+					__renderTextureSticker.draw(__stickerImage, matrix);
 					historyAdd(true);
 				}
 			}

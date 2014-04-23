@@ -64,5 +64,16 @@ package utils {
 			fileStream.writeBytes(ba);
 			fileStream.close();
 		}
+		
+		static public function savePNGToPath(sName:String, bBitmapData:BitmapData):void {
+			var pngSource:BitmapData = new BitmapData(bBitmapData.width, bBitmapData.height, true, 0x00000000);
+			pngSource.draw(bBitmapData);
+			var ba:ByteArray = PNGEncoder.encode(pngSource);
+			var file:File = File.desktopDirectory.resolvePath(sName);
+			var fileStream:FileStream = new FileStream();
+			fileStream.open(file, FileMode.WRITE);
+			fileStream.writeBytes(ba);
+			fileStream.close();
+		}
 	}
 }
