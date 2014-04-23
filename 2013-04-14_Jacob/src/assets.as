@@ -3,6 +3,7 @@ package {
 	import flash.utils.Dictionary;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
+	import utils.algorithms;
 	/**
 	 * 2014-02-11
 	 * @author Pavol Kusovsky

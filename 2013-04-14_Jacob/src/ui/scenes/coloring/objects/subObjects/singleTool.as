@@ -10,24 +10,18 @@ package ui.scenes.coloring.objects.subObjects {
 	 * @author Pavol Kusovsky
 	 */
 	public class singleTool extends Sprite {
-		private var __imageBg:Image;
 		private var __imageTint:Image;
 		private var __color:uint;
 		public function singleTool() {
 			super();
-			__imageBg = new Image(assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture("tool_empty"));
-			addChild(__imageBg);
 			__imageTint = new Image(assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture("tool_empty"));
 			addChild(__imageTint);
 		}
 		
 		public function init(sTool:String, uColor:uint):void {
-			__imageBg.texture = assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture(sTool + "_bg");
-			__imageBg.readjustSize();
-			__imageTint.texture = assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture(sTool + "_tint");
+			__imageTint.texture = assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture(sTool + "_tint_"+uColor.toString(16));
 			__imageTint.readjustSize();
 			__color = uColor;
-			__imageTint.color = uColor;
 		}
 	}
 }

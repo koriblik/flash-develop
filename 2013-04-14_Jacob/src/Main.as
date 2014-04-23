@@ -1,5 +1,6 @@
 package {
 	import flash.desktop.NativeApplication;
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -9,6 +10,7 @@ package {
 	import flash.text.TextField;
 	import ui.applicationClass;
 	import assets;
+	import utils.algorithms;
 	
 	/**
 	 * 2014-04-14
@@ -17,7 +19,13 @@ package {
 	public class Main extends Sprite {
 		public static var __starling:Starling;
 		public static var __tempOutput:TextField;
-		
+		/*
+		 * tincode
+		[Embed(source = "../assets/coloring_book/toolbar/brush_tint.png")]
+		public var PENCIL:Class;
+		[Embed(source = "../assets/coloring_book/toolbar/brush_bg.png")]
+		public var PENCIL_BG:Class;
+		*/
 		public function Main():void {
 			if (stage)
 				init();
@@ -52,6 +60,12 @@ package {
 			__starling.showStatsAt("right", "top", 1);
 			__starling.start();
 			__tempOutput.htmlText += "__WINDOW_WIDTH: " + config.__WINDOW_WIDTH + "\n__WINDOW_HEIGHT: " + config.__WINDOW_HEIGHT + "\n__WINDOW_SCALE: " + config.__WINDOW_SCALE;
+			/*
+			 * tin tcode
+			for (var i:uint = 0; i < assets.__coloringBookToolsPallete.length; i++) {
+				algorithms.savePNG("brush_tint", assets.__coloringBookToolsPallete[i], (new PENCIL() as Bitmap).bitmapData,(new PENCIL_BG() as Bitmap).bitmapData);
+			}
+			*/
 		}
 	}
 }

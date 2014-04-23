@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>3.3.3</string>
         <key>fileName</key>
-        <string>E:/Working/github/2013-04-14_Jacob/assets/coloring_book/_textures/coloring_book.tps</string>
+        <string>Z:/pavol.kusovsky/Documents/D/_folders/_personal/flash_develop/github/2013-04-14_Jacob/assets/coloring_book/_textures/coloring_book.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">

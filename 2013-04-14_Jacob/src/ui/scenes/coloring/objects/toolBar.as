@@ -34,7 +34,7 @@ package ui.scenes.coloring.objects {
 		private function onAddedOnStage(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedOnStage);
 			//my components
-			__toolSelection = new toolSelection(config.__WORKING_WIDTH - 16, 48);
+			__toolSelection = new toolSelection(config.__WORKING_WIDTH - 16, 64);
 			__toolSelection.x = 8;
 			__toolSelection.y = 2;
 			addChild(__toolSelection);
@@ -110,10 +110,11 @@ package ui.scenes.coloring.objects {
 					break;
 				case 1: 
 					mode = __paintingObject.__MODE_PAINT_BUCKET;
+					__toolSelection.init("brush/brush");
 					break;
 				case 2: 
 					mode = __paintingObject.__MODE_PENCIL;
-					__toolSelection.init("pencil");
+					__toolSelection.init("pencil/pencil");
 					break;
 				case 3: 
 					mode = __paintingObject.__MODE_BRUSH;

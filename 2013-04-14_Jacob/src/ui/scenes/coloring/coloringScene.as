@@ -50,12 +50,12 @@ package ui.scenes.coloring {
 		 */
 		public function initialize():void {
 			__object = new freePaintingObject();
-			__object.init(new Pooh(), config.__WORKING_WIDTH, config.__WORKING_HEIGHT - 128);
+			__object.init(new Pooh(), config.__WORKING_WIDTH, config.__WORKING_HEIGHT - 128, 0xff00ff00);
 			addChild(__object);
 			__toolBar = new toolBar(__object);
 			__toolBar.y = config.__WORKING_HEIGHT - 128;
 			addChild(__toolBar);
-			__toolBar.init(1, 1, 2, 255, 0, 0);
+			__toolBar.init(1, 1, 1, 255, 0, 0);
 		}
 	}
 }

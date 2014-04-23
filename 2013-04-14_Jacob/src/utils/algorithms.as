@@ -1,5 +1,13 @@
 package utils {
+	import com.adobe.images.PNGEncoder;
+	import flash.display.BitmapData;
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
+	import flash.geom.ColorTransform;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
+	import flash.utils.ByteArray;
 	
 	/**
 	 * 2014-04-21
@@ -39,6 +47,22 @@ package utils {
 			var deltaX:Number = pPoint2.x - pPoint1.x;
 			var deltaY:Number = pPoint2.y - pPoint1.y;
 			return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		}
+		
+		static public function savePNG(sName:String, uColor:uint, bBitmapData:BitmapData, bBgBitmapData:BitmapData):void {
+			trace(bBitmapData.height);
+			var pngSource:BitmapData = new BitmapData(bBitmapData.width, bBitmapData.height, true, 0x00000000);
+			var c:ColorTransform = new ColorTransform();
+			c.color = uColor;
+			bBitmapData.colorTransform(new Rectangle(0, 0, bBitmapData.width, bBitmapData.height), c);
+			pngSource.draw(bBgBitmapData);
+			pngSource.draw(bBitmapData);
+			var ba:ByteArray = PNGEncoder.encode(pngSource);
+			var file:File = File.desktopDirectory.resolvePath("pencil\\"+sName + "_" + uColor.toString(16) + ".png");
+			var fileStream:FileStream = new FileStream();
+			fileStream.open(file, FileMode.WRITE);
+			fileStream.writeBytes(ba);
+			fileStream.close();
 		}
 	}
 }
