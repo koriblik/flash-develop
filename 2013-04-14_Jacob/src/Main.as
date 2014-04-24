@@ -50,7 +50,8 @@ package {
 			config.initialize(stage);
 			//Create a Starling instance that will run the "application" class
 			Starling.multitouchEnabled = true;
-			__starling = new Starling(applicationClass, stage, new Rectangle(0, 0, config.__WINDOW_WIDTH, config.__WINDOW_HEIGHT),null,Context3DRenderMode.AUTO, Context3DProfile.BASELINE)
+			__starling = new Starling(applicationClass, stage, new Rectangle(0, 0, config.__WINDOW_WIDTH, config.__WINDOW_HEIGHT),null,Context3DRenderMode.AUTO, Context3DProfile.BASELINE);
+			//
 			__starling.simulateMultitouch = true;
 			Starling.current.stage.stageWidth = (config.__WINDOW_WIDTH / config.__WINDOW_SCALE);
 			Starling.current.stage.stageHeight = (config.__WINDOW_HEIGHT / config.__WINDOW_SCALE);

@@ -37,9 +37,12 @@ package ui.scenes.coloring.objects {
 		//mode constants
 		public const __MODE_NONE:String = "none";
 		public const __MODE_PAINT_BUCKET:String = "paint_bucket";
+		public const __MODE_STAMP:String = "stamp";
 		public const __MODE_PENCIL:String = "pencil";
 		public const __MODE_BRUSH:String = "brush";
+		public const __MODE_CHALK:String = "chalk";
 		public const __MODE_SPRAY:String = "spray";
+		public const __MODE_PARTICLE:String = "particle";
 		public const __MODE_STICKER:String = "sticker";
 		public const __MODE_ERASER:String = "eraser";
 		public const __MODE_MAGNIFYING_GLASS:String = "magnifying_glass";
@@ -65,13 +68,18 @@ package ui.scenes.coloring.objects {
 		private var __brushPreviousDistance:Number;
 		private var __brushDistance:Number;
 		private var __BRUSH_MAX_DISTANCE:Number = 10000;
-		//eraser
-		private var __eraserImage:Image;
-		//sticker
+		//spray
+		private var __chalkImage:Image;
+		//spray
 		private var __sprayImage:Image;
+		//particle
+		private var __particleImage:Image;
 		//sticker
 		private var __stickerImage:Image;
+		//eraser
+		private var __eraserImage:Image;
 		//comon
+		private var __movedInPaint:Boolean;
 		private var __toolsScale:Number;
 		public const __MIN_SCALE_VALUE:Number = 0.1;
 		private var __toolsAlpha:Number;
@@ -83,7 +91,7 @@ package ui.scenes.coloring.objects {
 		private var __line:Vector.<int>;
 		//render texture for brush and pencil
 		private var __renderTextureTool:RenderTexture;
-		private var __canvasTools:Image;
+		private var __canvasTool:Image;
 		private var __renderTextureSticker:RenderTexture;
 		private var __canvasSticker:Image;
 		//history
@@ -121,18 +129,27 @@ package ui.scenes.coloring.objects {
 						setMode(__MODE_PAINT_BUCKET);
 						break;
 					case __MODE_PAINT_BUCKET: 
+						setMode(__MODE_STAMP);
+						break;
+					case __MODE_STAMP: 
 						setMode(__MODE_PENCIL);
 						break;
 					case __MODE_PENCIL: 
 						setMode(__MODE_BRUSH);
 						break;
 					case __MODE_BRUSH: 
-						setMode(__MODE_STICKER);
+						setMode((__MODE_CHALK));
 						break;
-					case __MODE_STICKER: 
+					case __MODE_CHALK: 
 						setMode(__MODE_SPRAY);
 						break;
 					case __MODE_SPRAY: 
+						setMode(__MODE_PARTICLE);
+						break;
+					case __MODE_PARTICLE: 
+						setMode(__MODE_STICKER);
+						break;
+					case __MODE_STICKER: 
 						setMode(__MODE_ERASER);
 						break;
 					case __MODE_ERASER: 
@@ -158,17 +175,25 @@ package ui.scenes.coloring.objects {
 				case __MODE_PAINT_BUCKET: 
 					removeEventListener(TouchEvent.TOUCH, onTouchPaintBucket);
 					break;
+				case __MODE_STAMP: 
+					break;
 				case __MODE_PENCIL: 
 					removeEventListener(TouchEvent.TOUCH, onTouchPaint);
 					break;
 				case __MODE_BRUSH: 
 					removeEventListener(TouchEvent.TOUCH, onTouchPaint);
 					break;
-				case __MODE_STICKER: 
-					removeEventListener(TouchEvent.TOUCH, onTouchSticker);
+				case __MODE_CHALK: 
+					removeEventListener(TouchEvent.TOUCH, onTouchPaint);
 					break;
 				case __MODE_SPRAY: 
 					removeEventListener(TouchEvent.TOUCH, onTouchPaint);
+					break;
+				case __MODE_PARTICLE: 
+					removeEventListener(TouchEvent.TOUCH, onTouchParticle);
+					break;
+				case __MODE_STICKER: 
+					removeEventListener(TouchEvent.TOUCH, onTouchSticker);
 					break;
 				case __MODE_ERASER: 
 					removeEventListener(TouchEvent.TOUCH, onTouchPaint);
@@ -187,17 +212,25 @@ package ui.scenes.coloring.objects {
 				case __MODE_PAINT_BUCKET: 
 					addEventListener(TouchEvent.TOUCH, onTouchPaintBucket);
 					break;
+				case __MODE_STAMP: 
+					break;
 				case __MODE_PENCIL: 
 					addEventListener(TouchEvent.TOUCH, onTouchPaint);
 					break;
 				case __MODE_BRUSH: 
 					addEventListener(TouchEvent.TOUCH, onTouchPaint);
 					break;
-				case __MODE_STICKER: 
-					addEventListener(TouchEvent.TOUCH, onTouchSticker);
+				case __MODE_CHALK: 
+					addEventListener(TouchEvent.TOUCH, onTouchPaint);
 					break;
 				case __MODE_SPRAY: 
 					addEventListener(TouchEvent.TOUCH, onTouchPaint);
+					break;
+				case __MODE_PARTICLE: 
+					addEventListener(TouchEvent.TOUCH, onTouchParticle);
+					break;
+				case __MODE_STICKER: 
+					addEventListener(TouchEvent.TOUCH, onTouchSticker);
 					break;
 				case __MODE_ERASER: 
 					addEventListener(TouchEvent.TOUCH, onTouchPaint);
@@ -221,21 +254,22 @@ package ui.scenes.coloring.objects {
 			if (__historyIndex > 0) {
 				//znizime index a restornem bitmapu
 				__historyIndex--;
-				trace(__historyIndex + " = " + __historyLayer[__historyIndex]);
-				if (__historyLayer[__historyIndex] == __HISTORY_LAYER_PAINTER_BUCKET) {
-					__bitmapData.copyPixels(__historyBitmaps[__historyIndex], new Rectangle(0, 0, __finalSize.x, __finalSize.y), new Point(0, 0));
-					__fullImage.texture = Texture.fromBitmapData(__bitmapData);
-					return true;
+				trace("restore: (" + __historyIndex + ") " + __historyLayer[__historyIndex]);
+				switch (__historyLayer[__historyIndex]) {
+					case __HISTORY_LAYER_PAINTER_BUCKET: 
+						__bitmapData.copyPixels(__historyBitmaps[__historyIndex], new Rectangle(0, 0, __finalSize.x, __finalSize.y), new Point(0, 0));
+						__fullImage.texture = Texture.fromBitmapData(__bitmapData);
+						break;
+					case __HISTORY_LAYER_TOOLS: 
+						__renderTextureTool.clear();
+						__renderTextureTool.draw(new Image(Texture.fromBitmapData(__historyBitmaps[__historyIndex])));
+						break;
+					case __HISTORY_LAYER_STICKER: 
+						__renderTextureSticker.clear();
+						__renderTextureSticker.draw(new Image(Texture.fromBitmapData(__historyBitmaps[__historyIndex])));
+						break;
 				}
-				if (__historyLayer[__historyIndex] == __HISTORY_LAYER_TOOLS) {
-					__renderTextureTool.clear();
-					__renderTextureTool.draw(new Image(Texture.fromBitmapData(__historyBitmaps[__historyIndex])));
-					
-					//TODO vyplnut renderTExtrue bitmapou
-					//__bitmapData.copyPixels(__historyBitmaps[__historyIndex], new Rectangle(0, 0, __finalSize.x, __finalSize.y), new Point(0, 0));
-					
-					return true;
-				}
+				return true;
 			}
 			return false
 		}
@@ -244,53 +278,47 @@ package ui.scenes.coloring.objects {
 		 * Method to store "snaps" from current screen - to use as history
 		 * @param	bFromGPU	take snap from GPU?
 		 */
-		private function historyAdd(bFromGPU:Boolean = false):void {
+		private function historyAdd(sTarget:String):void {
 			//ak uz mam plne pole tak beriem prvy prvok a hodim ho na koniec - a tam ulozim bitmapu
-			if (__historyIndex == __HISTORY_SIZE - 1) {
+			if (__historyIndex == __HISTORY_SIZE) {
 				__historyBitmaps.push(__historyBitmaps.shift());
+				__historyLayer.push(__historyLayer.shift());
+				__historyIndex--;
 			}
-			//ak este nemam inicializovanu historiu
-			if (!__historyInitialized) {
-				//ak to nie je z gpu tak uloz original obrazok
-				if (!bFromGPU) {
-					__historyLayer[__historyIndex] = __HISTORY_LAYER_PAINTER_BUCKET;
-					__historyBitmaps[__historyIndex].copyPixels(__bitmapDataBackup, new Rectangle(0, 0, __finalSize.x, __finalSize.y), new Point(0, 0));
-				} else {
-					__historyLayer[__historyIndex] = __HISTORY_LAYER_TOOLS;
-					__historyBitmaps[__historyIndex].fillRect(new Rectangle(0, 0, __finalSize.x, __finalSize.y), 0x00ffffff);
-				}
-				__historyInitialized = true;
+			//uloz target pre identifikaciu pri vybere z history
+			__historyLayer[__historyIndex] = sTarget;
+			var target:Image;
+			trace("store: (" + __historyIndex + ") " + sTarget);
+			//vyber target
+			switch (sTarget) {
+				case __HISTORY_LAYER_PAINTER_BUCKET: 
+					__historyBitmaps[__historyIndex].copyPixels(__bitmapData, new Rectangle(0, 0, __finalSize.x, __finalSize.y), new Point(0, 0));
+					break;
+				case __HISTORY_LAYER_TOOLS: 
+					target = __canvasTool;
+					break
+				case __HISTORY_LAYER_STICKER: 
+					target = __canvasSticker;
+					break;
 			}
-			__historyIndex = Math.min(__HISTORY_SIZE - 1, (__historyIndex + 1));
-			if (bFromGPU) {
-				//vypnem vsetko co netreba screenshotovat off a zoberiem screenshot z GPU
-				//zoberem screenshot
+			if (target != null) {
+				//zoberem screenshot ak to nebol paintbucket
 				var stage:Stage = Starling.current.stage;
 				var rs:RenderSupport = new RenderSupport();
 				rs.clear();
-				rs.scaleMatrix(__finalSize.x/config.__WINDOW_WIDTH, __finalSize.y/config.__WINDOW_HEIGHT);
-				//rs.setOrthographicProjection(0, 0, 360, 546);
+				rs.scaleMatrix(__finalSize.x / config.__WINDOW_WIDTH, __finalSize.y / config.__WINDOW_HEIGHT);
 				rs.setOrthographicProjection(0, 0, __finalSize.x, __finalSize.y);
-				__canvasTools.render(rs, 1.0);
+				target.render(rs, 1.0);
 				rs.finishQuadBatch();
 				var outBmp:BitmapData = new BitmapData(__finalSize.x, __finalSize.y, true);
 				Starling.context.drawToBitmapData(outBmp);
 				//algorithms.savePNGToPath("output.png", outBmp);
-				//zapnem vsetko co nebolo treba screenshotovat spat
 				//zapis do history
-				trace("stage: " + stage.stageWidth + " / " + stage.stageHeight);
-				trace("__finalSize: " + __finalSize);
-				trace("default size: " + config.__DEFAULT_WIDTH+", "+config.__DEFAULT_HEIGHT);
-				trace("size: " + config.__WINDOW_WIDTH + ", " + config.__WINDOW_HEIGHT);
-				trace("working size: " + config.__WORKING_WIDTH+", "+config.__WORKING_HEIGHT);
-				trace("store: " + __HISTORY_LAYER_TOOLS);
-				__historyLayer[__historyIndex] = __HISTORY_LAYER_TOOLS;
 				__historyBitmaps[__historyIndex].copyPixels(outBmp, new Rectangle(0, 0, __finalSize.x, __finalSize.y), new Point(0, 0));
-			} else {
-				trace("store: " + __HISTORY_LAYER_PAINTER_BUCKET);
-				__historyLayer[__historyIndex] = __HISTORY_LAYER_PAINTER_BUCKET;
-				__historyBitmaps[__historyIndex].copyPixels(__bitmapData, new Rectangle(0, 0, __finalSize.x, __finalSize.y), new Point(0, 0));
 			}
+			//posun index
+			__historyIndex += 1;
+			trace(__historyLayer);
 			trace("----");
 		}
 		
@@ -341,9 +369,9 @@ package ui.scenes.coloring.objects {
 				addChild(__fullImage);
 				//canvasTool
 				__renderTextureTool = new RenderTexture(__finalSize.x, __finalSize.y);
-				__canvasTools = new Image(__renderTextureTool);
-				__canvasTools.smoothing = TextureSmoothing.NONE;
-				addChild(__canvasTools);
+				__canvasTool = new Image(__renderTextureTool);
+				__canvasTool.smoothing = TextureSmoothing.NONE;
+				addChild(__canvasTool);
 				//contour
 				var tempBitmapData:BitmapData = new BitmapData(frame.width, frame.height, true, 0x00000000);
 				tempBitmapData.copyPixels(__inputBitmap.bitmapData, frame, point, null, null, true);
@@ -367,14 +395,20 @@ package ui.scenes.coloring.objects {
 				__brushImage = new Image(assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture("brush"));
 				//__brushImage.smoothing = TextureSmoothing.NONE;
 				__brushImage.blendMode = BlendMode.NORMAL;
+				__chalkImage = new Image(assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture("chalk"));
+				//__brushImage.smoothing = TextureSmoothing.NONE;
+				__chalkImage.blendMode = BlendMode.NORMAL;
 				__sprayImage = new Image(assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture("spray"));
 				//__sprayImage.smoothing = TextureSmoothing.NONE;
 				__sprayImage.blendMode = BlendMode.NORMAL;
 				__eraserImage = new Image(assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture("eraser"));
 				//__eraserImage.smoothing = TextureSmoothing.NONE;
 				__eraserImage.blendMode = BlendMode.ERASE;
+				//
+				__particleImage = new Image(assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture(assets.__coloringBookParticles[0]));
+				__particleImage.smoothing = TextureSmoothing.NONE;
 				//sticker
-				__stickerImage = new Image(assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture(assets.__coloringBooksStickers[0]));
+				__stickerImage = new Image(assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture(assets.__coloringBookStickers[0]));
 				__stickerImage.smoothing = TextureSmoothing.NONE;
 				// scale, alpha and color initialization is done by toolBar.as
 				//deltas
@@ -487,17 +521,16 @@ package ui.scenes.coloring.objects {
 			//BEGAN Touch
 			if (touchesBegan.length > 0) {
 				if (touchesBegan.length == 1) {
-					//if (__deltaPoint.length == 0) {
 					//hodnota kam user klikol - koli kresleniu do bitmapy
 					var click:Point = touchesBegan[0].getLocation(this);
 					//kontrola ci som klikol na ciernu - v tom pripade nevyfarbujem
 					if (__bitmapData.getPixel32(click.x, click.y) != 0xff000000) {
-						trace(__toolsAlpha + "," + __toolsColorR + "," + __toolsColorG + "," + __toolsColorB);
+						//ulozim co bolo pred vyplnou do historie
+						historyAdd(__HISTORY_LAYER_PAINTER_BUCKET);
+						//spravim vypln
 						__bitmapData.floodFill(click.x, click.y, Color.argb(__toolsAlpha, __toolsColorR, __toolsColorG, __toolsColorB));
 						__fullImage.texture = Texture.fromBitmapData(__bitmapData);
-						historyAdd();
 					}
-					//}
 					if ((touchesStationary.length == 0) && (touchesMoved.length == 0)) {
 						__deltaPoint.x = 0;
 						__deltaPoint.y = 0;
@@ -520,20 +553,73 @@ package ui.scenes.coloring.objects {
 			Main.__tempOutput.htmlText += "MODE: " + __currentMode + "\n";
 			var matrix:Matrix = new Matrix();
 			matrix.scale(__toolsScale, __toolsScale);
-			__stickerImage = new Image(assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture(assets.__coloringBooksStickers[Math.floor(assets.__coloringBooksStickers.length * Math.random())]));
+			__stickerImage = new Image(assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture(assets.__coloringBookStickers[Math.floor(assets.__coloringBookStickers.length * Math.random())]));
 			__stickerImage.smoothing = TextureSmoothing.NONE;
 			__stickerImage.readjustSize();
 			__stickerImage.alpha = __toolsAlpha;
 			//BEGAN Touch
 			if (touchesBegan.length > 0) {
 				if (touchesBegan.length == 1) {
+					//ulozim pred stlacemin stickera
+					historyAdd(__HISTORY_LAYER_STICKER);
 					//hodnota kam user klikol - koli kresleniu do bitmapy
 					var click:Point = touchesBegan[0].getLocation(this);
 					matrix.tx = click.x - __toolsScale * (__stickerImage.width / 2);
 					matrix.ty = click.y - __toolsScale * (__stickerImage.height / 2);
 					__renderTextureSticker.draw(__stickerImage, matrix);
-					historyAdd(true);
 				}
+			}
+		}
+		
+		private function onTouchParticle(event:TouchEvent):void {
+			var touchBegan:Touch = event.getTouch(this, TouchPhase.BEGAN);
+			var touchEnded:Touch = event.getTouch(this, TouchPhase.ENDED);
+			var touchMoved:Touch = event.getTouch(this, TouchPhase.MOVED);
+			var touchesHover:Vector.<Touch> = event.getTouches(this, TouchPhase.HOVER);
+			var touchesStationary:Vector.<Touch> = event.getTouches(this, TouchPhase.STATIONARY);
+			Main.__tempOutput.htmlText = "BEGAN: " + (touchBegan != null) + "\n";
+			Main.__tempOutput.htmlText += "ENDED: " + (touchEnded != null) + "\n";
+			Main.__tempOutput.htmlText += "MOVED: " + (touchMoved != null) + "\n";
+			Main.__tempOutput.htmlText += "HOVER: " + touchesHover.length + "\n";
+			Main.__tempOutput.htmlText += "STATIONARY: " + touchesStationary.length + "\n";
+			Main.__tempOutput.htmlText += "MODE: " + __currentMode + "\n";
+			var matrix:Matrix = new Matrix();
+			var image:Image;
+			matrix.scale(__toolsScale, __toolsScale);
+			__particleImage.texture = assets.getAtlas(assets.TEXTURE_ATLAS_COLORING_BOOK).getTexture(assets.__coloringBookParticles[Math.floor(assets.__coloringBookParticles.length * Math.random())]);
+			__particleImage.smoothing = TextureSmoothing.NONE;
+			__particleImage.readjustSize();
+			image = __particleImage;
+			if (touchBegan) {
+				__movedInPaint = false;
+			}
+			if (touchMoved) {
+				// one finger moving -> drawing
+				//ak som sa pohol po prvy krat tak ulozim to co bolo do history
+				if (!__movedInPaint) {
+					historyAdd(__HISTORY_LAYER_STICKER);
+				}
+				__movedInPaint = true;
+				__deltaPoint = touchMoved.getLocation(this);
+				__deltaPreviousPoint = touchMoved.getPreviousLocation(this);
+				//v pripade spray robim aj nahodnu rotaciu image koli lepsej vizualizacii
+				__line = algorithms.bresenhamsLine(__deltaPreviousPoint, __deltaPoint);
+				__renderTextureSticker.drawBundled(function():void {
+					//v pripade brushu robim aj rotaciu image koli lepsej vizualizacii
+						var length:uint = __line.length / 2;
+						for (var i:uint = 0; i < length; i++) {
+							//10%sanca ze hodim particle
+							if (Math.random() > 0.9) {
+								image.scaleX = __toolsScale * Math.random();
+								image.scaleY = image.scaleX;
+								matrix.scale(image.scaleX, image.scaleX);
+								image.rotation = Math.PI * 2 * Math.random();
+								matrix.tx = __line[i * 2] - __toolsScale * (image.width / 2) - image.width / 2 + image.width * Math.random();
+								matrix.ty = __line[i * 2 + 1] - __toolsScale * (image.height / 2) - image.height / 2 + image.height * Math.random();
+								__renderTextureSticker.draw(image, matrix);
+							}
+						}
+					});
 			}
 		}
 		
@@ -561,6 +647,9 @@ package ui.scenes.coloring.objects {
 				case __MODE_BRUSH: 
 					image = __brushImage;
 					break;
+				case __MODE_CHALK: 
+					image = __chalkImage;
+					break;
 				case __MODE_SPRAY: 
 					image = __sprayImage;
 					break;
@@ -569,6 +658,7 @@ package ui.scenes.coloring.objects {
 					break;
 			}
 			if (touchBegan) {
+				__movedInPaint = false;
 				image.color = Color.rgb(__toolsColorR, __toolsColorG, __toolsColorB);
 				//ak som pencil tak alpha musi ist brutal dole / 10
 				image.alpha = __toolsAlpha;
@@ -579,9 +669,17 @@ package ui.scenes.coloring.objects {
 					__brushDistance = 0;
 					image.alpha = __toolsAlpha / (5 * __toolsScale);
 				}
+				if (__currentMode == __MODE_CHALK) {
+					image.alpha = __toolsAlpha / (8 * __toolsScale);
+				}
 			}
 			if (touchMoved) {
 				// one finger moving -> drawing
+				//ak som sa pohol po prvy krat tak ulozim to co bolo do history
+				if (!__movedInPaint) {
+					historyAdd(__HISTORY_LAYER_TOOLS);
+				}
+				__movedInPaint = true;
 				__deltaPoint = touchMoved.getLocation(this);
 				__deltaPreviousPoint = touchMoved.getPreviousLocation(this);
 				//v pripade spray robim aj nahodnu rotaciu image koli lepsej vizualizacii
@@ -595,7 +693,7 @@ package ui.scenes.coloring.objects {
 					//v pripade brushu robim aj rotaciu image koli lepsej vizualizacii
 						var length:uint = __line.length / 2;
 						for (var i:uint = 0; i < length; i++) {
-							if (__currentMode == __MODE_SPRAY) {
+							if ((__currentMode == __MODE_SPRAY) || (__currentMode == __MODE_CHALK)) {
 								image.rotation = Math.PI * 2 * Math.random();
 							}
 							matrix.tx = __line[i * 2] - scale * (image.width / 2);
@@ -603,9 +701,6 @@ package ui.scenes.coloring.objects {
 							__renderTextureTool.draw(image, matrix);
 						}
 					});
-			}
-			if (touchEnded) {
-				historyAdd(true);
 			}
 		}
 		

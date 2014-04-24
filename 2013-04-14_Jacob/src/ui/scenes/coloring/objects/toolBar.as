@@ -102,37 +102,36 @@ package ui.scenes.coloring.objects {
 		/**
 		 * Inicializuje hodnoty pre paintng objekt podla tychto co mam tu
 		 */
-		public function init(nScale:Number = 1, nAlpha:Number = 1, uMode:uint = 0, uR:uint = 255, uG:uint = 255, uB:uint = 255):void {
+		public function init(nScale:Number = 1, nAlpha:Number = 1, sMode:String = __paintingObject.__MODE_NONE, uR:uint = 255, uG:uint = 255, uB:uint = 255):void {
 			var mode:String;
-			switch (uMode) {
-				case 0: 
-					mode = __paintingObject.__MODE_NONE;
+			switch (sMode) {
+				case __paintingObject.__MODE_NONE: 
 					break;
-				case 1: 
-					mode = __paintingObject.__MODE_PAINT_BUCKET;
+				case __paintingObject.__MODE_PAINT_BUCKET: 
 					__toolSelection.init("brush/brush");
 					break;
-				case 2: 
-					mode = __paintingObject.__MODE_PENCIL;
+				case __paintingObject.__MODE_STAMP: 
+					mode = __paintingObject.__MODE_STAMP;
+					break;
+				case __paintingObject.__MODE_PENCIL: 
 					__toolSelection.init("pencil/pencil");
 					break;
-				case 3: 
-					mode = __paintingObject.__MODE_BRUSH;
+				case __paintingObject.__MODE_BRUSH: 
 					break;
-				case 4: 
-					mode = __paintingObject.__MODE_STICKER;
+				case __paintingObject.__MODE_CHALK: 
 					break;
-				case 5: 
-					mode = __paintingObject.__MODE_SPRAY;
+				case __paintingObject.__MODE_SPRAY: 
 					break;
-				case 6: 
-					mode = __paintingObject.__MODE_ERASER;
+				case __paintingObject.__MODE_PARTICLE: 
 					break;
-				case 7: 
-					mode = __paintingObject.__MODE_MAGNIFYING_GLASS;
+				case __paintingObject.__MODE_STICKER: 
+					break;
+				case __paintingObject.__MODE_ERASER: 
+					break;
+				case __paintingObject.__MODE_MAGNIFYING_GLASS: 
 					break;
 			}
-			__paintingObject.setMode(mode);
+			__paintingObject.setMode(sMode);
 			__paintingObject.toolsScale = nScale;
 			__paintingObject.toolsAlpha = nAlpha;
 			__paintingObject.toolsColorR = uR;

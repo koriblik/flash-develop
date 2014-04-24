@@ -8,15 +8,15 @@
   <compiler>
     <define append="true">
       <name>CONFIG::debug</name>
-      <value>false</value>
-    </define>
-    <define append="true">
-      <name>CONFIG::release</name>
       <value>true</value>
     </define>
     <define append="true">
+      <name>CONFIG::release</name>
+      <value>false</value>
+    </define>
+    <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'2014-04-23'</value>
+      <value>'4/24/2014'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -30,22 +30,20 @@
       <name>CONFIG::desktop</name>
       <value>false</value>
     </define>
-    <optimize>true</optimize>
-    <omit-trace-statements>true</omit-trace-statements>
-    <verbose-stacktraces>false</verbose-stacktraces>
+    <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>E:\Working\github\2013-04-14_Jacob\src</path-element>
-      <path-element>e:\Working\github\classes</path-element>
-      <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>Z:\pavol.kusovsky\Documents\D\_folders\_personal\flash_develop\github\2013-04-14_Jacob\src</path-element>
+      <path-element>z:\pavol.kusovsky\Documents\D\_folders\_personal\flash_develop\github\classes</path-element>
+      <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>E:\Working\github\2013-04-14_Jacob\lib\starling.swc</path-element>
-      <path-element>E:\Working\github\2013-04-14_Jacob\lib\feathers.swc</path-element>
-      <path-element>E:\Working\github\2013-04-14_Jacob\lib\MinimalMobileTheme.swc</path-element>
+      <path-element>Z:\pavol.kusovsky\Documents\D\_folders\_personal\flash_develop\github\2013-04-14_Jacob\lib\starling.swc</path-element>
+      <path-element>Z:\pavol.kusovsky\Documents\D\_folders\_personal\flash_develop\github\2013-04-14_Jacob\lib\feathers.swc</path-element>
+      <path-element>Z:\pavol.kusovsky\Documents\D\_folders\_personal\flash_develop\github\2013-04-14_Jacob\lib\MinimalMobileTheme.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>E:\Working\github\2013-04-14_Jacob\src\Main.as</path-element>
+    <path-element>Z:\pavol.kusovsky\Documents\D\_folders\_personal\flash_develop\github\2013-04-14_Jacob\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FF8000</default-background-color>
   <default-frame-rate>60</default-frame-rate>

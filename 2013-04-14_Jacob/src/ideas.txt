@@ -18,13 +18,18 @@ Obliekanie Jakubka. nove saty hranim minihier
 
 
 TODO:
-[ok] - smoothing mode for stickers
-new Tool - Stamp - drow black line items into bucketpainting layer so one can fill 
+[done] - smoothing mode for stickers
 [declined] - sticker should be added as image (and removed from stage from history)
+[done] - separate canvas layers (bottom (simple color white/black), tools (pencil, brush, spray, eraser), fill (PaintBucket), stickers (sticker, eraser)
+[done] - historyAdd for tools should not be activated when no movement done
+[done] - history on 2 Canvas and, fill
+fix artefacts during save - probably by scaling
+new Tool - Stamp - drow black line items into bucketpainting layer so one can fill 
+new Tool - Chalk
+new Tool - Particle - will add particles (rnd rotation, size, color) (stars bubles confets sparckless flowers)
+__stickerImage = new Image = should be removed - do not create new object
+particles/spray - it does not rotate image.
 reset button - all layers to be deleted and history as well
-historyAdd for tools should not be activated when no movement done
-[ok] - separate canvas layers (bottom (simple color white/black), tools (pencil, brush, spray, eraser), fill (PaintBucket), stickers (sticker, eraser)
-history on 2 Canvas and, fill
 change all bitmaps to bytearrays and manipulate them
 
 filters:
